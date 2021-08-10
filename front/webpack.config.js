@@ -58,8 +58,7 @@ const config = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: isDevelopment ? 'development' : 'production',
     }),
-    // new webpack.HotModuleReplacementPlugin(),
-    // new ReactRefreshWebpackPlugin(),
+
     new MiniCssExtractPlugin({
       filename: 'css/styles.css',
     }),
