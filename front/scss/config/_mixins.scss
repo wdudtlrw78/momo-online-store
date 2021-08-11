@@ -1,0 +1,11 @@
+@mixin atTablets() {
+  @media only screen and (min-width: $screen-md-min) {
+    @content;
+  }
+}
+
+@mixin atDesktop() {
+  @media only screen and (min-width: $screen-lg-min) {
+    @content;
+  }
+}

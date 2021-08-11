@@ -1,0 +1,12 @@
+@import 'scss/main.scss';
+
+.container {
+  width: 100%;
+  max-width: 1600px;
+  padding: 1em;
+  margin: 0 auto;
+
+  @include atTablets {
+    padding: 1rem;
+  }
+}

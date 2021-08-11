@@ -21,7 +21,6 @@ const config = {
     vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
     app: ['@babel/polyfill', 'eventsource-polyfill', './client'],
   },
-
   module: {
     rules: [
       {
@@ -48,8 +47,8 @@ const config = {
         exclude: path.join(__dirname, 'node_modules'),
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        test: /\.scss$/,
+        use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
     ],
   },
@@ -60,7 +59,8 @@ const config = {
     }),
 
     new MiniCssExtractPlugin({
-      filename: 'css/styles.css',
+      filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[contenthash].css',
     }),
   ],
 
