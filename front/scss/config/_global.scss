@@ -15,28 +15,25 @@ body {
 
 body {
   color: $primary-color;
-  font-size: 0.6875rem;
+  font-size: 16px;
   line-height: 1.6;
   font-weight: 500;
   font-family: 'Noto Sans KR', sans-serif;
   vertical-align: baseline;
+  padding-top: 48px;
+  height: 1400px;
 }
 
 a {
   text-decoration: none;
-  outline: none;
   cursor: pointer;
-
-  &:hover,
-  &:active {
-    text-decoration: none;
-    color: #000000;
-  }
 }
 
 button,
 select,
 option {
+  padding: 0;
+  margin: 0;
   cursor: pointer;
   outline: none;
   background: transparent;

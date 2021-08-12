@@ -4,6 +4,7 @@ import React from 'react';
 import BodyContainer from '@components/BodyContainer';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
+import CartPage from '../../pages/CartPage';
 
 const HomeScreen = loadable(() => import('@pages/HomeScreen'));
 
@@ -13,6 +14,7 @@ function App() {
       <Header />
       <Switch>
         <Route exact path="/" component={HomeScreen} />
+        <Route exact path="/user/cart" component={CartPage} />
       </Switch>
       <Footer />
     </BodyContainer>
