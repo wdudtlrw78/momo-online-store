@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { MenMenuItems, WomenMenuItems } from '../../lib/MenuItems';
+import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import SearchBox from '../SearchBox';
 import './styles.scss';
 

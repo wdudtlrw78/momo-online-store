@@ -15,6 +15,7 @@ const config = {
       '@components': path.resolve(__dirname, 'components'),
       '@layouts': path.resolve(__dirname, 'layouts'),
       '@pages': path.resolve(__dirname, 'pages'),
+      '@lib': path.resolve(__dirname, 'lib'),
     },
   },
   entry: {

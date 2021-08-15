@@ -1,5 +1,5 @@
 import React from 'react';
-import { MenMenuItems, WomenMenuItems } from '../../lib/MenuItems';
+import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import MobileNav from '../MobileNav';
 import './styles.scss';
 
@@ -55,7 +55,7 @@ function Header() {
         <div className="nav__right__group">
           <button type="button" className="nav__search-btn desktop">
             <i className="fas fa-search" />
-            <span>검색</span>
+            <span>SEARCH</span>
           </button>
           <a href="/login" className="login desktop">
             LOGIN
