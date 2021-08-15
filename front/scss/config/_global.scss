@@ -16,7 +16,6 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   vertical-align: baseline;
   padding-top: 48px;
-  height: 1400px;
 }
 
 a {
@@ -51,4 +50,10 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
+}
+
+@include atTablets {
+  body {
+    padding-top: 72px;
+  }
 }

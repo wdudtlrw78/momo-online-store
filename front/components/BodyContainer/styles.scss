@@ -3,16 +3,14 @@
 .container {
   width: 100%;
   max-width: 100rem;
-  padding: 1em;
+  padding: 1rem;
   margin: 0 auto;
 
   @include atTablets {
     padding: 1rem;
   }
-}
 
-.clearfix::after {
-  content: '';
-  clear: both;
-  display: block;
+  @include atDesktop {
+    padding: 0rem;
+  }
 }

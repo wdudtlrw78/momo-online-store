@@ -1,0 +1,120 @@
+@import 'scss/main';
+
+section {
+  position: relative;
+
+  .desktop {
+    display: none;
+  }
+
+  img {
+    width: 100%;
+  }
+  .inner {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 30%;
+
+    .visual-container {
+      text-align: center;
+      color: #fff;
+
+      .visual__title {
+        font-size: 1.875rem;
+        letter-spacing: 0.02em;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+      }
+
+      .visual__description {
+        font-size: $primary-size;
+        letter-spacing: 0.04em;
+      }
+
+      .visual__admission {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1.5rem;
+
+        .visual__admission--women {
+          width: 132px;
+          background-color: #fff;
+          padding: $small-size;
+          letter-spacing: 0.0825em;
+          margin-right: 0.25rem;
+          cursor: pointer;
+
+          a {
+            font-size: $small-size;
+            font-weight: 400;
+            color: $primary-color;
+          }
+        }
+
+        .visual__admission--men {
+          width: 132px;
+          background-color: #fff;
+          padding: $small-size;
+          margin-left: 0.25rem;
+
+          letter-spacing: 0.0825em;
+          cursor: pointer;
+
+          a {
+            font-size: $small-size;
+            font-weight: 400;
+            color: $primary-color;
+          }
+        }
+
+        .visual__admission--women:hover,
+        .visual__admission--men:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  @include atTablets {
+    img {
+      display: none;
+    }
+    img.desktop {
+      display: block;
+    }
+
+    .inner {
+      top: 35%;
+
+      .visual-container {
+        .visual__title {
+          font-size: 3.25rem;
+        }
+
+        .visual__admission {
+          flex-direction: column;
+
+          .visual__admission--women {
+            width: 240px;
+
+            margin-top: 0.5rem;
+            margin-right: 0rem;
+          }
+
+          .visual__admission--men {
+            width: 240px;
+            margin-top: 0.5rem;
+            margin-left: 0rem;
+          }
+        }
+      }
+    }
+  }
+}
