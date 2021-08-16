@@ -61,9 +61,11 @@ header {
         font-size: 1.5rem;
         font-weight: 700;
         padding: 1rem;
+        margin-left: 1rem;
       }
 
       &__cart-btn {
+        margin-right: 1rem;
         span:hover {
           color: $secondary-color;
         }

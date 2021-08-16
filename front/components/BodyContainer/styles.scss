@@ -3,14 +3,10 @@
 .container {
   width: 100%;
   max-width: 100rem;
-  padding: 1rem;
+  padding: 0 1rem;
   margin: 0 auto;
 
   @include atTablets {
-    padding: 1rem;
-  }
-
-  @include atDesktop {
-    padding: 0rem;
+    padding: 0 1rem;
   }
 }
