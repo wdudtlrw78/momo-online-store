@@ -26,6 +26,24 @@ function HomeScreen() {
           </div>
         </div>
       </section>
+
+      <div className="touch-target">
+        <p>EXPLORE MOMO</p>
+        <div>
+          <a href="#" alt="Women's dresses">
+            Women&apos;s dresses
+          </a>
+          <a href="#" alt="Men's jeans">
+            Men&apos;s jeans
+          </a>
+          <a href="#" alt="Women's trousers">
+            Women&apos;s trousers
+          </a>
+          <a href="#" alt="Men's tops">
+            Men&apos;s tops
+          </a>
+        </div>
+      </div>
     </>
   );
 }
