@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
 
-function MobileNav() {
+function MobileNav({ setShowSearchBox }) {
   const [ShowNav, setShowNav] = useState(false);
   const [ShowWomen, setShowWomen] = useState(true);
   const [ShowMen, setShowMen] = useState(false);
@@ -17,6 +18,8 @@ function MobileNav() {
       }
       return !status;
     });
+
+    setShowSearchBox(false);
   }, []);
 
   const onToggleGender = useCallback((e) => {
@@ -85,5 +88,9 @@ function MobileNav() {
     </>
   );
 }
+
+MobileNav.propTypes = {
+  setShowSearchBox: PropTypes.func.isRequired,
+};
 
 export default MobileNav;

@@ -58,7 +58,7 @@ function Header() {
               </ul>
             </li>
           </ul>
-          <MobileNav />
+          <MobileNav setShowSearchBox={setShowSearchBox} />
           <button type="button" className="nav__search-btn" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
           </button>

@@ -11,12 +11,14 @@ function SearchBox({ onToggleSearchBox }) {
 
   return (
     <>
-      <form>
-        <input type="text" placeholder="Search products..." className="search__box--desktop" ref={onSearchFocus} />
-        <button type="button" className="close-btn--desktop" style={{ color: '#ccc' }} onClick={onToggleSearchBox}>
-          <i className="fas fa-times" />
-        </button>
-      </form>
+      <div className="search__form--desktop">
+        <form>
+          <input type="text" placeholder="Search products..." className="search__box--desktop" ref={onSearchFocus} />
+          <button type="button" className="close-btn--desktop" style={{ color: '#ccc' }} onClick={onToggleSearchBox}>
+            <i className="fas fa-times" />
+          </button>
+        </form>
+      </div>
 
       <div className="dimmed--desktop" onClick={onToggleSearchBox} role="presentation" />
     </>

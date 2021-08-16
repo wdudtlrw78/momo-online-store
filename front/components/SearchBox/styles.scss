@@ -1,10 +1,11 @@
 @import 'scss/main';
 
-form {
+.search__form--desktop {
   position: relative;
   max-width: 100rem;
   margin: 0 auto;
   padding: 0 1rem;
+
   .search__box--desktop {
     width: 100%;
     border: none;
@@ -14,17 +15,17 @@ form {
     font-family: 'Noto Sans KR', sans-serif;
     color: $primary-color;
   }
-}
 
-.search__box--desktop::placeholder {
-  color: $hover-color;
-}
+  .search__box--desktop::placeholder {
+    color: $hover-color;
+  }
 
-.close-btn--desktop {
-  position: absolute;
-  font-size: $large-size;
-  top: 35%;
-  right: 1rem;
+  .close-btn--desktop {
+    position: absolute;
+    font-size: $large-size;
+    top: 35%;
+    right: 1rem;
+  }
 }
 
 .dimmed--desktop {
