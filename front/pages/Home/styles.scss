@@ -43,7 +43,7 @@ section {
         margin-top: 1.5rem;
 
         .visual__admission--women {
-          width: 132px;
+          width: 8.25rem;
           background-color: #fff;
           padding: $small-size;
           letter-spacing: 0.0825em;
@@ -58,7 +58,7 @@ section {
         }
 
         .visual__admission--men {
-          width: 132px;
+          width: 8.25rem;
           background-color: #fff;
           padding: $small-size;
           margin-left: 0.25rem;
@@ -101,14 +101,14 @@ section {
           flex-direction: column;
 
           .visual__admission--women {
-            width: 240px;
+            width: 15rem; // 240px
 
             margin-top: 0.5rem;
             margin-right: 0rem;
           }
 
           .visual__admission--men {
-            width: 240px;
+            width: 15rem; // 240px
             margin-top: 0.5rem;
             margin-left: 0rem;
           }
