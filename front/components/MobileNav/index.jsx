@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
-import SearchBox from '../SearchBox';
+import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
 
 function MobileNav() {
@@ -38,7 +38,7 @@ function MobileNav() {
         <>
           <aside>
             {/* Search */}
-            <SearchBox onToggleNav={onToggleNav} />
+            <MobileSearchBox onToggleNav={onToggleNav} />
 
             {/* Navigation */}
             <section>

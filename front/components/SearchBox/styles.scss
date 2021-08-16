@@ -1,31 +1,40 @@
 @import 'scss/main';
 
-.search__box {
+form {
   position: relative;
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #e7e7e7;
-  padding: 0.5rem 2rem;
-  font-size: 0.875rem;
-  font-family: 'Noto Sans KR', sans-serif;
-  color: $primary-color;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  .search__box--desktop {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+    padding: 1.5rem 0rem;
+    font-size: $large-size;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: $primary-color;
+  }
 }
 
-.search__box::placeholder {
+.search__box--desktop::placeholder {
   color: $hover-color;
 }
 
-.search__box--btn {
+.close-btn--desktop {
   position: absolute;
-  padding: 0.5rem 0.5rem 0.5rem 0;
-  top: 1.125rem;
-  left: 1rem;
-  font-size: 1rem;
+  font-size: $large-size;
+  top: 35%;
+  right: 1rem;
 }
 
-.close-btn {
-  position: absolute;
-  font-size: 1.25rem;
-  top: 20px;
-  right: 24px;
+.dimmed--desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0.9;
+  cursor: pointer;
+  z-index: -50;
 }

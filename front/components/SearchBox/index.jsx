@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-function SearchBox({ onToggleNav }) {
+function SearchBox({ onToggleSearchBox }) {
+  const onSearchFocus = useRef(null);
+
+  useEffect(() => {
+    onSearchFocus.current.focus();
+  }, []);
+
   return (
     <>
       <form>
-        <input type="text" placeholder="Search products..." className="search__box" />
+        <input type="text" placeholder="Search products..." className="search__box--desktop" ref={onSearchFocus} />
+        <button type="button" className="close-btn--desktop" style={{ color: '#ccc' }} onClick={onToggleSearchBox}>
+          <i className="fas fa-times" />
+        </button>
       </form>
-      <button type="button" className="search__box--btn">
-        <i className="fas fa-search fa-md" style={{ color: '#ccc' }} />
-      </button>
-      <button type="button" className="close-btn" style={{ color: '#ccc' }} onClick={onToggleNav}>
-        <i className="fas fa-times" />
-      </button>
+
+      <div className="dimmed--desktop" onClick={onToggleSearchBox} role="presentation" />
     </>
   );
 }
 
 SearchBox.propTypes = {
-  onToggleNav: PropTypes.func.isRequired,
+  onToggleSearchBox: PropTypes.func.isRequired,
 };
 
 export default SearchBox;

@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import MobileNav from '../MobileNav';
 import './styles.scss';
+import SearchBox from '../SearchBox';
 
 function Header() {
+  const [ShowSearchBox, setShowSearchBox] = useState(false);
+
+  const onToggleSearchBox = useCallback(() => {
+    setShowSearchBox((status) => {
+      if (status) {
+        document.body.style.overflow = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+      return !status;
+    });
+  }, []);
+
   return (
     <header>
       <nav className="nav">
@@ -45,7 +59,7 @@ function Header() {
             </li>
           </ul>
           <MobileNav />
-          <button type="button" className="nav__search-btn">
+          <button type="button" className="nav__search-btn" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
           </button>
         </div>
@@ -53,7 +67,7 @@ function Header() {
           MOMO
         </a>
         <div className="nav__right__group">
-          <button type="button" className="nav__search-btn desktop">
+          <button type="button" className="nav__search-btn desktop" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
             <span>SEARCH</span>
           </button>
@@ -65,6 +79,7 @@ function Header() {
           </a>
         </div>
       </nav>
+      {ShowSearchBox && <SearchBox onToggleSearchBox={onToggleSearchBox} />}
     </header>
   );
 }
