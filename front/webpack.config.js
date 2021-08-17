@@ -51,6 +51,18 @@ const config = {
         test: /\.scss$/,
         use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          name() {
+            if (isDevelopment) {
+              return '[path][name].[ext]';
+            }
+            return '[contenthash].[ext]';
+          },
+        },
+      },
     ],
   },
 
@@ -75,6 +87,12 @@ const config = {
     historyApiFallback: true,
     port: 3400,
     publicPath: '/dist/',
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3410',
+        changeOrigin: true,
+      },
+    },
   },
 };
 
