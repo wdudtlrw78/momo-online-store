@@ -16,6 +16,7 @@ function Register() {
         <a href="/login">Sign In</a>
         <a href="/register">Register</a>
       </div>
+
       <div className="login-form">
         <form onSubmit={onSubmit}>
           <label className="Nickname-label">
@@ -31,11 +32,12 @@ function Register() {
             <input type="password" />
           </label>
           <label className="confirm-password-label">
-            <span>Password</span>
+            <span>Confirm Password</span>
             <input type="password" />
           </label>
           <button type="submit">REGISTER</button>
         </form>
+
         <p className="link-container">
           Have an Account? <a href="/login">LOGIN</a>
         </p>

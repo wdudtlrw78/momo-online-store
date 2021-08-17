@@ -16,6 +16,7 @@ function Login() {
         <a href="/login">Sign In</a>
         <a href="/register">Register</a>
       </div>
+
       <div className="login-form">
         <form onSubmit={onSubmit}>
           <label className="email-label">
@@ -28,6 +29,7 @@ function Login() {
           </label>
           <button type="submit">LOG IN</button>
         </form>
+
         <p className="link-container">
           New Customer? <a href="/register">REGISTER</a>
         </p>
