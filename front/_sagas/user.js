@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import backUrl from '../config/config';
 import { REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from '../_reducers/user';
 
 function registerAPI(data) {
-  return axios.post('/api/users/register', data);
+  return axios.post(`${backUrl}/users/register`, data);
 }
 
 function* register(action) {

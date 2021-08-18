@@ -10,9 +10,9 @@ function Register({ history }) {
   const dispatch = useDispatch();
   const { registerLoading, registerDone, registerError } = useSelector((state) => state.user);
 
-  const [nickname, onChangeNickname] = useInput('');
-  const [email, onChangeEamil] = useInput('');
-  const [password, onChangePassword] = useInput('');
+  const [nickname, onChangeNickname, setNickname] = useInput('');
+  const [email, onChangeEamil, setEmail] = useInput('');
+  const [password, onChangePassword, setPassword] = useInput('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
@@ -56,6 +56,12 @@ function Register({ history }) {
   useEffect(() => {
     if (registerError) {
       alert(registerError);
+      setNickname('');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirm('');
+
+      onNicknameFocus.current.focus();
     }
   }, [registerError]);
 
@@ -80,13 +86,21 @@ function Register({ history }) {
             </label>
             <label className="password-label">
               <span>Password</span>
-              <input type="password" required value={password} onChange={onChangePassword} autoComplete="off" />
+              <input
+                type="password"
+                required
+                minLength={5}
+                value={password}
+                onChange={onChangePassword}
+                autoComplete="off"
+              />
             </label>
             <label className="confirm-password-label">
               <span>Confirm Password</span>
               <input
                 type="password"
                 required
+                minLength={5}
                 value={passwordConfirm}
                 onChange={onChangePasswordConfirm}
                 autoComplete="off"
@@ -107,7 +121,7 @@ function Register({ history }) {
 }
 
 Register.propTypes = {
-  history: PropTypes.element.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default Register;

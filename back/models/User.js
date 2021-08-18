@@ -43,6 +43,13 @@ const userSchema = mongoose.Schema({
   },
 });
 
+userSchema.methods.checkEmail = function (email, callback) {
+  User.findOne({ email: email }, function (err, user) {
+    console.log(user);
+    callback(err, user);
+  });
+};
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = { User };

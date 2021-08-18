@@ -24,7 +24,6 @@ export default function user(state = initialState, action) {
         ...state,
         registerLoading: false,
         registerDone: true,
-        userInfo: action.data,
       };
     case REGISTER_FAILURE:
       return {
