@@ -17,8 +17,6 @@ function Register({ history }) {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
-  const onNicknameFocus = useRef(null);
-
   const onChangePasswordConfirm = useCallback(
     (e) => {
       setPasswordConfirm(e.target.value);
@@ -45,6 +43,7 @@ function Register({ history }) {
     [nickname, email, password, passwordConfirm],
   );
 
+  const onNicknameFocus = useRef(null);
   useEffect(() => {
     onNicknameFocus.current.focus();
 

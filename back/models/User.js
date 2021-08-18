@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 const userSchema = mongoose.Schema({
   nickname: {
@@ -70,6 +72,30 @@ userSchema.pre('save', function (next) {
     next();
   }
 });
+
+userSchema.methods.comparePassword = function (plainPassword, callback) {
+  bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
+    if (err) return callback(err);
+    callback(null, isMatch);
+  });
+};
+
+userSchema.methods.generateToken = function (callback) {
+  let user = this;
+  console.log('user', user);
+
+  // jsonwebtoken을 이용해서 token 생성
+  // user._id + 'secret' = token
+  const token = jwt.sign(user._id.toHexString(), 'secret');
+  const aYear = moment().add(1, 'year').valueOf();
+
+  user.tokenExp = aYear;
+  user.token = token;
+  user.save(function (err, user) {
+    if (err) return callback(err);
+    callback(null, user);
+  });
+};
 
 const User = mongoose.model('User', userSchema);
 
