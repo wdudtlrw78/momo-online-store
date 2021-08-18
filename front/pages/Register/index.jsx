@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../../hooks/useInput';
 import { REGISTER_REQUEST } from '../../_reducers/user';
@@ -70,8 +71,8 @@ function Register({ history }) {
       {registerLoading && <Loader />}
       <div className="register-container">
         <div className="category-group">
-          <a href="/login">Sign In</a>
-          <a href="/register">Register</a>
+          <Link to="/login">Sign In</Link>
+          <Link to="/register">Register</Link>
         </div>
 
         <div className="register-form">
@@ -112,7 +113,7 @@ function Register({ history }) {
           {passwordError && <p className="error-message">Passwords do not match</p>}
 
           <p className="link-container">
-            Have an Account? <a href="/login">LOGIN</a>
+            Have an Account? <Link to="/login">LOGIN</Link>
           </p>
         </div>
       </div>

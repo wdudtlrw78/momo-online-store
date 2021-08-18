@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import './styles.scss';
 
 function Login() {
@@ -13,8 +14,8 @@ function Login() {
   return (
     <div className="login-container">
       <div className="category-group">
-        <a href="/login">Sign In</a>
-        <a href="/register">Register</a>
+        <Link to="/login">Sign In</Link>
+        <Link to="/register">Register</Link>
       </div>
 
       <div className="login-form">
@@ -31,7 +32,7 @@ function Login() {
         </form>
 
         <p className="link-container">
-          New Customer? <a href="/register">REGISTER</a>
+          New Customer? <Link href="/register">REGISTER</Link>
         </p>
       </div>
     </div>
