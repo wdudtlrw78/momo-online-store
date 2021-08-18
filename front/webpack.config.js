@@ -87,12 +87,12 @@ const config = {
     historyApiFallback: true,
     port: 3400,
     publicPath: '/dist/',
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3410',
-        changeOrigin: true,
-      },
-    },
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:3410',
+    //     changeOrigin: true,
+    //   },
+    // },
   },
 };
 

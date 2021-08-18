@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
 const config = require('./config/key');
 
 app.use(express.urlencoded({ extended: true }));
@@ -17,13 +19,20 @@ mongoose
   .then(() => console.log('✅ MongoDB Connected..'))
   .catch((err) => console.log(err));
 
+app.use(morgan('dev'));
+app.use(
+  cors({
+    origin: true,
+  })
+);
+
 app.use(cookieParser());
 
 app.get('/', function (req, res) {
   res.send('hello world');
 });
 
-app.use('/api/users', require('./routes/users'));
+app.use('/users', require('./routes/users'));
 
 const port = process.env.PORT || 3410;
 app.listen(3410, () => {
