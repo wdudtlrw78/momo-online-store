@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
@@ -59,9 +60,9 @@ function MobileNav({ setShowSearchBox }) {
                     </button>
                   </li>
                 </ul>
-                <a href="/login" className="login">
+                <Link to="/login" className="login">
                   LOGIN
-                </a>
+                </Link>
               </div>
 
               {/* Category */}

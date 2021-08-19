@@ -1,11 +1,15 @@
 import React, { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
+import { useSelector } from 'react-redux';
+
 import MobileNav from '../MobileNav';
 import './styles.scss';
 import SearchBox from '../SearchBox';
 
 function Header() {
   const [ShowSearchBox, setShowSearchBox] = useState(false);
+  const { userInfo } = useSelector((state) => state.user);
 
   const onToggleSearchBox = useCallback(() => {
     setShowSearchBox((status) => {
@@ -24,35 +28,29 @@ function Header() {
         <div className="nav__left__group">
           <ul>
             <li>
-              <a href="/" className="logo desktop">
+              <Link to="/" className="logo desktop">
                 MOMO
-              </a>
+              </Link>
             </li>
             <li className="menu--women desktop">
-              <a href="#" alt="WOMEN">
-                WOMEN
-              </a>
+              <Link to="#">WOMEN</Link>
               <ul className="drop-menu__women">
                 {WomenMenuItems.map((item) => (
                   <li key={item.title}>
-                    <a href={item.url} alt={item.title}>
-                      {item.title}
-                    </a>
+                    <Link to={item.url}>{item.title}</Link>
                   </li>
                 ))}
               </ul>
             </li>
 
             <li className="menu--men desktop">
-              <a href="#" alt="MEN">
-                MEN
-              </a>
+              <Link to="#">MEN</Link>
               <ul className="drop-menu__men">
                 {MenMenuItems.map((item) => (
                   <li key={item.title}>
-                    <a href={item.url} alt={item.title}>
+                    <Link to={item.url} alt={item.title}>
                       {item.title}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -63,20 +61,29 @@ function Header() {
             <i className="fas fa-search" />
           </button>
         </div>
-        <a href="/" className="logo">
+        <Link to="/" className="logo">
           MOMO
-        </a>
+        </Link>
         <div className="nav__right__group">
           <button type="button" className="nav__search-btn desktop" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
             <span>SEARCH</span>
           </button>
-          <a href="/login" className="login desktop">
-            LOGIN
-          </a>
-          <a href="/user/cart" className="nav__cart-btn">
+          {userInfo ? (
+            <>
+              <Link to="/profile" className="login desktop">
+                MY MOMO
+              </Link>
+              <span className="logout desktop">LOGOUT</span>
+            </>
+          ) : (
+            <Link to="/login" className="login desktop">
+              LOGIN
+            </Link>
+          )}
+          <Link to="/user/cart" className="nav__cart-btn">
             <span>CART(0)</span>
-          </a>
+          </Link>
         </div>
       </nav>
       {ShowSearchBox && <SearchBox onToggleSearchBox={onToggleSearchBox} />}

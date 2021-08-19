@@ -191,7 +191,13 @@ header {
           color: $primary-color;
         }
 
-        .login:hover {
+        .logout {
+          padding: 1rem;
+          cursor: pointer;
+        }
+
+        .login:hover,
+        .logout:hover {
           color: $secondary-color;
         }
       }

@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Loader from '../../components/Loader';
-import useInput from '../../hooks/useInput';
-import { loginRequestAction } from '../../_reducers/user';
+import Loader from '@components/Loader';
+import useInput from '@hooks/useInput';
+import { loginRequestAction } from '@_reducers/user';
 import './styles.scss';
 
 function Login({ history }) {
   const dispatch = useDispatch();
-  const { logInLoading, logInDone, logInError } = useSelector((state) => state.user);
+  const { logInLoading, logInDone, logInError, userInfo } = useSelector((state) => state.user);
 
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
@@ -41,34 +41,35 @@ function Login({ history }) {
     }
   }, [logInError]);
 
+  if (logInLoading || userInfo === undefined) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      {logInLoading && <Loader />}
-      <div className="login-container">
-        <div className="category-group">
-          <Link to="/login">Sign In</Link>
-          <Link to="/register">Register</Link>
-        </div>
-
-        <div className="login-form">
-          <form onSubmit={onSubmit}>
-            <label className="email-label">
-              <span>Email</span>
-              <input type="email" ref={onEmailFocus} value={email} onChange={onChangeEmail} />
-            </label>
-            <label className="password-label">
-              <span>Password</span>
-              <input type="password" value={password} onChange={onChangePassword} />
-            </label>
-            <button type="submit">LOG IN</button>
-          </form>
-
-          <p className="link-container">
-            New Customer? <Link to="/register">REGISTER</Link>
-          </p>
-        </div>
+    <div className="login-container">
+      <div className="category-group">
+        <Link to="/login">Sign In</Link>
+        <Link to="/register">Register</Link>
       </div>
-    </>
+
+      <div className="login-form">
+        <form onSubmit={onSubmit}>
+          <label className="email-label">
+            <span>Email</span>
+            <input type="email" required ref={onEmailFocus} value={email} onChange={onChangeEmail} />
+          </label>
+          <label className="password-label">
+            <span>Password</span>
+            <input type="password" required value={password} onChange={onChangePassword} autoComplete="off" />
+          </label>
+          <button type="submit">LOG IN</button>
+        </form>
+
+        <p className="link-container">
+          New Customer? <Link to="/register">REGISTER</Link>
+        </p>
+      </div>
+    </div>
   );
 }
 

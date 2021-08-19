@@ -16,6 +16,10 @@ const config = {
       '@layouts': path.resolve(__dirname, 'layouts'),
       '@pages': path.resolve(__dirname, 'pages'),
       '@lib': path.resolve(__dirname, 'lib'),
+      '@hooks': path.resolve(__dirname, 'hooks'),
+      '@config': path.resolve(__dirname, 'config'),
+      '@_reducers': path.resolve(__dirname, '_reducers'),
+      '@_sagas': path.resolve(__dirname, '_sagas'),
     },
   },
   entry: {
