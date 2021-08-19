@@ -7,14 +7,12 @@ router.post('/register', (req, res) => {
 
   user.checkEmail(req.body.email, function (err, result) {
     // 존재하는 이메일이 있는지 확인
-    if (result !== null) {
-      return res.status(403).send('User already exists');
-    } else {
-      user.save((err) => {
-        if (err) return res.send(err);
-        return res.status(200).send('ok');
-      });
-    }
+    if (result !== null) return res.status(403).send('User already exists');
+
+    user.save((err) => {
+      if (err) return res.send(err);
+      return res.status(200).json({ success: true });
+    });
   });
 });
 
