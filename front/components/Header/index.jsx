@@ -1,15 +1,17 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOutRequestAction } from '@_reducers/user';
 
 import MobileNav from '../MobileNav';
 import './styles.scss';
 import SearchBox from '../SearchBox';
 
 function Header() {
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.user);
   const [ShowSearchBox, setShowSearchBox] = useState(false);
-  const { userInfo } = useSelector((state) => state.user);
 
   const onToggleSearchBox = useCallback(() => {
     setShowSearchBox((status) => {
@@ -20,6 +22,10 @@ function Header() {
       }
       return !status;
     });
+  }, []);
+
+  const onClickLogOut = useCallback(() => {
+    dispatch(logOutRequestAction());
   }, []);
 
   return (
@@ -69,12 +75,19 @@ function Header() {
             <i className="fas fa-search" />
             <span>SEARCH</span>
           </button>
-          {userInfo ? (
+          {userData?.isAuth && userData.isAdmin && (
+            <Link to="/admin" className="admin desktop">
+              Admim
+            </Link>
+          )}
+          {userData?.isAuth ? (
             <>
-              <Link to="/profile" className="login desktop">
+              <Link to="/profile" className="profile desktop">
                 MY MOMO
               </Link>
-              <span className="logout desktop">LOGOUT</span>
+              <button type="button" className="logout desktop" onClick={onClickLogOut}>
+                <span>LOGOUT</span>
+              </button>
             </>
           ) : (
             <Link to="/login" className="login desktop">
@@ -82,7 +95,7 @@ function Header() {
             </Link>
           )}
           <Link to="/user/cart" className="nav__cart-btn">
-            <span>CART(0)</span>
+            CART(0)
           </Link>
         </div>
       </nav>

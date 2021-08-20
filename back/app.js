@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const config = require('./config/key');
 
+app.use(cors());
+
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
 
@@ -25,19 +27,13 @@ mongoose
 // 프론트에서 백엔드 요청 보낼 때 어떤 요청들 보냈는지 기록 (백엔드에서 디버깅)
 app.use(morgan('dev'));
 
-app.use(
-  cors({
-    origin: true,
-  })
-);
-
 app.use(cookieParser());
 
 app.get('/', function (req, res) {
   res.send('hello world');
 });
 
-app.use('/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users'));
 
 const port = process.env.PORT || 3410;
 app.listen(3410, () => {

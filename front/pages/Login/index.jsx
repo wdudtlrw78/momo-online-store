@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loader from '@components/Loader';
@@ -7,9 +7,9 @@ import useInput from '@hooks/useInput';
 import { loginRequestAction } from '@_reducers/user';
 import './styles.scss';
 
-function Login({ history }) {
+function Login(props) {
   const dispatch = useDispatch();
-  const { logInLoading, logInDone, logInError, userInfo } = useSelector((state) => state.user);
+  const { logInLoading, logInError, logInDone } = useSelector((state) => state.user);
 
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
@@ -28,7 +28,7 @@ function Login({ history }) {
     onEmailFocus.current.focus();
 
     if (logInDone) {
-      history.replace('/');
+      props.history.replace('/');
     }
   }, [logInDone]);
 
@@ -41,7 +41,7 @@ function Login({ history }) {
     }
   }, [logInError]);
 
-  if (logInLoading || userInfo === undefined) {
+  if (logInLoading) {
     return <Loader />;
   }
 
@@ -74,7 +74,7 @@ function Login({ history }) {
 }
 
 Login.propTypes = {
-  history: PropTypes.object.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default Login;

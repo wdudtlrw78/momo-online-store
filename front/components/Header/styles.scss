@@ -185,6 +185,15 @@ header {
         display: flex;
         align-items: center;
         font-size: $small-size;
+        .admin {
+          padding: 1rem;
+          color: $primary-color;
+        }
+
+        .profile {
+          padding: 1rem;
+          color: $primary-color;
+        }
 
         .login {
           padding: 1rem;
@@ -192,12 +201,25 @@ header {
         }
 
         .logout {
-          padding: 1rem;
           cursor: pointer;
+          span {
+            color: $primary-color;
+            font-family: 'Noto Sans KR';
+            font-size: $small-size;
+            font-weight: 500;
+            padding: 1rem;
+          }
         }
 
-        .login:hover,
-        .logout:hover {
+        .logout {
+          span:hover {
+            color: $secondary-color;
+          }
+        }
+
+        .admin:hover,
+        .profile:hover,
+        .login:hover {
           color: $secondary-color;
         }
       }
@@ -221,12 +243,11 @@ header {
 
       &__cart-btn {
         margin-right: 1rem;
-        span {
-          font-size: $small-size;
-          padding: 1rem 0 1rem 1rem;
-        }
+        font-size: $small-size;
+        color: $primary-color;
+        padding: 1rem 0 1rem 1rem;
 
-        span:hover {
+        &:hover {
           color: $secondary-color;
         }
       }

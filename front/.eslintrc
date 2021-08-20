@@ -27,6 +27,11 @@
     "max-len": "off",
     "spaced-comment": "off",
     "no-param-reassign": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "react/jsx-props-no-spreading": "off",
+    "func-names": "off",
+    "no-lonely-if": "off",
+    "brace-style": "off",
+    "react/no-unused-prop-types": "off"
   }
 }

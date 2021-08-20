@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '@hooks/useInput';
@@ -7,9 +7,9 @@ import { REGISTER_REQUEST } from '@_reducers/user';
 import './styles.scss';
 import Loader from '@components/Loader';
 
-function Register({ history }) {
+function Register(props) {
   const dispatch = useDispatch();
-  const { registerLoading, registerDone, registerError, userInfo } = useSelector((state) => state.user);
+  const { registerLoading, registerDone, registerError } = useSelector((state) => state.user);
 
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [email, onChangeEamil, setEmail] = useInput('');
@@ -49,7 +49,7 @@ function Register({ history }) {
 
     if (registerDone) {
       alert('Membership registration completed');
-      history.push('/login');
+      props.history.replace('/login');
     }
   }, [registerDone]);
 
@@ -65,7 +65,7 @@ function Register({ history }) {
     }
   }, [registerError]);
 
-  if (registerLoading || userInfo === undefined) {
+  if (registerLoading) {
     return <Loader />;
   }
 
@@ -122,7 +122,7 @@ function Register({ history }) {
 }
 
 Register.propTypes = {
-  history: PropTypes.object.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default Register;

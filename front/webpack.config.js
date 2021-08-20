@@ -17,6 +17,7 @@ const config = {
       '@pages': path.resolve(__dirname, 'pages'),
       '@lib': path.resolve(__dirname, 'lib'),
       '@hooks': path.resolve(__dirname, 'hooks'),
+      '@hoc': path.resolve(__dirname, 'hoc'),
       '@config': path.resolve(__dirname, 'config'),
       '@_reducers': path.resolve(__dirname, '_reducers'),
       '@_sagas': path.resolve(__dirname, '_sagas'),
@@ -91,12 +92,12 @@ const config = {
     historyApiFallback: true,
     port: 3400,
     publicPath: '/dist/',
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:3410',
-    //     changeOrigin: true,
-    //   },
-    // },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3410',
+        changeOrigin: true,
+      },
+    },
   },
 };
 

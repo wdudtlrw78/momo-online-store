@@ -36,8 +36,6 @@ const userSchema = mongoose.Schema({
     default: [],
   },
 
-  image: String,
-
   token: {
     type: String,
   },
@@ -47,18 +45,17 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.methods.checkEmail = function (email, callback) {
+userSchema.methods.checkEmail = function (email, cb) {
   User.findOne({ email: email }, function (err, user) {
     console.log(user);
-    callback(err, user);
+    cb(err, user);
   });
 };
-
 userSchema.pre('save', function (next) {
-  let user = this;
+  const user = this;
 
-  // 비밀번호만 변환될 때에만 bcrypt 암호화 해준다.
   if (user.isModified('password')) {
+    // console.log('password changed')
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
 
@@ -73,30 +70,37 @@ userSchema.pre('save', function (next) {
   }
 });
 
-userSchema.methods.comparePassword = function (plainPassword, callback) {
+userSchema.methods.comparePassword = function (plainPassword, cb) {
   bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-    if (err) return callback(err);
-    callback(null, isMatch);
+    if (err) return cb(err);
+    cb(null, isMatch);
   });
 };
 
-userSchema.methods.generateToken = function (callback) {
-  let user = this;
-  console.log('user', user);
+userSchema.methods.generateToken = function (cb) {
+  const user = this;
 
-  // jsonwebtoken을 이용해서 token 생성
-  // user._id + 'secret' = token
   const token = jwt.sign(user._id.toHexString(), 'secret');
-  const aYear = moment().add(1, 'year').valueOf();
+  const oneHour = moment().add(1, 'hour').valueOf();
 
-  user.tokenExp = aYear;
+  user.tokenExp = oneHour;
   user.token = token;
   user.save(function (err, user) {
-    if (err) return callback(err);
-    callback(null, user);
+    if (err) return cb(err);
+    cb(null, user);
   });
 };
 
+userSchema.statics.findByToken = function (token, cb) {
+  const user = this;
+
+  jwt.verify(token, 'secret', function (err, decode) {
+    user.findOne({ _id: decode, token: token }, function (err, user) {
+      if (err) return cb(err);
+      cb(null, user);
+    });
+  });
+};
 const User = mongoose.model('User', userSchema);
 
 module.exports = { User };
