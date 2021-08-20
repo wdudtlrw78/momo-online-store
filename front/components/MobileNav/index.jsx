@@ -2,13 +2,19 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
+import { useDispatch, useSelector } from 'react-redux';
 import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
+import { logOutRequestAction } from '../../_reducers/user';
 
 function MobileNav({ setShowSearchBox }) {
+  const dispatch = useDispatch();
+
   const [ShowNav, setShowNav] = useState(false);
   const [ShowWomen, setShowWomen] = useState(true);
   const [ShowMen, setShowMen] = useState(false);
+
+  const { userData } = useSelector((state) => state.user);
 
   const onToggleNav = useCallback(() => {
     setShowNav((status) => {
@@ -31,6 +37,11 @@ function MobileNav({ setShowSearchBox }) {
       setShowWomen(true);
       setShowMen(false);
     }
+  }, []);
+
+  const onClickLogOut = useCallback(() => {
+    dispatch(logOutRequestAction());
+    setShowNav(false);
   }, []);
 
   return (
@@ -60,9 +71,26 @@ function MobileNav({ setShowSearchBox }) {
                     </button>
                   </li>
                 </ul>
-                <Link to="/login" className="login">
-                  LOGIN
-                </Link>
+                {userData?.isAuth ? (
+                  <>
+                    <Link to="/profile" className="profile" onClick={onToggleNav}>
+                      MY MOMO
+                    </Link>
+                    <button type="button" className="logout" onClick={onClickLogOut}>
+                      <span>LOGOUT</span>
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/login" className="login" onClick={onToggleNav}>
+                    LOGIN
+                  </Link>
+                )}
+
+                {userData?.isAuth && userData.isAdmin && (
+                  <Link to="/admin" className="admin" onClick={onToggleNav}>
+                    ADMIN
+                  </Link>
+                )}
               </div>
 
               {/* Category */}

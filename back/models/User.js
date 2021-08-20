@@ -45,10 +45,10 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.methods.checkEmail = function (email, cb) {
+userSchema.methods.checkEmail = function (email, callback) {
   User.findOne({ email: email }, function (err, user) {
     console.log(user);
-    cb(err, user);
+    callback(err, user);
   });
 };
 userSchema.pre('save', function (next) {
@@ -70,34 +70,34 @@ userSchema.pre('save', function (next) {
   }
 });
 
-userSchema.methods.comparePassword = function (plainPassword, cb) {
+userSchema.methods.comparePassword = function (plainPassword, callback) {
   bcrypt.compare(plainPassword, this.password, function (err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
+    if (err) return callback(err);
+    callback(null, isMatch);
   });
 };
 
-userSchema.methods.generateToken = function (cb) {
+userSchema.methods.generateToken = function (callback) {
   const user = this;
 
   const token = jwt.sign(user._id.toHexString(), 'secret');
-  const oneHour = moment().add(1, 'hour').valueOf();
+  const aYear = moment().add(1, 'year').valueOf();
 
-  user.tokenExp = oneHour;
+  user.tokenExp = aYear;
   user.token = token;
   user.save(function (err, user) {
-    if (err) return cb(err);
-    cb(null, user);
+    if (err) return callback(err);
+    callback(null, user);
   });
 };
 
-userSchema.statics.findByToken = function (token, cb) {
+userSchema.statics.findByToken = function (token, callback) {
   const user = this;
 
   jwt.verify(token, 'secret', function (err, decode) {
     user.findOne({ _id: decode, token: token }, function (err, user) {
-      if (err) return cb(err);
-      cb(null, user);
+      if (err) return callback(err);
+      callback(null, user);
     });
   });
 };

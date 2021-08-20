@@ -9,7 +9,7 @@ import './styles.scss';
 
 function Login(props) {
   const dispatch = useDispatch();
-  const { logInLoading, logInError, logInDone } = useSelector((state) => state.user);
+  const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
 
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
@@ -30,7 +30,12 @@ function Login(props) {
     if (logInDone) {
       props.history.replace('/');
     }
-  }, [logInDone]);
+
+    if (userData?.isAuth) {
+      props.history.replace('/');
+      alert('Only users who are not logged in can access it.');
+    }
+  }, [logInDone, userData?.isAuth]);
 
   useEffect(() => {
     if (logInError) {

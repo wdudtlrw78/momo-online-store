@@ -38,13 +38,12 @@ header {
     }
 
     &__cart-btn {
-      span {
-        color: $primary-color;
-        font-weight: 500;
-        font-family: 'Noto Sans KR', sans-serif;
-        font-size: $primary-size;
-        padding: 1rem;
-      }
+      padding: 1rem;
+      color: $primary-color;
+    }
+
+    &__cart-btn:hover {
+      color: $secondary-color;
     }
   }
 
@@ -62,12 +61,6 @@ header {
         font-weight: 700;
         padding: 1rem;
         margin-left: 1rem;
-      }
-
-      &__cart-btn {
-        span:hover {
-          color: $secondary-color;
-        }
       }
     }
   }

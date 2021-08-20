@@ -9,7 +9,7 @@ import Loader from '@components/Loader';
 
 function Register(props) {
   const dispatch = useDispatch();
-  const { registerLoading, registerDone, registerError } = useSelector((state) => state.user);
+  const { registerLoading, registerDone, registerError, userData } = useSelector((state) => state.user);
 
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [email, onChangeEamil, setEmail] = useInput('');
@@ -51,7 +51,12 @@ function Register(props) {
       alert('Membership registration completed');
       props.history.replace('/login');
     }
-  }, [registerDone]);
+
+    if (userData?.isAuth) {
+      props.history.replace('/');
+      alert('Only users who are not logged in can access it.');
+    }
+  }, [registerDone, userData?.isAuth]);
 
   useEffect(() => {
     if (registerError) {

@@ -1,8 +1,14 @@
 import React from 'react';
+import Loader from '@components/Loader';
 
 import './styles.scss';
+import { useSelector } from 'react-redux';
 
 function HomeScreen() {
+  const { authLoading } = useSelector((state) => state.user);
+  if (authLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <section>
