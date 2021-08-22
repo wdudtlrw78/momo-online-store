@@ -37,16 +37,19 @@ aside {
 
       li {
         list-style: none;
-        padding-top: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-
+        cursor: pointer;
         button {
+          width: 100%;
+          height: 100%;
           display: inline-block;
           font-weight: 400;
           font-family: 'Noto Sans KR', sans-serif;
           font-size: $primary-size;
           color: $secondary-color;
+          text-align: start;
+          padding-top: 1rem;
+          padding-right: 1rem;
+          padding-bottom: 1rem;
         }
 
         button:hover {
@@ -73,6 +76,9 @@ aside {
         padding: 1rem 1rem 1rem 0;
         text-align: start;
         span {
+          display: inline-block;
+          width: 100%;
+          height: 100%;
           font-weight: 500;
           color: $secondary-color;
           font-size: $primary-size;
@@ -99,41 +105,29 @@ aside {
       color: $hover-color;
     }
 
-    .category--women {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      margin-top: 1rem;
-
-      a {
-        font-weight: 400;
-        color: $primary-color;
-        padding-top: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-      }
-
-      a:hover {
-        color: $secondary-color;
-      }
-    }
-
+    .category--women,
     .category--men {
       width: 50%;
       display: flex;
       flex-direction: column;
       margin-top: 1rem;
 
-      a {
-        font-weight: 400;
-        color: $primary-color;
-        padding-top: 1rem;
-        padding-right: 1rem;
-        padding-bottom: 1rem;
-      }
+      li {
+        cursor: pointer;
+        a {
+          width: 100%;
+          height: 100%;
+          display: inline-block;
+          padding-top: 1rem;
+          padding-right: 1rem;
+          padding-bottom: 1rem;
+          font-weight: 400;
+          color: $primary-color;
+        }
 
-      a:hover {
-        color: $secondary-color;
+        a:hover {
+          color: $secondary-color;
+        }
       }
     }
   }
@@ -146,6 +140,11 @@ aside {
   aside {
     width: 50%;
     border-right: 1px solid $light-color;
+
+    .main-menu {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .dimmed {

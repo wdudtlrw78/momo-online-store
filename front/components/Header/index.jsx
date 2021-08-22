@@ -39,10 +39,10 @@ function Header() {
               </Link>
             </li>
             <li className="menu--women desktop">
-              <Link to="#">WOMEN</Link>
+              <Link to="/women">WOMEN</Link>
               <ul className="drop-menu__women">
                 {WomenMenuItems.map((item) => (
-                  <li key={item.title}>
+                  <li key={item.key}>
                     <Link to={item.url}>{item.title}</Link>
                   </li>
                 ))}
@@ -50,10 +50,10 @@ function Header() {
             </li>
 
             <li className="menu--men desktop">
-              <Link to="#">MEN</Link>
+              <Link to="/men">MEN</Link>
               <ul className="drop-menu__men">
                 {MenMenuItems.map((item) => (
-                  <li key={item.title}>
+                  <li key={item.key}>
                     <Link to={item.url} alt={item.title}>
                       {item.title}
                     </Link>
@@ -77,9 +77,10 @@ function Header() {
           </button>
           {userData?.isAuth && userData.isAdmin && (
             <Link to="/admin" className="admin desktop">
-              Admim
+              ADMIN
             </Link>
           )}
+
           {userData?.isAuth ? (
             <>
               <Link to="/profile" className="profile desktop">
@@ -94,6 +95,7 @@ function Header() {
               LOGIN
             </Link>
           )}
+
           <Link to="/user/cart" className="nav__cart-btn">
             CART(0)
           </Link>

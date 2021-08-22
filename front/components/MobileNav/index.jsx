@@ -95,19 +95,27 @@ function MobileNav({ setShowSearchBox }) {
 
               {/* Category */}
               {ShowWomen && (
-                <div className="category--women">
+                <ul className="category--women">
                   {WomenMenuItems.map((item) => (
-                    <a key={item.title}>{item.title}</a>
+                    <li key={item.key}>
+                      <Link to={item.url} onClick={onToggleNav}>
+                        {item.title}
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
 
               {ShowMen && (
-                <div className="category--men">
+                <ul className="category--men">
                   {MenMenuItems.map((item) => (
-                    <a key={item.title}>{item.title}</a>
+                    <li key={item.key}>
+                      <Link to={item.url} onClick={onToggleNav}>
+                        {item.title}
+                      </Link>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </section>
             <div className="dimmed" onClick={onToggleNav} role="presentation" />

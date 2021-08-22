@@ -3,6 +3,7 @@ import Loader from '@components/Loader';
 
 import './styles.scss';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function HomeScreen() {
   const { authLoading } = useSelector((state) => state.user);
@@ -20,14 +21,10 @@ function HomeScreen() {
             <p className="visual__description">Discover our latest edit of Core by MOMO</p>
             <div className="visual__admission">
               <div className="visual__admission--women">
-                <a href="#" alt="shop-women">
-                  SHOP WOMEN
-                </a>
+                <Link to="/women">SHOP WOMEN</Link>
               </div>
               <div className="visual__admission--men">
-                <a href="#" alt="shop-men">
-                  SHOP MEN
-                </a>
+                <Link to="/men">SHOP MEN</Link>
               </div>
             </div>
           </div>
@@ -37,18 +34,10 @@ function HomeScreen() {
       <div className="touch-target">
         <p>EXPLORE MOMO</p>
         <div>
-          <a href="#" alt="Women's dresses">
-            Women&apos;s dresses
-          </a>
-          <a href="#" alt="Men's jeans">
-            Men&apos;s jeans
-          </a>
-          <a href="#" alt="Women's trousers">
-            Women&apos;s trousers
-          </a>
-          <a href="#" alt="Men's tops">
-            Men&apos;s tops
-          </a>
+          <Link to="/women/category/dresses">Women&apos;s dresses</Link>
+          <Link to="/men/category/jeans">Men&apos;s jeans</Link>
+          <Link to="/women/category/trousers">Women&apos;s trousers</Link>
+          <Link to="/men/category/tops">Men&apos;s tops</Link>
         </div>
       </div>
     </>

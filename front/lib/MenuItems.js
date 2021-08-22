@@ -1,37 +1,45 @@
 export const WomenMenuItems = [
   {
+    key: 1,
     title: 'DRESSERS',
-    url: '#',
+    url: '/women/category/DRESSERS',
   },
   {
+    key: 2,
     title: 'TOPS',
-    url: '#',
+    url: '/women/category/TOPS',
   },
   {
+    key: 3,
     title: 'TROUSERES',
-    url: '#',
+    url: '/women/category/TROUSERES',
   },
   {
+    key: 4,
     title: 'JEANS',
-    url: '#',
+    url: '/women/category/JEANS',
   },
 ];
 
 export const MenMenuItems = [
   {
+    key: 1,
     title: 'TOP',
-    url: '#',
+    url: '/men/category/TOP',
   },
   {
+    key: 2,
     title: 'TROUSERS',
-    url: '#',
+    url: '/men/category/TROUSERS',
   },
   {
+    key: 3,
     title: 'SWEAT SHIRTS',
-    url: '#',
+    url: '/men/category/SWEAT SHIRTS',
   },
   {
+    key: 4,
     title: 'JEANS',
-    url: '#',
+    url: '/men/category/JEANS',
   },
 ];

@@ -1,0 +1,19 @@
+@import 'scss/main';
+
+.dropZone-container {
+  display: flex;
+  flex-direction: column;
+
+  .dropZone {
+    width: 100%;
+    height: 15rem;
+    border: 1px solid $primary-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    .fa-plus {
+      font-size: 3rem;
+    }
+  }
+}
