@@ -8,40 +8,48 @@ const userSchema = mongoose.Schema({
   nickname: {
     type: String,
     maxlength: 30,
+    require: true,
   },
 
   email: {
     type: String,
     trim: true,
     unique: 1,
+    require: true,
   },
 
   password: {
     type: String,
     minlength: 5,
+    require: true,
   },
 
   role: {
     type: Number,
     default: 0,
+    require: true,
   },
 
   cart: {
     type: Array,
     default: [],
+    require: true,
   },
 
   history: {
     type: Array,
     default: [],
+    require: true,
   },
 
   token: {
     type: String,
+    require: true,
   },
 
   tokenExp: {
     type: Number,
+    require: true,
   },
 });
 
