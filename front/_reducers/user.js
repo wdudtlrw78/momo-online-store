@@ -1,5 +1,5 @@
 export const initialState = {
-  authLoading: false, // 유저 로드
+  authLoading: false, // 인증
   authDone: false,
   authError: null,
 

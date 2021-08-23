@@ -6,11 +6,12 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
-import App from './layouts/App';
+
+import App from '@layouts/App';
 import './scss/main.scss';
 
-import rootReducer from './_reducers';
-import rootSaga from './_sagas';
+import rootReducer from '@_reducers';
+import rootSaga from '@_sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const enhancer =

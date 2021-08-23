@@ -32,6 +32,7 @@
     "func-names": "off",
     "no-lonely-if": "off",
     "brace-style": "off",
-    "react/no-unused-prop-types": "off"
+    "react/no-unused-prop-types": "off",
+    "react/no-array-index-key": 1
   }
 }

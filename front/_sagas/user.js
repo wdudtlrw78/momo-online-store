@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import USER_SERVER from '../config/config';
 import {
   AUTH_FAILURE,
   AUTH_REQUEST,
@@ -14,7 +13,8 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-} from '../_reducers/user';
+} from '@_reducers/user';
+import { USER_SERVER } from '@config/config';
 
 function authAPI() {
   return axios.get(`${USER_SERVER}/auth`);
