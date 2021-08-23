@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { Product } = require('../models/Product');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,13 +28,23 @@ try {
 router.post('/image', (req, res) => {
   upload(req, res, (err) => {
     if (err) {
-      return res.status(403).send('Upload Failed');
+      return res.status(403).send('Image upload failed');
     } else {
       return res.status(200).json({
         filePath: res.req.file.path,
         fileName: res.req.file.filename,
       });
     }
+  });
+});
+
+router.post('/', (req, res) => {
+  const product = new Product(req.body);
+
+  product.save((err) => {
+    if (err)
+      return res.status(400).send('Failed to upload product information');
+    return res.status(200).json({ uploadSuccess: true });
   });
 });
 

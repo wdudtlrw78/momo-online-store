@@ -1,23 +1,89 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 import useInput from '@hooks/useInput';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import FileUpload from '@components/FileUpload';
+import { STORAGE_PRODUCT_INFO_REQUEST } from '@_reducers/product';
 
 function Admin(props) {
-  const [gender, onChangeGender] = useInput('Men');
-  const [menProductCategory, onChangeMenProductCategory] = useInput(1);
-  const [womenProductCategory, onChangeWomenProductCategory] = useInput(1);
-  const [title, onChangeTitle] = useInput('');
-  const [description, onChangeDescription] = useInput('');
-  const [price, onChangePrice] = useInput(0);
+  const dispatch = useDispatch();
+
+  const [gender, onChangeGender, setGender] = useInput('Men');
+  const [menProductCategory, onChangeMenProductCategory, setMenProductCategory] = useInput(1);
+  const [womenProductCategory, onChangeWomenProductCategory, setWomenProductCategory] = useInput(1);
+  const [title, onChangeTitle, setTitle] = useInput('');
+  const [description, onChangeDescription, setDescription] = useInput('');
+  const [price, onChangePrice, setPrice] = useInput(0);
+  const [images, setImages] = useState([]);
 
   const { userData } = useSelector((state) => state.user);
+  const { storageProductInfoDone, storageProductInfoError } = useSelector((state) => state.product);
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (storageProductInfoDone) {
+      alert('Product information upload succeeded');
+      props.history.push('/');
+    }
+  }, [storageProductInfoDone]);
+
+  useEffect(() => {
+    if (storageProductInfoError) {
+      setGender('Man');
+      setMenProductCategory(1);
+      setWomenProductCategory(1);
+      setTitle('');
+      setDescription('');
+      setPrice('');
+    }
+  }, [storageProductInfoError]);
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      if (
+        !gender ||
+        !menProductCategory ||
+        !womenProductCategory ||
+        !title ||
+        !description ||
+        !price ||
+        !images.length === 0
+      ) {
+        return alert('You have to put in all the values.');
+      }
+
+      dispatch({
+        type: STORAGE_PRODUCT_INFO_REQUEST,
+        data: {
+          writer: userData?._id,
+          gender,
+          menProductCategory,
+          womenProductCategory,
+          title,
+          description,
+          price,
+          images,
+        },
+      });
+    },
+    [
+      userData._id,
+      gender,
+      menProductCategory,
+      menProductCategory,
+      womenProductCategory,
+      title,
+      description,
+      price,
+      images,
+    ],
+  );
+
+  const updateImages = useCallback((newImages) => {
+    setImages(newImages);
   }, []);
 
   if (!userData) return null;
@@ -36,7 +102,7 @@ function Admin(props) {
 
       <form onSubmit={onSubmit} className="admin-form">
         {/* DropZone */}
-        <FileUpload />
+        <FileUpload updateImages={updateImages} />
 
         <label>Gender</label>
         <select onChange={onChangeGender} value={gender} className="admin__select--gender">

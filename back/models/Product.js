@@ -31,7 +31,7 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
-    user: {
+    writer: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },

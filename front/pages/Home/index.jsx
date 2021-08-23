@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 function HomeScreen() {
   const { authLoading } = useSelector((state) => state.user);
+
   if (authLoading) {
     return <Loader />;
   }
