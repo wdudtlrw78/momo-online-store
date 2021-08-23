@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { useSelector } from 'react-redux';
 import './styles.scss';
@@ -14,16 +14,10 @@ function Admin(props) {
   const [description, onChangeDescription] = useInput('');
   const [price, onChangePrice] = useInput(0);
 
-  const [images, setImages] = useState([]);
-
   const { userData } = useSelector((state) => state.user);
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-  }, []);
-
-  const updateImages = useCallback((newImages) => {
-    setImages(newImages);
   }, []);
 
   if (!userData) return null;

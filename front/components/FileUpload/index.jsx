@@ -13,7 +13,7 @@ function FileUpload() {
 
   const [images, setImages] = useState([]);
 
-  const dropHandler = useCallback(
+  const onDrop = useCallback(
     (files) => {
       const imageFormData = new FormData();
       const config = {
@@ -39,10 +39,23 @@ function FileUpload() {
     [upLoadImagesDone],
   );
 
+  const onRemoveDrop = useCallback(
+    (image) => {
+      console.log(image);
+      const currentIndex = images.indexOf(image);
+
+      const newImages = [...images];
+      newImages.splice(currentIndex, 1);
+
+      setImages(newImages);
+    },
+    [images],
+  );
+
   return (
     <>
       <div className="dropZone-container">
-        <Dropzone onDrop={dropHandler}>
+        <Dropzone onDrop={onDrop}>
           {({ getRootProps, getInputProps }) => (
             <section>
               <div {...getRootProps()} className="dropZone">
@@ -52,13 +65,12 @@ function FileUpload() {
             </section>
           )}
         </Dropzone>
-        <div className="upload__image-container">
-          {images.map((image, i) => (
-            <div key={i}>
-              <img src={`${SERVER_URL}/${image}`} alt="productImages" className="upload__image" />
-            </div>
-          ))}
-        </div>
+
+        {images.map((image, i) => (
+          <div key={i} className="upload__image-container" onClick={() => onRemoveDrop(image)} role="presentation">
+            <img src={`${SERVER_URL}/${image}`} alt="productImages" className="upload__image" />
+          </div>
+        ))}
       </div>
     </>
   );
