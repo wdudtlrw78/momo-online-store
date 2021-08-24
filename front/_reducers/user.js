@@ -99,7 +99,7 @@ export default function user(state = initialState, action) {
         ...state,
         logInLoading: false,
         logInDone: true,
-        loginSucces: action.data,
+        ...action.data,
       };
     case LOG_IN_FAILURE:
       return {
@@ -122,7 +122,6 @@ export default function user(state = initialState, action) {
         logOutError: action.error,
         logInDone: false,
         userData: null,
-        loginSucces: null,
       };
     case LOG_OUT_FAILURE:
       return {

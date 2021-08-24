@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,8 +9,8 @@ import './styles.scss';
 
 function Login(props) {
   const dispatch = useDispatch();
-  const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
 
+  const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
 
@@ -61,7 +61,7 @@ function Login(props) {
         <form onSubmit={onSubmit}>
           <label className="email-label">
             <span>Email</span>
-            <input type="email" required ref={onEmailFocus} value={email} onChange={onChangeEmail} />
+            <input type="email" required ref={onEmailFocus} value={email || ''} onChange={onChangeEmail} />
           </label>
           <label className="password-label">
             <span>Password</span>
