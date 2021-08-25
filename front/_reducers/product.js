@@ -3,18 +3,26 @@ export const initialState = {
   upLoadImagesDone: false,
   upLoadImagesError: null,
 
-  storageProductInfoLoading: false, // 상품 정보 저장
-  storageProductInfoDone: false,
-  storageProductInfoError: null,
+  storageProductLoading: false, // 상품 정보 저장
+  storageProductDone: false,
+  storageProductError: null,
+
+  getProductsLoading: false, // 상품 정보들 가져오기
+  getProductsDone: false,
+  getProductsError: null,
 };
 
 export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
 export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
 export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
-export const STORAGE_PRODUCT_INFO_REQUEST = 'STORAGE_PRODUCT_INFO_REQUEST';
-export const STORAGE_PRODUCT_INFO_SUCCESS = 'STORAGE_PRODUCT_INFO_SUCCESS';
-export const STORAGE_PRODUCT_INFO_FAILURE = 'STORAGE_PRODUCT_INFO_FAILURE';
+export const STORAGE_PRODUCT_REQUEST = 'STORAGE_PRODUCT_REQUEST';
+export const STORAGE_PRODUCT_SUCCESS = 'STORAGE_PRODUCT_SUCCESS';
+export const STORAGE_PRODUCT_FAILURE = 'STORAGE_PRODUCT_FAILURE';
+
+export const GET_PRODUCTS_REQUEST = 'GET_PRODUCTS_REQUEST';
+export const GET_PRODUCTS_SUCCESS = 'GET_PRODUCTS_SUCCESS';
+export const GET_PRODUCTS_FAILURE = 'GET_PRODUCTS_FAILURE';
 
 export default function product(state = initialState, action) {
   switch (action.type) {
@@ -38,19 +46,45 @@ export default function product(state = initialState, action) {
         upLoadImagesLoading: false,
         upLoadImagesError: action.error,
       };
-    case STORAGE_PRODUCT_INFO_REQUEST:
+    case STORAGE_PRODUCT_REQUEST:
       return {
         ...state,
         storageProductInfoLoading: true,
         storageProductInfoDone: false,
         storageProductInfoError: null,
       };
-    case STORAGE_PRODUCT_INFO_SUCCESS:
+    case STORAGE_PRODUCT_SUCCESS:
       return {
         ...state,
         storageProductInfoLoading: false,
         storageProductInfoDone: true,
         ...action.data,
+      };
+    case STORAGE_PRODUCT_FAILURE:
+      return {
+        ...state,
+        storageProductInfoLoading: false,
+        storageProductInfoError: action.error,
+      };
+    case GET_PRODUCTS_REQUEST:
+      return {
+        ...state,
+        getProductsInfoLoading: true,
+        getProductsInfoDone: false,
+        getProductsInfoError: null,
+      };
+    case GET_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        getProductsInfoLoading: false,
+        getProductsInfoDone: true,
+        ...action.data,
+      };
+    case GET_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        getProductsInfoLoading: false,
+        getProductsInfoError: action.error,
       };
     default:
       return state;

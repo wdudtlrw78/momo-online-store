@@ -5,7 +5,7 @@ import './styles.scss';
 import useInput from '@hooks/useInput';
 import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import FileUpload from '@components/FileUpload';
-import { STORAGE_PRODUCT_INFO_REQUEST } from '@_reducers/product';
+import { STORAGE_PRODUCT_REQUEST } from '@_reducers/product';
 
 function Admin(props) {
   const dispatch = useDispatch();
@@ -21,12 +21,7 @@ function Admin(props) {
   const { userData } = useSelector((state) => state.user);
   const { storageProductInfoDone, storageProductInfoError } = useSelector((state) => state.product);
 
-  useEffect(() => {
-    if (storageProductInfoDone) {
-      alert('Product information upload succeeded');
-      props.history.push('/');
-    }
-  }, [storageProductInfoDone]);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (storageProductInfoError) {
@@ -36,6 +31,7 @@ function Admin(props) {
       setTitle('');
       setDescription('');
       setPrice('');
+      setImages([]);
     }
   }, [storageProductInfoError]);
 
@@ -50,15 +46,14 @@ function Admin(props) {
         !title ||
         !description ||
         !price ||
-        !images.length === 0
+        images.length === 0
       ) {
         return alert('You have to put in all the values.');
       }
 
       dispatch({
-        type: STORAGE_PRODUCT_INFO_REQUEST,
+        type: STORAGE_PRODUCT_REQUEST,
         data: {
-          writer: userData?._id,
           gender,
           menProductCategory,
           womenProductCategory,
@@ -68,9 +63,11 @@ function Admin(props) {
           images,
         },
       });
+
+      alert('Product information upload succeeded');
+      props.history.push(`/${gender.toLowerCase()}`);
     },
     [
-      userData._id,
       gender,
       menProductCategory,
       menProductCategory,
@@ -79,6 +76,7 @@ function Admin(props) {
       description,
       price,
       images,
+      storageProductInfoDone,
     ],
   );
 

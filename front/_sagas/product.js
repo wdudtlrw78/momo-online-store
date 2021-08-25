@@ -3,9 +3,12 @@ import axios from 'axios';
 import { UPLOAD_IMAGES_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS } from '@_reducers/product';
 import { PRODUCT_SERVER } from '@config/config';
 import {
-  STORAGE_PRODUCT_INFO_FAILURE,
-  STORAGE_PRODUCT_INFO_REQUEST,
-  STORAGE_PRODUCT_INFO_SUCCESS,
+  STORAGE_PRODUCT_REQUEST,
+  STORAGE_PRODUCT_SUCCESS,
+  STORAGE_PRODUCT_FAILURE,
+  GET_PRODUCTS_REQUEST,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_FAILURE,
 } from '../_reducers/product';
 
 function uploadImagesAPI(data, config) {
@@ -29,22 +32,42 @@ function* uploadImages(action) {
   }
 }
 
-function storageProductInfoAPI(data) {
+function StorageProductAPI(data) {
   return axios.post(`${PRODUCT_SERVER}`, data);
 }
 
-function* storageProductInfo(action) {
+function* StorageProduct(action) {
   try {
-    const result = yield call(storageProductInfoAPI, action.data);
+    const result = yield call(StorageProductAPI, action.data);
     console.log(result);
     yield put({
-      type: STORAGE_PRODUCT_INFO_SUCCESS,
+      type: STORAGE_PRODUCT_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     console.error(err);
     yield put({
-      type: STORAGE_PRODUCT_INFO_FAILURE,
+      type: STORAGE_PRODUCT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function GetProductsAPI(data) {
+  return axios.post(`${PRODUCT_SERVER}/${data}`);
+}
+
+function* getProducts(action) {
+  try {
+    const result = yield call(GetProductsAPI, action.data);
+    yield put({
+      type: GET_PRODUCTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: GET_PRODUCTS_FAILURE,
       error: err.response.data,
     });
   }
@@ -54,10 +77,14 @@ function* watchUploadImages() {
   yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
 }
 
-function* watchStorageProductInfo() {
-  yield takeLatest(STORAGE_PRODUCT_INFO_REQUEST, storageProductInfo);
+function* watchStorageProduct() {
+  yield takeLatest(STORAGE_PRODUCT_REQUEST, StorageProduct);
+}
+
+function* watchGetProducts() {
+  yield takeLatest(GET_PRODUCTS_REQUEST, getProducts);
 }
 
 export default function* productSaga() {
-  yield all([fork(watchUploadImages), fork(watchStorageProductInfo)]);
+  yield all([fork(watchUploadImages), fork(watchStorageProduct), fork(watchGetProducts)]);
 }

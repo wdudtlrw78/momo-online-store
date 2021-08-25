@@ -48,4 +48,13 @@ router.post('/', (req, res) => {
   });
 });
 
+router.post('/:gender', (req, res) => {
+  // product collection 상품 정보들 가져오기
+
+  Product.find().exec((err, productsInfo) => {
+    if (err) return res.status(400).send('Failed to get product information.');
+    return res.status(200).json({ productsInfo });
+  });
+});
+
 module.exports = router;

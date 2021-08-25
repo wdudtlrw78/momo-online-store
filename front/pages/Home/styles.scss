@@ -45,12 +45,14 @@ section {
         .visual__admission--women {
           width: 8.25rem;
           background-color: #fff;
-          padding: $small-size;
           letter-spacing: 0.0825em;
           margin-right: 0.25rem;
           cursor: pointer;
 
           a {
+            display: inline-block;
+            width: 100%;
+            padding: $small-size;
             font-size: $small-size;
             font-weight: 400;
             color: $primary-color;
@@ -60,15 +62,16 @@ section {
         .visual__admission--men {
           width: 8.25rem;
           background-color: #fff;
-          padding: $small-size;
           margin-left: 0.25rem;
-
           letter-spacing: 0.0825em;
           cursor: pointer;
 
           a {
+            display: block;
+            width: 100%;
             font-size: $small-size;
             font-weight: 400;
+            padding: $small-size;
             color: $primary-color;
           }
         }
