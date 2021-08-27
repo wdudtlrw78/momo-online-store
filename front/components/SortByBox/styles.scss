@@ -1,0 +1,29 @@
+@import 'scss/main';
+
+.sort-container {
+  width: 100%;
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+  border-top: 1px solid $light-color;
+
+  .sort-button {
+    border: none;
+    cursor: pointer;
+    .sort {
+      font-size: $small-size;
+      margin-right: 0.25rem;
+    }
+
+    .fa-chevron-up {
+      display: none;
+      color: $secondary-color;
+    }
+
+    .fa-chevron-down {
+      color: $secondary-color;
+    }
+  }
+}

@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
   });
 });
 
-router.post('/:gender', (req, res) => {
+router.get('/:gender', (req, res) => {
   // product collection 상품 정보들 가져오기
 
   Product.find().exec((err, productsInfo) => {

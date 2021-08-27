@@ -7,7 +7,7 @@ import useInput from '@hooks/useInput';
 import { loginRequestAction } from '@_reducers/user';
 import './styles.scss';
 
-function Login(props) {
+function Login({ history }) {
   const dispatch = useDispatch();
 
   const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
@@ -28,11 +28,11 @@ function Login(props) {
     onEmailFocus.current.focus();
 
     if (logInDone) {
-      props.history.replace('/');
+      history.replace('/');
     }
 
     if (userData?.isAuth) {
-      props.history.replace('/');
+      history.replace('/');
       alert('Only users who are not logged in can access it.');
     }
   }, [logInDone, userData?.isAuth]);

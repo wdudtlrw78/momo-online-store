@@ -16,8 +16,8 @@ function FileUpload({ updateImages }) {
 
   useEffect(() => {
     if (upLoadImagesDone) {
-      setImages([filePath, ...images]);
-      updateImages([filePath, ...images]);
+      setImages([...images, filePath]);
+      updateImages([...images, filePath]);
     }
 
     if (upLoadImagesError) {

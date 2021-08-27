@@ -1,0 +1,50 @@
+@import 'scss/main';
+
+.card__single-container {
+  padding-bottom: 1.5rem;
+
+  a {
+    span {
+      display: inline-block;
+      .img-main {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .img-hover {
+        display: none;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    span:hover {
+      .img-main {
+        display: none;
+      }
+
+      .img-hover {
+        display: block;
+      }
+    }
+
+    .text-info {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      font-size: 0.625rem;
+
+      font-weight: 400;
+      color: #1b1b1b;
+
+      text-transform: uppercase;
+
+      .card__title {
+        line-height: 1.75;
+      }
+
+      .card__price {
+        margin-top: 0.25rem;
+      }
+    }
+  }
+}

@@ -11,8 +11,8 @@ export const WomenMenuItems = [
   },
   {
     key: 3,
-    title: 'TROUSERES',
-    url: '/women/category/TROUSERES',
+    title: 'OUTERWEAR',
+    url: '/women/category/OUTERWEAR',
   },
   {
     key: 4,
@@ -29,13 +29,13 @@ export const MenMenuItems = [
   },
   {
     key: 2,
-    title: 'TROUSERS',
-    url: '/men/category/TROUSERS',
+    title: 'OUTERWEAR',
+    url: '/men/category/OUTERWEAR',
   },
   {
     key: 3,
-    title: 'SWEAT SHIRTS',
-    url: '/men/category/SWEAT SHIRTS',
+    title: 'SHIRTS',
+    url: '/men/category/SHIRTS',
   },
   {
     key: 4,

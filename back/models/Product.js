@@ -37,11 +37,11 @@ const productSchema = mongoose.Schema(
     },
 
     menProductCategory: {
-      type: Number,
+      type: String,
     },
 
     womenProductCategory: {
-      type: Number,
+      type: String,
     },
 
     title: {

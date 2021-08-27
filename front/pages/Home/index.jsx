@@ -37,7 +37,7 @@ function HomeScreen() {
         <div>
           <Link to="/women/category/dresses">Women&apos;s dresses</Link>
           <Link to="/men/category/jeans">Men&apos;s jeans</Link>
-          <Link to="/women/category/trousers">Women&apos;s trousers</Link>
+          <Link to="/women/category/outerwear">Women&apos;s outerwear</Link>
           <Link to="/men/category/tops">Men&apos;s tops</Link>
         </div>
       </div>

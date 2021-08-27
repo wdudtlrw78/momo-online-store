@@ -18,7 +18,7 @@ function uploadImagesAPI(data, config) {
 function* uploadImages(action) {
   try {
     const result = yield call(uploadImagesAPI, action.data);
-    console.log(result);
+
     yield put({
       type: UPLOAD_IMAGES_SUCCESS,
       data: result.data,
@@ -39,7 +39,7 @@ function StorageProductAPI(data) {
 function* StorageProduct(action) {
   try {
     const result = yield call(StorageProductAPI, action.data);
-    console.log(result);
+
     yield put({
       type: STORAGE_PRODUCT_SUCCESS,
       data: result.data,
@@ -54,7 +54,7 @@ function* StorageProduct(action) {
 }
 
 function GetProductsAPI(data) {
-  return axios.post(`${PRODUCT_SERVER}/${data}`);
+  return axios.get(`${PRODUCT_SERVER}/${data}`);
 }
 
 function* getProducts(action) {

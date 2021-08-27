@@ -7,33 +7,37 @@ import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import FileUpload from '@components/FileUpload';
 import { STORAGE_PRODUCT_REQUEST } from '@_reducers/product';
 
-function Admin(props) {
+function Admin({ history }) {
   const dispatch = useDispatch();
 
-  const [gender, onChangeGender, setGender] = useInput('Men');
-  const [menProductCategory, onChangeMenProductCategory, setMenProductCategory] = useInput(1);
-  const [womenProductCategory, onChangeWomenProductCategory, setWomenProductCategory] = useInput(1);
+  const [gender, onChangeGender, setGender] = useInput('men');
+  const [menProductCategory, onChangeMenProductCategory, setMenProductCategory] = useInput('TOP');
+  const [womenProductCategory, onChangeWomenProductCategory, setWomenProductCategory] = useInput('DRESSERS');
   const [title, onChangeTitle, setTitle] = useInput('');
   const [description, onChangeDescription, setDescription] = useInput('');
   const [price, onChangePrice, setPrice] = useInput(0);
   const [images, setImages] = useState([]);
 
-  const { userData } = useSelector((state) => state.user);
+  const { userData, logOutDone } = useSelector((state) => state.user);
   const { storageProductInfoDone, storageProductInfoError } = useSelector((state) => state.product);
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     if (storageProductInfoError) {
       setGender('Man');
-      setMenProductCategory(1);
-      setWomenProductCategory(1);
+      setMenProductCategory('TOP');
+      setWomenProductCategory('DRESSERS');
       setTitle('');
       setDescription('');
       setPrice('');
       setImages([]);
     }
   }, [storageProductInfoError]);
+
+  useEffect(() => {
+    if (logOutDone) {
+      history.push('/');
+    }
+  }, [logOutDone]);
 
   const onSubmit = useCallback(
     (e) => {
@@ -65,7 +69,7 @@ function Admin(props) {
       });
 
       alert('Product information upload succeeded');
-      props.history.push(`/${gender.toLowerCase()}`);
+      history.push(`/${gender.toLowerCase()}`);
     },
     [
       gender,
@@ -89,7 +93,7 @@ function Admin(props) {
   if (!userData?.isAdmin) {
     console.log(!userData?.isAdmin);
     alert('This page is accessible only to administrators.');
-    props.history.push('/');
+    history.push('/');
   }
 
   return (
@@ -104,15 +108,15 @@ function Admin(props) {
 
         <label>Gender</label>
         <select onChange={onChangeGender} value={gender} className="admin__select--gender">
-          <option value="Men">Men</option>
-          <option value="Women">Women</option>
+          <option value="men">Men</option>
+          <option value="women">Women</option>
         </select>
 
         <label>Category</label>
-        {gender === 'Men' ? (
+        {gender === 'men' ? (
           <select onChange={onChangeMenProductCategory} value={menProductCategory} className="admin__category--men">
             {MenMenuItems.map((item) => (
-              <option key={item.key} value={item.key}>
+              <option key={item.title} value={item.title}>
                 {item.title}
               </option>
             ))}
@@ -124,7 +128,7 @@ function Admin(props) {
             className="admin__category--women"
           >
             {WomenMenuItems.map((item) => (
-              <option key={item.key} value={item.key}>
+              <option key={item.title} value={item.title}>
                 {item.title}
               </option>
             ))}
