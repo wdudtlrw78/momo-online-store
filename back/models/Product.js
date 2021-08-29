@@ -84,7 +84,7 @@ const productSchema = mongoose.Schema(
     sold: {
       type: Number,
       maxlength: 100,
-      defalut: 0,
+      default: 0,
     },
 
     views: {
