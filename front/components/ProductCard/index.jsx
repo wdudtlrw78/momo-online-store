@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { SERVER_URL } from '../../config/config';
 import './styles.scss';
 
-function ProductCard({ product, gender }) {
+function ProductCard({ product }) {
   return (
     <li className="card__single-container">
-      <Link to={`/${gender}/product/${product._id}`}>
+      <Link to={`/shop/product/${product._id}`}>
         <span>
           <img className="img-main" src={`${SERVER_URL}/${product.images[0]}`} alt="product card" />
           <img className="img-hover" src={`${SERVER_URL}/${product.images[1]}`} alt="product card" />
@@ -29,8 +29,6 @@ ProductCard.propTypes = {
     title: PropTypes.string,
     price: PropTypes.number,
   }).isRequired,
-
-  gender: PropTypes.string.isRequired,
 };
 
 export default ProductCard;

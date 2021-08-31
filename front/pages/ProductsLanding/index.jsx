@@ -1,58 +1,136 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import { GET_PRODUCTS_REQUEST } from '@_reducers/product';
+
 import './styles.scss';
-import { Link, NavLink } from 'react-router-dom';
-import { MenMenuItems, WomenMenuItems } from '../../lib/MenuItems';
-import ProductCard from '../../components/ProductCard';
-import SortByBox from '../../components/SortByBox';
+import { Link } from 'react-router-dom';
+import ProductCard from '@components/ProductCard';
+import SortButton from '@components/SortButton';
+import MobileSortByBox from '@components/MobileSortByBox';
+import SortByBox from '@components/SortByBox';
+import Loader from '@components/Loader';
+import axios from 'axios';
+import { PRODUCT_SERVER } from '@config/config';
 
-function ProductsLanding({ match }) {
-  const gender = match.params.gender;
-  const categoryId = match.params.categoryId;
+function ProductsLanding() {
+  const [Products, setProducts] = useState([]);
+  const [showMobileSortButton, setShowMobileSortByBox] = useState(false);
+  const [showSrotByButton, setShowSortByButton] = useState(false);
+  const [Skip, setSkip] = useState(0);
+  const [Limit, setLimit] = useState(8);
+  const [loadMore, setLoadMore] = useState(false);
+  const [PostSize, setPostSize] = useState(0);
 
-  const menuItem = gender === 'men' ? MenMenuItems : WomenMenuItems;
-  const { productsInfo } = useSelector((state) => state.product);
+  const isSortButton = 'sort' || 'fas fa-chevron-down' || 'fas fa-chevron-down';
 
-  const dispatch = useDispatch();
+  const getProducts = useCallback(
+    (body) => {
+      axios.post(`${PRODUCT_SERVER}/shop`, body).then((response) => {
+        if (response.data.success) {
+          console.log('success', response.data.productInfo);
+          if (loadMore) {
+            setProducts([...Products, ...response.data.productInfo]);
+          } else {
+            setProducts(response.data.productInfo);
+          }
+          setPostSize(response.data.PostSize);
+        } else {
+          alert('상품들을 가져오는데 실패했습니다.');
+        }
+      });
+    },
+    [loadMore],
+  );
 
   useEffect(() => {
-    dispatch({
-      type: GET_PRODUCTS_REQUEST,
-      data: gender,
+    setLoadMore(false);
+
+    const body = {
+      skip: Skip,
+      limit: Limit,
+    };
+
+    getProducts(body);
+  }, [Skip, Limit]);
+
+  const onClickLoadMore = useCallback(() => {
+    const skip = Skip + Limit;
+
+    const body = {
+      skip,
+      limit: Limit,
+    };
+
+    getProducts(body);
+    setSkip(skip);
+    setLoadMore(true);
+  }, [Skip + Limit, Limit]);
+
+  useEffect(() => {
+    function onCloseSortBox(e) {
+      if (e.target.className === isSortButton) return;
+      setShowSortByButton(false);
+    }
+
+    document.body.addEventListener('click', onCloseSortBox);
+
+    return () => {
+      document.body.removeEventListener('click', onCloseSortBox);
+    };
+  }, []);
+
+  const onToggleMobileSortButton = useCallback(() => {
+    setShowMobileSortByBox((status) => {
+      if (status) {
+        document.body.style.overflow = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+      return !status;
     });
   }, []);
+
+  if (!Products) {
+    return <Loader />;
+  }
 
   return (
     <>
       <div className="products-container">
-        <h2 className="products__title">{categoryId?.toUpperCase() || 'ALL'}</h2>
+        <h2 className="products__title">ALL</h2>
         <ul className="products-menus">
           <li>
-            <Link to={`/${gender}`} className={categoryId ? undefined : 'active'}>
+            <Link to="/shop" className="active">
               ALL
             </Link>
           </li>
-          {menuItem.map((item) => (
-            <li key={item.key}>
-              <NavLink to={item.url} activeClassName="active">
-                {item.title}
-              </NavLink>
-            </li>
-          ))}
         </ul>
 
-        <SortByBox />
+        <SortButton
+          showMobileSortButton={showMobileSortButton}
+          onToggleMobileSortButton={onToggleMobileSortButton}
+          showSrotByButton={showSrotByButton}
+          setShowSortByButton={setShowSortByButton}
+        />
+
+        {showMobileSortButton && (
+          <MobileSortByBox header="SORT BY" onToggleMobileSortButton={onToggleMobileSortButton} />
+        )}
+
+        {showSrotByButton && <SortByBox />}
       </div>
       <ul className="card-container">
-        {productsInfo
-          ?.map(
-            (product) =>
-              gender === product.gender && <ProductCard key={product._id} product={product} gender={gender} />,
-          )
-          .reverse()}
+        {Products.map((product) => (
+          <ProductCard key={product.title} product={product} />
+        ))}
       </ul>
+
+      {PostSize >= Limit && (
+        <div>
+          <button type="button" onClick={onClickLoadMore}>
+            더 보기
+          </button>
+        </div>
+      )}
     </>
   );
 }

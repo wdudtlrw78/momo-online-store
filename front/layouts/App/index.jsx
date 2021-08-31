@@ -10,9 +10,8 @@ const Home = loadable(() => import('@pages/Home'));
 const Login = loadable(() => import('@pages/Login'));
 const Register = loadable(() => import('@pages/Register'));
 const Admin = loadable(() => import('@pages/Admin'));
-const Profile = loadable(() => import('@pages/profile'));
+const History = loadable(() => import('@pages/History'));
 const ProductsLanding = loadable(() => import('@pages/ProductsLanding'));
-const ProductsCategory = loadable(() => import('@pages/ProductsCategory'));
 const DetailProduct = loadable(() => import('@pages/DetailProduct'));
 const Cart = loadable(() => import('@pages/Cart'));
 
@@ -25,11 +24,10 @@ function App() {
         <Route exact path="/login" component={Auth(Login, false)} />
         <Route exact path="/register" component={Auth(Register, false)} />
         <Route exact path="/admin" component={Auth(Admin, true, true)} />
-        <Route exact path="/:gender" component={Auth(ProductsLanding, null)} />
-        <Route exact path="/:gender/category/:categoryId" component={Auth(ProductsCategory, null)} />
-        <Route exact path="/:gender/product/:productId" component={Auth(DetailProduct, null)} />
+        <Route exact path="/shop" component={Auth(ProductsLanding, null)} />
+        <Route exact path="/shop/product/:productId" component={Auth(DetailProduct, null)} />
         <Route exact path="/user/cart" component={Auth(Cart, null)} />
-        <Route exact path="/profile" component={Auth(Profile, true)} />
+        <Route exact path="/history" component={Auth(History, true)} />
       </Switch>
       <Footer />
     </BodyContainer>

@@ -2,11 +2,11 @@
 
 section {
   position: relative;
-  .desktop {
+  .visual__images-right {
     display: none;
   }
 
-  img {
+  .visual__images-left {
     width: 100%;
   }
   .inner {
@@ -42,7 +42,7 @@ section {
         align-items: center;
         margin-top: 1.5rem;
 
-        .visual__admission--women {
+        .visual__admission--shop {
           width: 8.25rem;
           background-color: #fff;
           letter-spacing: 0.0825em;
@@ -59,24 +59,7 @@ section {
           }
         }
 
-        .visual__admission--men {
-          width: 8.25rem;
-          background-color: #fff;
-          margin-left: 0.25rem;
-          letter-spacing: 0.0825em;
-          cursor: pointer;
-
-          a {
-            display: block;
-            width: 100%;
-            font-size: $small-size;
-            font-weight: 400;
-            padding: $small-size;
-            color: $primary-color;
-          }
-        }
-
-        .visual__admission--women:hover,
+        .visual__admission--shop:hover,
         .visual__admission--men:hover {
           opacity: 0.7;
         }
@@ -85,11 +68,14 @@ section {
   }
 
   @include atTablets {
-    img {
-      display: none;
-    }
-    img.desktop {
-      display: block;
+    .visual__images-container {
+      display: flex;
+
+      .visual__images-left,
+      .visual__images-right {
+        display: block;
+        width: 50%;
+      }
     }
 
     .inner {
@@ -97,23 +83,21 @@ section {
 
       .visual-container {
         .visual__title {
-          font-size: 3.25rem;
+          font-size: 3.875rem;
         }
 
         .visual__admission {
           flex-direction: column;
 
-          .visual__admission--women {
+          .visual__admission--shop {
             width: 15rem; // 240px
-
+            padding: 0.5rem 0;
             margin-top: 0.5rem;
             margin-right: 0rem;
-          }
 
-          .visual__admission--men {
-            width: 15rem; // 240px
-            margin-top: 0.5rem;
-            margin-left: 0rem;
+            a {
+              font-size: $primary-size;
+            }
           }
         }
       }

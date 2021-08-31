@@ -1,0 +1,32 @@
+@import 'scss/main';
+
+.sort-container {
+  width: 100%;
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+  border-top: 1px solid $light-color;
+
+  .sort-button {
+    border: none;
+    cursor: pointer;
+    .sort {
+      font-size: $small-size;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: $primary-color;
+      padding-right: 0.25rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .fa-chevron-up {
+      color: $secondary-color;
+    }
+
+    .fa-chevron-down {
+      color: $secondary-color;
+    }
+  }
+}

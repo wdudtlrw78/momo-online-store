@@ -14,18 +14,17 @@ function HomeScreen() {
   return (
     <>
       <section>
-        <img src="../../public/images/Home/mobile-start-overlay-.gif" alt="visual" />
-        <img src="../../public/images/Home/section-visual.jpg" className="desktop" alt="visual" />
+        <div className="visual__images-container">
+          <img src="../../public/images/Home/UDJA1C101I2_2.jpg" className="visual__images-left" alt="visual" />
+          <img src="../../public/images/Home/UDSH1C309G2_1.jpg" className="visual__images-right" alt="visual" />
+        </div>
         <div className="inner">
           <div className="visual-container">
             <h2 className="visual__title">The new essentials</h2>
             <p className="visual__description">Discover our latest edit of Core by MOMO</p>
             <div className="visual__admission">
-              <div className="visual__admission--women">
-                <Link to="/women">SHOP WOMEN</Link>
-              </div>
-              <div className="visual__admission--men">
-                <Link to="/men">SHOP MEN</Link>
+              <div className="visual__admission--shop">
+                <Link to="/shop">VIEW</Link>
               </div>
             </div>
           </div>
@@ -35,10 +34,10 @@ function HomeScreen() {
       <div className="touch-target">
         <p>EXPLORE MOMO</p>
         <div>
-          <Link to="/women/category/dresses">Women&apos;s dresses</Link>
-          <Link to="/men/category/jeans">Men&apos;s jeans</Link>
-          <Link to="/women/category/outerwear">Women&apos;s outerwear</Link>
-          <Link to="/men/category/tops">Men&apos;s tops</Link>
+          <Link to="/shop/category/OUTERWEAR">OUTERWEAR</Link>
+          <Link to="/shop/category/KNITWEAR">KNITWEAR</Link>
+          <Link to="/shop/category/TOPS">TOPS</Link>
+          <Link to="/shop/category/BOTTOMS">BOTTOMS</Link>
         </div>
       </div>
     </>

@@ -1,37 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './styles.scss';
 import useInput from '@hooks/useInput';
-import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
+
 import FileUpload from '@components/FileUpload';
-import { STORAGE_PRODUCT_REQUEST } from '@_reducers/product';
+import axios from 'axios';
+import { PRODUCT_SERVER } from '../../config/config';
+
+const Category = [
+  { key: 1, value: 'OUTERWEAR' },
+  { key: 2, value: 'KNITWEAR' },
+  { key: 3, value: 'TOPS' },
+  { key: 4, value: 'BOTTOMS' },
+];
 
 function Admin({ history }) {
-  const dispatch = useDispatch();
-
-  const [gender, onChangeGender, setGender] = useInput('men');
-  const [menProductCategory, onChangeMenProductCategory, setMenProductCategory] = useInput('TOP');
-  const [womenProductCategory, onChangeWomenProductCategory, setWomenProductCategory] = useInput('DRESSERS');
-  const [title, onChangeTitle, setTitle] = useInput('');
-  const [description, onChangeDescription, setDescription] = useInput('');
-  const [price, onChangePrice, setPrice] = useInput(0);
+  const [category, onChangeCategory] = useInput('OUTERWEAR');
+  const [title, onChangeTitle] = useInput('');
+  const [description, onChangeDescription] = useInput('');
+  const [price, onChangePrice] = useInput(0);
   const [images, setImages] = useState([]);
 
   const { userData, logOutDone } = useSelector((state) => state.user);
-  const { storageProductInfoDone, storageProductInfoError } = useSelector((state) => state.product);
-
-  useEffect(() => {
-    if (storageProductInfoError) {
-      setGender('Man');
-      setMenProductCategory('TOP');
-      setWomenProductCategory('DRESSERS');
-      setTitle('');
-      setDescription('');
-      setPrice('');
-      setImages([]);
-    }
-  }, [storageProductInfoError]);
 
   useEffect(() => {
     if (logOutDone) {
@@ -43,45 +34,29 @@ function Admin({ history }) {
     (e) => {
       e.preventDefault();
 
-      if (
-        !gender ||
-        !menProductCategory ||
-        !womenProductCategory ||
-        !title ||
-        !description ||
-        !price ||
-        images.length === 0
-      ) {
+      if (!category || !title || !description || !price || images.length === 0) {
         return alert('You have to put in all the values.');
       }
 
-      dispatch({
-        type: STORAGE_PRODUCT_REQUEST,
-        data: {
-          gender,
-          menProductCategory,
-          womenProductCategory,
-          title,
-          description,
-          price,
-          images,
-        },
-      });
+      const body = {
+        writer: userData._id,
+        category,
+        title,
+        description,
+        price,
+        images,
+      };
 
-      alert('Product information upload succeeded');
-      history.push(`/${gender.toLowerCase()}`);
+      axios.post(`${PRODUCT_SERVER}`, body).then((response) => {
+        if (response.data.success) {
+          alert('The product upload was successful.');
+          history.push('/shop');
+        } else {
+          alert('Failed to upload product information');
+        }
+      });
     },
-    [
-      gender,
-      menProductCategory,
-      menProductCategory,
-      womenProductCategory,
-      title,
-      description,
-      price,
-      images,
-      storageProductInfoDone,
-    ],
+    [category, title, description, price, images],
   );
 
   const updateImages = useCallback((newImages) => {
@@ -91,7 +66,6 @@ function Admin({ history }) {
   if (!userData) return null;
 
   if (!userData?.isAdmin) {
-    console.log(!userData?.isAdmin);
     alert('This page is accessible only to administrators.');
     history.push('/');
   }
@@ -106,34 +80,15 @@ function Admin({ history }) {
         {/* DropZone */}
         <FileUpload updateImages={updateImages} />
 
-        <label>Gender</label>
-        <select onChange={onChangeGender} value={gender} className="admin__select--gender">
-          <option value="men">Men</option>
-          <option value="women">Women</option>
-        </select>
-
         <label>Category</label>
-        {gender === 'men' ? (
-          <select onChange={onChangeMenProductCategory} value={menProductCategory} className="admin__category--men">
-            {MenMenuItems.map((item) => (
-              <option key={item.title} value={item.title}>
-                {item.title}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <select
-            onChange={onChangeWomenProductCategory}
-            value={womenProductCategory}
-            className="admin__category--women"
-          >
-            {WomenMenuItems.map((item) => (
-              <option key={item.title} value={item.title}>
-                {item.title}
-              </option>
-            ))}
-          </select>
-        )}
+
+        <select onChange={onChangeCategory} value={category} className="admin__category">
+          {Category.map((item) => (
+            <option key={item.key} value={item.value}>
+              {item.value}
+            </option>
+          ))}
+        </select>
 
         <label>Title</label>
         <input onChange={onChangeTitle} value={title} className="admin__product--title" />

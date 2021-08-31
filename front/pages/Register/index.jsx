@@ -7,7 +7,7 @@ import { REGISTER_REQUEST } from '@_reducers/user';
 import './styles.scss';
 import Loader from '@components/Loader';
 
-function Register(props) {
+function Register({ history }) {
   const dispatch = useDispatch();
   const { registerLoading, registerDone, registerError, userData } = useSelector((state) => state.user);
 
@@ -49,11 +49,11 @@ function Register(props) {
 
     if (registerDone) {
       alert('Membership registration completed');
-      props.history.replace('/login');
+      history.replace('/login');
     }
 
     if (userData?.isAuth) {
-      props.history.replace('/');
+      history.replace('/');
       alert('Only users who are not logged in can access it.');
     }
   }, [registerDone, userData?.isAuth]);

@@ -1,29 +1,40 @@
 @import 'scss/main';
 
-.sort-container {
-  width: 100%;
-  border: none;
-  display: flex;
-  justify-content: flex-end;
-  padding-top: 1rem;
-  margin-bottom: 2rem;
-  border-top: 1px solid $light-color;
+.sort-box__desktop {
+  position: absolute;
+  width: 150px;
+  max-width: 150px;
+  max-height: 324px;
+  border: 1px solid #eee;
+  background-color: #fff;
+  border-right: none;
+  overflow-y: auto;
 
-  .sort-button {
-    border: none;
+  right: 0;
+  top: 10.5rem;
+
+  ul {
+    text-align: end;
+    font-size: $small-size;
+    color: $hover-color;
+  }
+
+  li:first-child {
+    padding-top: 0.5rem;
+  }
+
+  li {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-right: 0.25rem;
     cursor: pointer;
-    .sort {
-      font-size: $small-size;
-      margin-right: 0.25rem;
-    }
+  }
 
-    .fa-chevron-up {
-      display: none;
-      color: $secondary-color;
-    }
+  li:last-child {
+    padding-bottom: 0.5rem;
+  }
 
-    .fa-chevron-down {
-      color: $secondary-color;
-    }
+  li:hover {
+    color: $primary-color;
   }
 }

@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import { useDispatch, useSelector } from 'react-redux';
 import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
@@ -11,8 +10,6 @@ function MobileNav({ setShowSearchBox }) {
   const dispatch = useDispatch();
 
   const [ShowNav, setShowNav] = useState(false);
-  const [ShowWomen, setShowWomen] = useState(true);
-  const [ShowMen, setShowMen] = useState(false);
 
   const { userData } = useSelector((state) => state.user);
 
@@ -29,16 +26,6 @@ function MobileNav({ setShowSearchBox }) {
     setShowSearchBox(false);
   }, []);
 
-  const onToggleGender = useCallback((e) => {
-    if (e.target.textContent === 'MEN') {
-      setShowWomen(false);
-      setShowMen(true);
-    } else {
-      setShowWomen(true);
-      setShowMen(false);
-    }
-  }, []);
-
   const onClickLogOut = useCallback(() => {
     dispatch(logOutRequestAction());
     setShowNav(false);
@@ -51,30 +38,25 @@ function MobileNav({ setShowSearchBox }) {
       </button>
       {ShowNav && (
         <>
-          <aside>
+          <aside className="mobile-navigation">
             {/* Search */}
             <MobileSearchBox onToggleNav={onToggleNav} />
 
             {/* Navigation */}
             <section>
               {/* Main */}
-              <div className="main-menu" onClick={onToggleGender} role="presentation">
+              <div className="main-menu" role="presentation">
                 <ul>
                   <li>
-                    <button type="button" className={ShowWomen ? 'active' : undefined}>
-                      WOMEN
-                    </button>
-                  </li>
-                  <li>
-                    <button type="button" className={ShowMen ? 'active' : undefined}>
-                      MEN
-                    </button>
+                    <Link to="/shop" onClick={onToggleNav} className="main-menu__shop">
+                      SHOP
+                    </Link>
                   </li>
                 </ul>
                 {userData?.isAuth ? (
                   <>
-                    <Link to="/profile" className="profile" onClick={onToggleNav}>
-                      MY MOMO
+                    <Link to="/history" className="history" onClick={onToggleNav}>
+                      HISTORY
                     </Link>
                     <button type="button" className="logout" onClick={onClickLogOut}>
                       <span>LOGOUT</span>
@@ -92,33 +74,8 @@ function MobileNav({ setShowSearchBox }) {
                   </Link>
                 )}
               </div>
-
-              {/* Category */}
-              {ShowWomen && (
-                <ul className="category--women">
-                  {WomenMenuItems.map((item) => (
-                    <li key={item.key}>
-                      <Link to={item.url} onClick={onToggleNav}>
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {ShowMen && (
-                <ul className="category--men">
-                  {MenMenuItems.map((item) => (
-                    <li key={item.key}>
-                      <Link to={item.url} onClick={onToggleNav}>
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
             </section>
-            <div className="dimmed" onClick={onToggleNav} role="presentation" />
+            <div className="mobile-nav__dimmed" onClick={onToggleNav} role="presentation" />
           </aside>
         </>
       )}

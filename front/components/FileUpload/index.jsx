@@ -6,24 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 
 import { SERVER_URL } from '@config/config';
-import { UPLOAD_IMAGES_REQUEST } from '@_reducers/product';
+import axios from 'axios';
+import { PRODUCT_SERVER } from '../../config/config';
 
 function FileUpload({ updateImages }) {
-  const dispatch = useDispatch();
-  const { upLoadImagesDone, upLoadImagesError, filePath } = useSelector((state) => state.product);
-
   const [images, setImages] = useState([]);
-
-  useEffect(() => {
-    if (upLoadImagesDone) {
-      setImages([...images, filePath]);
-      updateImages([...images, filePath]);
-    }
-
-    if (upLoadImagesError) {
-      alert(upLoadImagesError);
-    }
-  }, [upLoadImagesDone, upLoadImagesError, filePath]);
 
   const onDrop = useCallback(
     (files) => {
@@ -34,13 +21,16 @@ function FileUpload({ updateImages }) {
 
       imageFormData.append('file', files[0]);
 
-      dispatch({
-        type: UPLOAD_IMAGES_REQUEST,
-        data: imageFormData,
-        config,
+      axios.post(`${PRODUCT_SERVER}/image`, imageFormData, config).then((response) => {
+        if (response.data.success) {
+          setImages([...images, response.data.filePath]);
+          updateImages([...images, response.data.filePath]);
+        } else {
+          alert('Image upload failed');
+        }
       });
     },
-    [upLoadImagesDone],
+    [images],
   );
 
   const onRemoveDrop = useCallback(

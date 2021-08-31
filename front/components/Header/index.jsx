@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MenMenuItems, WomenMenuItems } from '@lib/MenuItems';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutRequestAction } from '@_reducers/user';
 
@@ -38,38 +37,17 @@ function Header() {
                 MOMO
               </Link>
             </li>
-            <li className="menu--women desktop">
-              <Link to="/women">WOMEN</Link>
-              <ul className="drop-menu__women">
-                {WomenMenuItems.map((item) => (
-                  <li key={item.key}>
-                    <Link to={item.url}>{item.title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-
-            <li className="menu--men desktop">
-              <Link to="/men">MEN</Link>
-              <ul className="drop-menu__men">
-                {MenMenuItems.map((item) => (
-                  <li key={item.key}>
-                    <Link to={item.url} alt={item.title}>
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
           </ul>
           <MobileNav setShowSearchBox={setShowSearchBox} />
           <button type="button" className="nav__search-btn" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
           </button>
         </div>
+
         <Link to="/" className="logo">
           MOMO
         </Link>
+
         <div className="nav__right__group">
           <button type="button" className="nav__search-btn desktop" onClick={onToggleSearchBox}>
             <i className="fas fa-search" />
@@ -83,8 +61,8 @@ function Header() {
 
           {userData?.isAuth ? (
             <>
-              <Link to="/profile" className="profile desktop">
-                MY MOMO
+              <Link to="/history" className="history desktop">
+                HISTORY
               </Link>
               <button type="button" className="logout desktop" onClick={onClickLogOut}>
                 <span>LOGOUT</span>

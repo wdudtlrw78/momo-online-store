@@ -9,7 +9,7 @@
   padding-left: 1rem;
 }
 
-aside {
+.mobile-navigation {
   width: 100%;
   height: 100vh;
   background-color: #fff;
@@ -30,15 +30,10 @@ aside {
       flex-direction: column;
       margin-top: 1rem;
 
-      .active,
-      .active:hover {
-        color: $primary-color;
-      }
-
       li {
         list-style: none;
         cursor: pointer;
-        button {
+        .main-menu__shop {
           width: 100%;
           height: 100%;
           display: inline-block;
@@ -52,7 +47,7 @@ aside {
           padding-bottom: 1rem;
         }
 
-        button:hover {
+        .main-menu__shop:hover {
           color: $hover-color;
         }
       }
@@ -60,7 +55,7 @@ aside {
         padding: 1rem 1rem 1rem 0;
         color: $secondary-color;
       }
-      .profile {
+      .history {
         margin-top: 3.5rem;
         padding: 1rem 1rem 1rem 0;
         color: $secondary-color;
@@ -68,7 +63,7 @@ aside {
       }
 
       .admin:hover,
-      .profile:hover {
+      .history:hover {
         color: $hover-color;
       }
 
@@ -79,7 +74,7 @@ aside {
           display: inline-block;
           width: 100%;
           height: 100%;
-          font-weight: 500;
+
           color: $secondary-color;
           font-size: $primary-size;
           font-family: 'Noto Sans KR', sans-serif;
@@ -104,31 +99,6 @@ aside {
     .login:hover {
       color: $hover-color;
     }
-
-    .category--women,
-    .category--men {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-      margin-top: 1rem;
-      li {
-        cursor: pointer;
-        a {
-          width: 100%;
-          height: 100%;
-          display: inline-block;
-          padding-top: 1rem;
-          padding-right: 1rem;
-          padding-bottom: 1rem;
-          font-weight: 400;
-          color: $primary-color;
-        }
-
-        a:hover {
-          color: $secondary-color;
-        }
-      }
-    }
   }
 }
 
@@ -136,7 +106,7 @@ aside {
   .btn--toggle {
     font-size: 1.5rem;
   }
-  aside {
+  .mobile-navigation {
     width: 50%;
     border-right: 1px solid $light-color;
 
@@ -146,7 +116,7 @@ aside {
     }
   }
 
-  .dimmed {
+  .mobile-nav__dimmed {
     position: fixed;
     top: 0;
     left: 50%;

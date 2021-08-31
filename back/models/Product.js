@@ -19,7 +19,7 @@ const reviewSchema = mongoose.Schema(
     },
 
     writer: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
@@ -31,17 +31,10 @@ const reviewSchema = mongoose.Schema(
 
 const productSchema = mongoose.Schema(
   {
-    gender: {
-      type: String,
-      require: true,
-    },
-
-    menProductCategory: {
-      type: String,
-    },
-
-    womenProductCategory: {
-      type: String,
+    writer: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
 
     title: {
