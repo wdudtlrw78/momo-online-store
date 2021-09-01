@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
-import { useDispatch, useSelector } from 'react-redux';
 
 import './styles.scss';
 

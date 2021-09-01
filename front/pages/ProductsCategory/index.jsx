@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
-import './styles.scss';
+import '../ProductsLanding/styles.scss';
 import { Link } from 'react-router-dom';
 import ProductCard from '@components/ProductCard';
 import SortButton from '@components/SortButton';
@@ -10,24 +10,23 @@ import SortByBox from '@components/SortByBox';
 
 import axios from 'axios';
 import { PRODUCT_SERVER } from '@config/config';
-
 import { cateogry, sortBox } from '@lib/Datas';
 
-function ProductsLanding({ match }) {
+function ProductsCategory({ match }) {
   const [Products, setProducts] = useState([]);
-  const [showMobileSortByBox, setShowMobileSortByBox] = useState(false);
+  const [showMobileSortButton, setShowMobileSortByBox] = useState(false);
   const [showSrotByButton, setShowSortByButton] = useState(false);
-  const [sortBoxTitle, setSortBoxTitle] = useState('Best Sellers');
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(8);
   const [loadMore, setLoadMore] = useState(false);
   const [PostSize, setPostSize] = useState(0);
 
   const isSortButton = 'sort' || 'fas fa-chevron-down' || 'fas fa-chevron-down';
+  const categoryId = match.params.categoryId;
 
   const getProducts = useCallback(
     (body) => {
-      axios.post(`${PRODUCT_SERVER}/shop`, body).then((response) => {
+      axios.post(`${PRODUCT_SERVER}/shop/category/${body.categoryId}`, body).then((response) => {
         if (response.data.success) {
           console.log('success', response.data.productInfo);
           if (loadMore) {
@@ -48,17 +47,19 @@ function ProductsLanding({ match }) {
     setLoadMore(false);
 
     const body = {
+      categoryId,
       skip: Skip,
       limit: Limit,
     };
 
     getProducts(body);
-  }, [Skip, Limit]);
+  }, [categoryId, Skip, Limit]);
 
   const onClickLoadMore = useCallback(() => {
     const skip = Skip + Limit;
 
     const body = {
+      categoryId,
       skip,
       limit: Limit,
     };
@@ -66,7 +67,7 @@ function ProductsLanding({ match }) {
     getProducts(body);
     setSkip(skip);
     setLoadMore(true);
-  }, [Skip + Limit, Limit]);
+  }, [categoryId, Skip + Limit, Limit]);
 
   useEffect(() => {
     function onCloseSortBox(e) {
@@ -95,6 +96,7 @@ function ProductsLanding({ match }) {
   const showFilterdResults = useCallback(
     (filters) => {
       const body = {
+        categoryId,
         skip: 0,
         Limit,
         filters,
@@ -103,10 +105,12 @@ function ProductsLanding({ match }) {
       getProducts(body);
       setSkip(0);
     },
-    [Limit],
+    [categoryId, Limit],
   );
 
   const handleFilters = useCallback((filters) => {
+    console.log('filters', filters);
+
     const newFilters = filters;
 
     showFilterdResults(newFilters);
@@ -133,31 +137,17 @@ function ProductsLanding({ match }) {
         </ul>
 
         <SortButton
-          header={sortBoxTitle}
-          showMobileSortByBox={showMobileSortByBox}
+          showMobileSortButton={showMobileSortButton}
           onToggleMobileSortButton={onToggleMobileSortButton}
           showSrotByButton={showSrotByButton}
           setShowSortByButton={setShowSortByButton}
         />
 
-        {showMobileSortByBox && (
-          <MobileSortByBox
-            header={sortBoxTitle}
-            setSortBoxTitle={setSortBoxTitle}
-            setShowMobileSortByBox={setShowMobileSortByBox}
-            onToggleMobileSortButton={onToggleMobileSortButton}
-            list={sortBox}
-            handleFilters={(filters) => handleFilters(filters)}
-          />
+        {showMobileSortButton && (
+          <MobileSortByBox header="SORT BY" onToggleMobileSortButton={onToggleMobileSortButton} />
         )}
 
-        {showSrotByButton && (
-          <SortByBox
-            list={sortBox}
-            handleFilters={(filters) => handleFilters(filters)}
-            setSortBoxTitle={setSortBoxTitle}
-          />
-        )}
+        {showSrotByButton && <SortByBox list={sortBox} handleFilters={(filters) => handleFilters(filters)} />}
       </div>
       <ul className="card-container">
         {Products.map((product, index) => (
@@ -176,8 +166,8 @@ function ProductsLanding({ match }) {
   );
 }
 
-export default ProductsLanding;
+export default ProductsCategory;
 
-ProductsLanding.propTypes = {
+ProductsCategory.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
 };

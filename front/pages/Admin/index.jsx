@@ -8,19 +8,18 @@ import FileUpload from '@components/FileUpload';
 import axios from 'axios';
 import { PRODUCT_SERVER } from '../../config/config';
 
-const Category = [
-  { key: 1, value: 'OUTERWEAR' },
-  { key: 2, value: 'KNITWEAR' },
-  { key: 3, value: 'TOPS' },
-  { key: 4, value: 'BOTTOMS' },
-];
-
 function Admin({ history }) {
   const [category, onChangeCategory] = useInput('OUTERWEAR');
   const [title, onChangeTitle] = useInput('');
   const [description, onChangeDescription] = useInput('');
   const [price, onChangePrice] = useInput(0);
   const [images, setImages] = useState([]);
+  const Category = [
+    { key: 1, value: 'OUTERWEAR' },
+    { key: 2, value: 'KNITWEAR' },
+    { key: 3, value: 'TOPS' },
+    { key: 4, value: 'BOTTOMS' },
+  ];
 
   const { userData, logOutDone } = useSelector((state) => state.user);
 
@@ -35,11 +34,11 @@ function Admin({ history }) {
       e.preventDefault();
 
       if (!category || !title || !description || !price || images.length === 0) {
-        return alert('You have to put in all the values.');
+        alert('You have to put in all the values.');
       }
 
       const body = {
-        writer: userData._id,
+        writer: userData?._id,
         category,
         title,
         description,
@@ -56,19 +55,19 @@ function Admin({ history }) {
         }
       });
     },
-    [category, title, description, price, images],
+    [userData?._id, category, title, description, price, images],
   );
 
   const updateImages = useCallback((newImages) => {
     setImages(newImages);
   }, []);
 
-  if (!userData) return null;
-
   if (!userData?.isAdmin) {
     alert('This page is accessible only to administrators.');
     history.push('/');
   }
+
+  if (!userData) return null;
 
   return (
     <div className="admin-container">

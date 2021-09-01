@@ -37,6 +37,11 @@ const productSchema = mongoose.Schema(
       ref: 'User',
     },
 
+    category: {
+      type: String,
+      require: true,
+    },
+
     title: {
       type: String,
       maxlength: 50,

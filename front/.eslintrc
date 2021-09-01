@@ -37,6 +37,7 @@
     "operator-linebreak": "off",
     "consistent-return": "off",
     "prefer-destructuring": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "no-unused-vars": 1
   }
 }
