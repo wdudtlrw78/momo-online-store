@@ -113,16 +113,10 @@ header {
         display: flex;
         align-items: center;
         font-size: $small-size;
-        .admin {
-          padding: 1rem;
-          color: $primary-color;
-        }
 
-        .history {
-          padding: 1rem;
-          color: $primary-color;
-        }
-
+        .admin,
+        .shop,
+        .history,
         .login {
           padding: 1rem;
           color: $primary-color;
@@ -147,7 +141,8 @@ header {
 
         .admin:hover,
         .history:hover,
-        .login:hover {
+        .login:hover,
+        .shop:hover {
           color: $secondary-color;
         }
       }

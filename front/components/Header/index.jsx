@@ -41,12 +41,15 @@ function Header() {
 
           {userData?.isAuth ? (
             <>
-              <Link to="/history" className="history desktop">
-                HISTORY
+              <Link to="/shop" className="shop desktop">
+                SHOP
               </Link>
               <button type="button" className="logout desktop" onClick={onClickLogOut}>
                 <span>LOGOUT</span>
               </button>
+              <Link to="/history" className="history desktop">
+                HISTORY
+              </Link>
             </>
           ) : (
             <Link to="/login" className="login desktop">

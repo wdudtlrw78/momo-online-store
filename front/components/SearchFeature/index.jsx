@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import './styles.scss';
 
 function SearchFeature({ updateSearchTerm }) {
   const [SearchTerm, setSearchTerm] = useState('');
@@ -13,13 +14,12 @@ function SearchFeature({ updateSearchTerm }) {
   );
 
   return (
-    <div>
+    <div className="products__search-container">
       <input
         onChange={onChangeSearchTerm}
         value={SearchTerm}
         placeholder="Search here..."
         className="products__search"
-        style={{ width: 250, padding: '0.5rem', border: 'none', borderBottom: '1px solid #999', marginBottom: '1rem' }}
       />
     </div>
   );

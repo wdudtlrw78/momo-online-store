@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-
 import './styles.scss';
 import ProductCard from '@components/ProductCard';
-
 import axios from 'axios';
 import { PRODUCT_SERVER } from '@config/config';
 import { clothes, price } from '@lib/Datas';
@@ -15,13 +13,12 @@ function ProductsLanding() {
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(12);
   const [LoadMore, setLoadMore] = useState(false);
+  const [SearchTerm, setSearchTerm] = useState('');
   const [PostSize, setPostSize] = useState(0);
   const [Filters, setFilters] = useState({
     category: [],
     price: [],
   });
-
-  const [SearchTerm, setSearchTerm] = useState('');
 
   const getProducts = useCallback(
     (body) => {
@@ -46,7 +43,7 @@ function ProductsLanding() {
   useEffect(() => {
     setLoadMore(false);
 
-    let body = {
+    const body = {
       skip: Skip,
       limit: Limit,
     };
@@ -57,7 +54,7 @@ function ProductsLanding() {
   const onClickLoadMore = useCallback(() => {
     const skip = Skip + Limit;
 
-    let body = {
+    const body = {
       skip,
       limit: Limit,
     };
@@ -69,7 +66,7 @@ function ProductsLanding() {
 
   const showFilterResults = useCallback(
     (filters) => {
-      let body = {
+      const body = {
         skip: 0,
         limit: Limit,
         filters,
@@ -86,7 +83,7 @@ function ProductsLanding() {
       const data = price;
       let array = [];
 
-      for (let key in data) {
+      for (const key in data) {
         if (data[key]._id === parseInt(value, 10)) {
           array = data[key].array;
         }
@@ -105,7 +102,7 @@ function ProductsLanding() {
       console.log('filters', filters);
 
       if (category === 'price') {
-        let priceValues = handlePrice(filters);
+        const priceValues = handlePrice(filters);
         newFilters[category] = priceValues;
       }
 
@@ -118,7 +115,7 @@ function ProductsLanding() {
 
   const updateSearchTerm = useCallback(
     (newSearchTerm) => {
-      let body = {
+      const body = {
         skip: 0,
         limit: Limit,
         filters: Filters,
@@ -144,11 +141,10 @@ function ProductsLanding() {
           <li>
             <PriceBox list={price} handleFilters={(filters) => handleFilters(filters, 'price')} />
           </li>
-          <li>
-            <SearchFeature updateSearchTerm={updateSearchTerm} />
-          </li>
         </ul>
       </div>
+
+      <SearchFeature updateSearchTerm={updateSearchTerm} />
 
       <ul className="card-container">
         {Products.map((product, index) => (

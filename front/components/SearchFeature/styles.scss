@@ -1,0 +1,25 @@
+@import 'scss/main';
+
+.products__search-container {
+  display: flex;
+  justify-content: center;
+}
+
+.products__search {
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid $hover-color;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.products__search::placeholder {
+  color: $hover-color;
+}
+
+@include atTablets {
+  .products__search-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
