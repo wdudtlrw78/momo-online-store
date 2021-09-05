@@ -21,8 +21,23 @@
   z-index: 100;
 
   section {
+    position: relative;
     display: flex;
     font-size: $primary-size;
+
+    .fa-times {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: $large-size;
+      color: $hover-color;
+      cursor: pointer;
+      padding: 1rem;
+    }
+
+    .fa-times:hover {
+      color: $light-color;
+    }
 
     .main-menu {
       width: 50%;

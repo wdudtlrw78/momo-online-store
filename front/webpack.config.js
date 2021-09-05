@@ -37,7 +37,9 @@ const config = {
             [
               '@babel/preset-env',
               {
-                targets: '> 0.25%, not dead',
+                targets: {
+                  browsers: ['last 2 chrome versions'],
+                },
                 modules: false,
                 useBuiltIns: 'usage',
               },

@@ -1,12 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import MobileSearchBox from '../MobileSearchBox';
 import './styles.scss';
-import { logOutRequestAction } from '../../_reducers/user';
+import { logOutRequestAction } from '@_reducers/user';
 
-function MobileNav({ setShowSearchBox }) {
+function MobileNav() {
   const dispatch = useDispatch();
 
   const [ShowNav, setShowNav] = useState(false);
@@ -14,16 +12,7 @@ function MobileNav({ setShowSearchBox }) {
   const { userData } = useSelector((state) => state.user);
 
   const onToggleNav = useCallback(() => {
-    setShowNav((status) => {
-      if (status) {
-        document.body.style.overflow = 'auto';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
-      return !status;
-    });
-
-    setShowSearchBox(false);
+    setShowNav((prev) => !prev);
   }, []);
 
   const onClickLogOut = useCallback(() => {
@@ -39,11 +28,12 @@ function MobileNav({ setShowSearchBox }) {
       {ShowNav && (
         <>
           <aside className="mobile-navigation">
-            {/* Search */}
-            <MobileSearchBox onToggleNav={onToggleNav} />
-
             {/* Navigation */}
             <section>
+              <button type="button">
+                <i className="fas fa-times" />
+              </button>
+
               {/* Main */}
               <div className="main-menu" role="presentation">
                 <ul>
@@ -82,9 +72,5 @@ function MobileNav({ setShowSearchBox }) {
     </>
   );
 }
-
-MobileNav.propTypes = {
-  setShowSearchBox: PropTypes.func.isRequired,
-};
 
 export default MobileNav;

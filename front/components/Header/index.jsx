@@ -1,27 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOutRequestAction } from '@_reducers/user';
 
 import MobileNav from '../MobileNav';
 import './styles.scss';
-import SearchBox from '../SearchBox';
 
 function Header() {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.user);
-  const [ShowSearchBox, setShowSearchBox] = useState(false);
-
-  const onToggleSearchBox = useCallback(() => {
-    setShowSearchBox((status) => {
-      if (status) {
-        document.body.style.overflow = 'auto';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
-      return !status;
-    });
-  }, []);
 
   const onClickLogOut = useCallback(() => {
     dispatch(logOutRequestAction());
@@ -38,10 +25,7 @@ function Header() {
               </Link>
             </li>
           </ul>
-          <MobileNav setShowSearchBox={setShowSearchBox} />
-          <button type="button" className="nav__search-btn" onClick={onToggleSearchBox}>
-            <i className="fas fa-search" />
-          </button>
+          <MobileNav />
         </div>
 
         <Link to="/" className="logo">
@@ -49,10 +33,6 @@ function Header() {
         </Link>
 
         <div className="nav__right__group">
-          <button type="button" className="nav__search-btn desktop" onClick={onToggleSearchBox}>
-            <i className="fas fa-search" />
-            <span>SEARCH</span>
-          </button>
           {userData?.isAuth && userData.isAdmin && (
             <Link to="/admin" className="admin desktop">
               ADMIN
@@ -79,7 +59,6 @@ function Header() {
           </Link>
         </div>
       </nav>
-      {ShowSearchBox && <SearchBox onToggleSearchBox={onToggleSearchBox} />}
     </header>
   );
 }

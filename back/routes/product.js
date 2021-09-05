@@ -49,100 +49,52 @@ router.post('/', (req, res) => {
 });
 
 router.post('/shop', (req, res) => {
-  const limit = req.body.limit ? parseInt(req.body.limit) : 50;
+  const limit = req.body.limit ? parseInt(req.body.limit) : 20;
   const skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  const term = req.body.searchTerm;
 
-  const sortBox = (sort) => {
-    Product.find()
-      .populate('writer')
-      .sort(sort)
-      .skip(skip)
-      .limit(limit)
-      .exec((err, productInfo) => {
-        if (err) return res.status(400).json({ success: false, err });
-        return res.status(200).json({
-          success: true,
-          productInfo,
-          PostSize: productInfo.length,
-        });
-      });
-  };
+  const findArgs = {};
 
-  switch (req.body.filters) {
-    case 1:
-      sortBox({ createdAt: -1 });
-      break;
-    case 2:
-      sortBox({ price: 1 });
-      break;
-    case 3:
-      sortBox({ price: -1 });
-      break;
-    default:
-      Product.find()
-        .populate('writer')
-        .sort({ sold: -1 })
-        .skip(skip)
-        .limit(limit)
-        .exec((err, productInfo) => {
-          if (err) return res.status(400).json({ success: false, err });
-          return res.status(200).json({
-            success: true,
-            productInfo,
-            PostSize: productInfo.length,
-          });
-        });
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      console.log('key', key);
+
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1],
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+    }
   }
-});
 
-router.post('/shop/category/:categoryId', (req, res) => {
-  const limit = req.body.limit ? parseInt(req.body.limit) : 50;
-  const skip = req.body.skip ? parseInt(req.body.skip) : 0;
+  console.log('findArgs', findArgs);
 
-  const category = Product.findOne({
-    category: req.params.categoryId,
-  });
-
-  const sortBox = (sort, category) => {
-    Product.find(category)
+  if (term) {
+    Product.find(findArgs)
+      .find({ $text: { $search: term } })
       .populate('writer')
-      .sort(sort)
       .skip(skip)
       .limit(limit)
       .exec((err, productInfo) => {
         if (err) return res.status(400).json({ success: false, err });
-        return res.status(200).json({
-          success: true,
-          productInfo,
-          PostSize: productInfo.length,
-        });
+        return res
+          .status(200)
+          .json({ success: true, productInfo, PostSize: productInfo.length });
       });
-  };
-
-  switch (req.body.filters) {
-    case 1:
-      sortBox({ createdAt: -1 }, category);
-      break;
-    case 2:
-      sortBox({ price: 1 }, category);
-      break;
-    case 3:
-      sortBox({ price: -1 }, category);
-      break;
-    default:
-      Product.find(category)
-        .populate('writer')
-        .sort({ sold: -1 })
-        .skip(skip)
-        .limit(limit)
-        .exec((err, productInfo) => {
-          if (err) return res.status(400).json({ success: false, err });
-          return res.status(200).json({
-            success: true,
-            productInfo,
-            PostSize: productInfo.length,
-          });
-        });
+  } else {
+    Product.find(findArgs)
+      .populate('writer')
+      .skip(skip)
+      .limit(limit)
+      .exec((err, productInfo) => {
+        if (err) return res.status(400).json({ success: false, err });
+        return res
+          .status(200)
+          .json({ success: true, productInfo, PostSize: productInfo.length });
+      });
   }
 });
 

@@ -1,46 +1,53 @@
-const cateogry = [
+const clothes = [
   {
     _id: 1,
     name: 'OUTERWEAR',
-    url: '/shop/category/OUTERWEAR',
   },
   {
     _id: 2,
-    name: 'KNITWEAR',
-    url: '/shop/category/KNITWEAR',
+    name: 'DRESSES',
   },
   {
     _id: 3,
     name: 'TOPS',
-    url: '/shop/category/TOPS',
   },
   {
     _id: 4,
     name: 'BOTTOMS',
-    url: '/shop/category/BOTTOMS',
   },
 ];
 
-const sortBox = [
+const price = [
   {
     _id: 0,
-    name: 'Best Sellers',
+    name: 'Any',
+    array: [],
   },
-
   {
     _id: 1,
-    name: 'Newest',
+    name: '$0 to $199',
+    array: [0, 199],
   },
-
   {
     _id: 2,
-    name: 'Price (Low - High)',
+    name: '$200 to $249',
+    array: [200, 249],
   },
-
   {
     _id: 3,
-    name: 'Price (High - Low)',
+    name: '$250 to $279',
+    array: [250, 279],
+  },
+  {
+    _id: 4,
+    name: '$280 to $299',
+    array: [280, 299],
+  },
+  {
+    _id: 5,
+    name: 'More than $300',
+    array: [300, 1500000],
   },
 ];
 
-export { cateogry, sortBox };
+export { clothes, price };

@@ -1,37 +1,36 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 
 import './styles.scss';
-import { Link } from 'react-router-dom';
 import ProductCard from '@components/ProductCard';
-import SortButton from '@components/SortButton';
-import MobileSortByBox from '@components/MobileSortByBox';
-import SortByBox from '@components/SortByBox';
 
 import axios from 'axios';
 import { PRODUCT_SERVER } from '@config/config';
+import { clothes, price } from '@lib/Datas';
+import CategoryBox from '@components/CategoryBox';
+import PriceBox from '@components/PriceBox';
+import SearchFeature from '@components/SearchFeature';
 
-import { cateogry, sortBox } from '@lib/Datas';
-
-function ProductsLanding({ match }) {
+function ProductsLanding() {
   const [Products, setProducts] = useState([]);
-  const [showMobileSortByBox, setShowMobileSortByBox] = useState(false);
-  const [showSrotByButton, setShowSortByButton] = useState(false);
-  const [sortBoxTitle, setSortBoxTitle] = useState('Best Sellers');
   const [Skip, setSkip] = useState(0);
-  const [Limit, setLimit] = useState(8);
-  const [loadMore, setLoadMore] = useState(false);
+  const [Limit, setLimit] = useState(12);
+  const [LoadMore, setLoadMore] = useState(false);
   const [PostSize, setPostSize] = useState(0);
+  const [Filters, setFilters] = useState({
+    category: [],
+    price: [],
+  });
 
-  const isSortButton = 'sort' || 'fas fa-chevron-down' || 'fas fa-chevron-down';
+  const [SearchTerm, setSearchTerm] = useState('');
 
   const getProducts = useCallback(
     (body) => {
       axios.post(`${PRODUCT_SERVER}/shop`, body).then((response) => {
         if (response.data.success) {
           console.log('success', response.data.productInfo);
-          if (loadMore) {
+          if (LoadMore) {
             setProducts([...Products, ...response.data.productInfo]);
+            console.log('ladmore', response.data.productInfo);
           } else {
             setProducts(response.data.productInfo);
           }
@@ -41,13 +40,13 @@ function ProductsLanding({ match }) {
         }
       });
     },
-    [loadMore],
+    [LoadMore, Products],
   );
 
   useEffect(() => {
     setLoadMore(false);
 
-    const body = {
+    let body = {
       skip: Skip,
       limit: Limit,
     };
@@ -58,7 +57,7 @@ function ProductsLanding({ match }) {
   const onClickLoadMore = useCallback(() => {
     const skip = Skip + Limit;
 
-    const body = {
+    let body = {
       skip,
       limit: Limit,
     };
@@ -66,37 +65,13 @@ function ProductsLanding({ match }) {
     getProducts(body);
     setSkip(skip);
     setLoadMore(true);
-  }, [Skip + Limit, Limit]);
+  }, [Skip, Limit]);
 
-  useEffect(() => {
-    function onCloseSortBox(e) {
-      if (e.target.className === isSortButton) return;
-      setShowSortByButton(false);
-    }
-
-    document.body.addEventListener('click', onCloseSortBox);
-
-    return () => {
-      document.body.removeEventListener('click', onCloseSortBox);
-    };
-  }, []);
-
-  const onToggleMobileSortButton = useCallback(() => {
-    setShowMobileSortByBox((status) => {
-      if (status) {
-        document.body.style.overflow = 'auto';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
-      return !status;
-    });
-  }, []);
-
-  const showFilterdResults = useCallback(
+  const showFilterResults = useCallback(
     (filters) => {
-      const body = {
+      let body = {
         skip: 0,
-        Limit,
+        limit: Limit,
         filters,
       };
 
@@ -106,59 +81,75 @@ function ProductsLanding({ match }) {
     [Limit],
   );
 
-  const handleFilters = useCallback((filters) => {
-    const newFilters = filters;
+  const handlePrice = useCallback(
+    (value) => {
+      const data = price;
+      let array = [];
 
-    showFilterdResults(newFilters);
-  }, []);
+      for (let key in data) {
+        if (data[key]._id === parseInt(value, 10)) {
+          array = data[key].array;
+        }
+      }
+
+      return array;
+    },
+    [price],
+  );
+
+  const handleFilters = useCallback(
+    (filters, category) => {
+      const newFilters = { ...Filters };
+
+      newFilters[category] = filters;
+      console.log('filters', filters);
+
+      if (category === 'price') {
+        let priceValues = handlePrice(filters);
+        newFilters[category] = priceValues;
+      }
+
+      console.log('newFilters', newFilters);
+      showFilterResults(newFilters);
+      setFilters(newFilters);
+    },
+    [Filters],
+  );
+
+  const updateSearchTerm = useCallback(
+    (newSearchTerm) => {
+      let body = {
+        skip: 0,
+        limit: Limit,
+        filters: Filters,
+        searchTerm: newSearchTerm,
+      };
+
+      setSkip(0);
+      setSearchTerm(newSearchTerm);
+      getProducts(body);
+    },
+    [Limit, Filters],
+  );
 
   return (
     <>
       <div className="products-container">
-        <h2 className="products__title">ALL</h2>
+        <h2 className="products__title">SHOP</h2>
 
-        <ul className="products-menus">
+        <ul className="products__categorys">
           <li>
-            <Link to="/shop" className={match.path === '/shop' ? 'active' : undefined}>
-              ALL
-            </Link>
+            <CategoryBox list={clothes} handleFilters={(filters) => handleFilters(filters, 'category')} />
           </li>
-          {cateogry?.map((item) => (
-            <li key={item._id}>
-              <Link to={item.url} className={match.params.categoryId === item.name ? 'active' : undefined}>
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          <li>
+            <PriceBox list={price} handleFilters={(filters) => handleFilters(filters, 'price')} />
+          </li>
+          <li>
+            <SearchFeature updateSearchTerm={updateSearchTerm} />
+          </li>
         </ul>
-
-        <SortButton
-          header={sortBoxTitle}
-          showMobileSortByBox={showMobileSortByBox}
-          onToggleMobileSortButton={onToggleMobileSortButton}
-          showSrotByButton={showSrotByButton}
-          setShowSortByButton={setShowSortByButton}
-        />
-
-        {showMobileSortByBox && (
-          <MobileSortByBox
-            header={sortBoxTitle}
-            setSortBoxTitle={setSortBoxTitle}
-            setShowMobileSortByBox={setShowMobileSortByBox}
-            onToggleMobileSortButton={onToggleMobileSortButton}
-            list={sortBox}
-            handleFilters={(filters) => handleFilters(filters)}
-          />
-        )}
-
-        {showSrotByButton && (
-          <SortByBox
-            list={sortBox}
-            handleFilters={(filters) => handleFilters(filters)}
-            setSortBoxTitle={setSortBoxTitle}
-          />
-        )}
       </div>
+
       <ul className="card-container">
         {Products.map((product, index) => (
           <ProductCard key={index} product={product} />
@@ -177,7 +168,3 @@ function ProductsLanding({ match }) {
 }
 
 export default ProductsLanding;
-
-ProductsLanding.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-};

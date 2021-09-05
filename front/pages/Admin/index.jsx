@@ -9,14 +9,14 @@ import axios from 'axios';
 import { PRODUCT_SERVER } from '../../config/config';
 
 function Admin({ history }) {
-  const [category, onChangeCategory] = useInput('OUTERWEAR');
+  const [category, onChangeCategory] = useInput(1);
   const [title, onChangeTitle] = useInput('');
   const [description, onChangeDescription] = useInput('');
   const [price, onChangePrice] = useInput(0);
   const [images, setImages] = useState([]);
   const Category = [
     { key: 1, value: 'OUTERWEAR' },
-    { key: 2, value: 'KNITWEAR' },
+    { key: 2, value: 'DRESSES' },
     { key: 3, value: 'TOPS' },
     { key: 4, value: 'BOTTOMS' },
   ];
@@ -83,7 +83,7 @@ function Admin({ history }) {
 
         <select onChange={onChangeCategory} value={category} className="admin__category">
           {Category.map((item) => (
-            <option key={item.key} value={item.value}>
+            <option key={item.key} value={item.key}>
               {item.value}
             </option>
           ))}
