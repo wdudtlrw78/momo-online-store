@@ -20,3 +20,20 @@
     line-height: 1.25rem;
   }
 }
+
+.info__cart-btn {
+  width: 100%;
+  button {
+    width: 100%;
+    border: none;
+    font-size: $small-size;
+    background-color: $primary-color;
+    color: #fff;
+    margin-top: 1rem;
+    padding: 1rem 0;
+  }
+
+  button:hover {
+    background-color: $hover-color;
+  }
+}

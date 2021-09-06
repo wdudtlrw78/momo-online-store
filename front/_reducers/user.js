@@ -15,6 +15,10 @@ export const initialState = {
   logOutDone: false,
   logOutError: null,
 
+  addToCartLoading: false, // 카트
+  addToCartDone: false,
+  addToCartError: null,
+
   userData: null,
 };
 
@@ -33,6 +37,10 @@ export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const ADD_TO_CART_REQUEST = 'ADD_TO_CART_REQUEST';
+export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
+export const ADD_TO_CART_FAILURE = 'ADD_TO_CART_FAILURE';
 
 // action creator
 export const loginRequestAction = (data) => ({
@@ -128,6 +136,29 @@ export default function user(state = initialState, action) {
         ...state,
         logOutLoading: false,
         logOutError: action.error,
+      };
+    case ADD_TO_CART_REQUEST:
+      return {
+        ...state,
+        addToCartLoading: true,
+        addToCartDone: false,
+        addToCartError: null,
+      };
+    case ADD_TO_CART_SUCCESS:
+      return {
+        ...state,
+        addToCartLoading: false,
+        addToCartDone: true,
+        userData: {
+          ...state.userData,
+          cart: action.data,
+        },
+      };
+    case ADD_TO_CART_FAILURE:
+      return {
+        ...state,
+        addToCartLoading: false,
+        addToCartError: action.error,
       };
     default:
       return state;
