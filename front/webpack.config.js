@@ -90,6 +90,13 @@ const config = {
     publicPath: '/dist/',
   },
 
+  // webpack-dev-server@4 버전
+  // devServer: {
+  //   devMiddleware: { publicPath: '/dist' },
+  //   static: { directory: path.resolve(__dirname) },
+  //   hot: true
+  // }
+
   devServer: {
     historyApiFallback: true,
     port: 3400,

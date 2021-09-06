@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { Product } = require('../models/Product');
+const { send } = require('process');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -96,6 +97,18 @@ router.post('/shop', (req, res) => {
           .json({ success: true, productInfo, PostSize: productInfo.length });
       });
   }
+});
+
+router.get('/products_by_id', (req, res) => {
+  const type = req.query.type;
+  const productIds = req.query.id;
+
+  Product.find({ _id: { $in: productIds } })
+    .populate('writer')
+    .exec((err, product) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send({ success: true, product });
+    });
 });
 
 module.exports = router;
