@@ -19,7 +19,7 @@ const reviewSchema = mongoose.Schema(
     },
 
     writer: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },

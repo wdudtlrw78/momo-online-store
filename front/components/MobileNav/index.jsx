@@ -30,7 +30,7 @@ function MobileNav() {
           <aside className="mobile-navigation">
             {/* Navigation */}
             <section>
-              <button type="button">
+              <button type="button" onClick={onToggleNav}>
                 <i className="fas fa-times" />
               </button>
 

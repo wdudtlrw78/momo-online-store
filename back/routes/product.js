@@ -99,15 +99,53 @@ router.post('/shop', (req, res) => {
   }
 });
 
-router.get('/products_by_id', (req, res) => {
+router.get('/product/:productId', (req, res) => {
   const type = req.query.type;
-  const productIds = req.query.id;
+  const productIds = req.params.productId;
 
   Product.find({ _id: { $in: productIds } })
     .populate('writer')
     .exec((err, product) => {
       if (err) return res.status(400).send(err);
       return res.status(200).send({ success: true, product });
+    });
+});
+
+router.post('/product/:productId/reviews', (req, res) => {
+  const { rating, comment, nickname, writer } = req.body;
+
+  const productIds = req.params.productId;
+
+  Product.find({ _id: { $in: productIds } })
+    .populate('writer')
+    .findOneAndUpdate(
+      { _id: { $in: productIds } },
+      {
+        $push: {
+          reviews: {
+            nickname,
+            rating: Number(rating),
+            comment,
+            writer,
+          },
+        },
+      },
+      { new: true }
+    )
+    .exec((err, productReview) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send({ success: true, productReview });
+    });
+});
+
+router.get('/product/:productId/reviews', (req, res) => {
+  const productIds = req.params.productId;
+
+  Product.find({ _id: { $in: productIds } })
+    .populate('writer')
+    .exec((err, productReview) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send({ success: true, productReview });
     });
 });
 
