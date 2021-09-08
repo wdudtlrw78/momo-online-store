@@ -31,4 +31,4 @@ ProductCard.propTypes = {
   }).isRequired,
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);

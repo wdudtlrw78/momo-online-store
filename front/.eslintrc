@@ -40,6 +40,7 @@
     "implicit-arrow-linebreak": "off",
     "no-unused-vars": 1,
     "no-restricted-syntax": "off",
-    "prefer-const": 1
+    "prefer-const": 1,
+    "no-nested-ternary": 1
   }
 }

@@ -78,21 +78,18 @@ function ProductsLanding() {
     [Limit],
   );
 
-  const handlePrice = useCallback(
-    (value) => {
-      const data = price;
-      let array = [];
+  const handlePrice = useCallback((value) => {
+    const data = price;
+    let array = [];
 
-      for (const key in data) {
-        if (data[key]._id === parseInt(value, 10)) {
-          array = data[key].array;
-        }
+    for (const key in data) {
+      if (data[key]._id === parseInt(value, 10)) {
+        array = data[key].array;
       }
+    }
 
-      return array;
-    },
-    [price],
-  );
+    return array;
+  }, []);
 
   const handleFilters = useCallback(
     (filters, category) => {

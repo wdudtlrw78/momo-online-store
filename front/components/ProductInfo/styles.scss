@@ -23,6 +23,7 @@
 
 .info__cart-btn {
   width: 100%;
+
   button {
     width: 100%;
     border: none;
@@ -35,5 +36,11 @@
 
   button:hover {
     background-color: $hover-color;
+  }
+}
+
+@include atDesktop {
+  .info__cart-btn {
+    margin-top: 2rem;
   }
 }

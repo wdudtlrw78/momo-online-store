@@ -7,4 +7,123 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid $light-color;
+  padding-bottom: 2rem;
+}
+
+.detail__info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail__reviews-container {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  .detail__reviews__title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .detail__reviews__nickname {
+    font-size: 0.75rem;
+  }
+
+  .detail__reviews {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .detial__reviews__date {
+    font-size: 0.6875rem;
+  }
+
+  .detail__reivew {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+}
+
+.detail__customer__title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.detail__customer-form {
+  display: flex;
+  flex-direction: column;
+
+  .detail__customer__rating-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  .detail__customer__rating {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail__customer__rating-select,
+  .detail__customer__reivew {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .detail__customer__review-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail__customer__review-btn {
+    border: none;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: $primary-color;
+    color: #fff;
+  }
+
+  .detail__customer__review-btn:hover {
+    background-color: $hover-color;
+  }
+}
+
+.detail__customer__login {
+  font-size: 0.875rem;
+
+  a {
+    text-decoration: underline;
+    color: $primary-color;
+  }
+
+  a:hover {
+    color: $hover-color;
+  }
+}
+
+@include atDesktop {
+  .detail-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: unset;
+  }
+
+  .detail__info-container {
+    width: 40%;
+    margin-left: 2rem;
+  }
+
+  .detail__reviews-container {
+    width: 40%;
+    margin: 2rem auto;
+  }
 }

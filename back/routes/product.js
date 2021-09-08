@@ -100,7 +100,6 @@ router.post('/shop', (req, res) => {
 });
 
 router.get('/product/:productId', (req, res) => {
-  const type = req.query.type;
   const productIds = req.params.productId;
 
   Product.find({ _id: { $in: productIds } })
