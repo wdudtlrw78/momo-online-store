@@ -58,7 +58,7 @@ function Header() {
           )}
 
           <Link to="/user/cart" className="nav__cart-btn">
-            CART(0)
+            CART({userData?.cart ? userData?.cart.length : 0})
           </Link>
         </div>
       </nav>

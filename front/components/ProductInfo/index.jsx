@@ -19,7 +19,7 @@ function ProductInfo({ detail }) {
   return (
     <>
       <div className="info-container">
-        <h3 className="info__title">{detail.title}</h3>
+        <h1 className="info__title">{detail.title}</h1>
         <span className="info__price">${detail.price} USD</span>
         <p className="info__description">{detail.description}</p>
       </div>

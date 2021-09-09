@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { Product } = require('../models/Product');
-const { send } = require('process');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -99,14 +98,21 @@ router.post('/shop', (req, res) => {
   }
 });
 
-router.get('/product/:productId', (req, res) => {
-  const productIds = req.params.productId;
+router.get('/products_by_id', (req, res) => {
+  const type = req.query.type;
+  let productIds = req.query.id;
 
+  if (type === 'array') {
+    let ids = req.query.id.split(',');
+    productIds = ids.map((item) => {
+      return item;
+    });
+  }
   Product.find({ _id: { $in: productIds } })
     .populate('writer')
     .exec((err, product) => {
       if (err) return res.status(400).send(err);
-      return res.status(200).send({ success: true, product });
+      return res.status(200).json({ success: true, product });
     });
 });
 

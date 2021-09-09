@@ -22,7 +22,7 @@ function DetailProductPage({ match }) {
 
   useEffect(() => {
     axios
-      .get(`${PRODUCT_SERVER}/product/${productId}`)
+      .get(`${PRODUCT_SERVER}/products_by_id?id=${productId}&type=single`)
       .then((response) => {
         if (response.data.success) {
           setProduct(response.data.product[0]);
@@ -97,7 +97,7 @@ function DetailProductPage({ match }) {
           </div>
         ))}
 
-        <h3 className="detail__customer__title">WRITE A CUSTOMER REVIEW</h3>
+        <h3 className="detail__customer__title">Write a customer review</h3>
 
         {userData?.isAuth ? (
           <form onSubmit={onSubmit} className="detail__customer-form">

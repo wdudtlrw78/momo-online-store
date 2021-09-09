@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest, throttle } from 'redux-saga/effects';
 import {
   AUTH_FAILURE,
   AUTH_REQUEST,
@@ -15,7 +15,15 @@ import {
   REGISTER_SUCCESS,
 } from '@_reducers/user';
 import { USER_SERVER } from '@config/config';
-import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS } from '../_reducers/user';
+import {
+  ADD_TO_CART_FAILURE,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  LOAD_CART_ITEMS_FAILURE,
+  LOAD_CART_ITEMS_REQUEST,
+  LOAD_CART_ITEMS_SUCCESS,
+} from '../_reducers/user';
+import { PRODUCT_SERVER } from '../config/config';
 
 function authAPI() {
   return axios.get(`${USER_SERVER}/auth`);

@@ -1,0 +1,49 @@
+@import 'scss/main';
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  background-color: $primary-color;
+  color: #fff;
+  height: 3rem;
+}
+
+td,
+th {
+  border: 1px solid $light-color;
+  text-align: left;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  .cart__image {
+    width: 4.5rem;
+  }
+
+  .cart__remove-btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    background-color: $primary-color;
+    color: #fff;
+  }
+
+  .cart__remove-btn:hover {
+    background-color: $hover-color;
+  }
+}
+
+tr:nth-child(even) {
+  background-color: $light-color;
+}
+
+@include atTablets {
+  td,
+  th {
+    .cart__image {
+      width: 9rem;
+    }
+  }
+}
