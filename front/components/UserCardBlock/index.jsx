@@ -43,6 +43,7 @@ function UserCardBlock({ products, removeItem }) {
 
 UserCardBlock.propTypes = {
   products: PropTyeps.array.isRequired,
+  removeItem: PropTyeps.func.isRequired,
 };
 
 export default UserCardBlock;

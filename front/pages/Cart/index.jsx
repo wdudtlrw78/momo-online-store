@@ -51,21 +51,31 @@ function CartPage() {
     }
   }, [userData]);
 
-  const removeFromCart = useCallback((productId) => {
-    axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`).then((response) => {
-      response.data.cart.forEach((item) => {
-        response.data.productInfo.forEach((product, index) => {
-          if (item.id === product._id) {
-            response.data.productInfo[index].quantity = item.quantity;
-          }
+  const removeFromCart = useCallback(
+    (productId) => {
+      axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`).then((response) => {
+        // productInfo, cart 정보를 조합해서 CartDetail을 만든다.
+        response.data.cart.forEach((item) => {
+          response.data.productInfo.forEach((product, index) => {
+            if (item.id === product._id) {
+              response.data.productInfo[index].quantity = item.quantity;
+            }
+          });
         });
-      });
 
-      if (response.data.productInfo.length <= 0) {
-        setShowTotal(false);
-      }
-    });
-  }, []);
+        if (response.data.success) {
+          setCartDetail(response.data.productInfo);
+          calculateTotal(response.data.productInfo);
+          userData.cart = response.data.cart;
+        }
+
+        if (response.data.productInfo.length <= 0) {
+          setShowTotal(false);
+        }
+      });
+    },
+    [userData],
+  );
 
   return (
     <div className="cart-container">
