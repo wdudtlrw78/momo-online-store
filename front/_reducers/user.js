@@ -19,6 +19,10 @@ export const initialState = {
   addToCartDone: false,
   addToCartError: null,
 
+  successBuyLoading: false, // 결제
+  successBuyDone: false,
+  successBuyError: null,
+
   userData: null,
 };
 
@@ -43,6 +47,10 @@ export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
 export const ADD_TO_CART_FAILURE = 'ADD_TO_CART_FAILURE';
 
 export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+
+export const SUCCESS_BUY_REQUEST = 'SUCCESS_BUY_REQUEST';
+export const SUCCESS_BUY_SUCCESS = 'SUCCESS_BUY_SUCCESS';
+export const SUCCESS_BUY_FAILURE = 'SUCCESS_BUY_FAILURE';
 
 // action creator
 export const loginRequestAction = (data) => ({
@@ -169,6 +177,34 @@ export default function user(state = initialState, action) {
           ...state.userData,
           cart: action.data,
         },
+      };
+    case SUCCESS_BUY_REQUEST:
+      return {
+        ...state,
+        successBuyLoading: true,
+        successBuyDone: false,
+        successBuyError: null,
+      };
+    case SUCCESS_BUY_SUCCESS:
+      return {
+        ...state,
+        successBuyLoading: false,
+        successBuyDone: true,
+
+        userData: {
+          ...state.userData,
+          cart: action.data.cart,
+          history: {
+            ...state.history,
+            ...action.data.history,
+          },
+        },
+      };
+    case SUCCESS_BUY_FAILURE:
+      return {
+        ...state,
+        successBuyLoading: false,
+        successBuyError: action.error,
       };
     default:
       return state;

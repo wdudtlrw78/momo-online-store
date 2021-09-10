@@ -42,6 +42,7 @@
     "no-restricted-syntax": "off",
     "prefer-const": 1,
     "no-nested-ternary": 1,
-    "react/prefer-stateless-function": 1
+    "react/prefer-stateless-function": 1,
+    "react/destructuring-assignment": 1
   }
 }

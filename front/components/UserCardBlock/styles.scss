@@ -19,7 +19,8 @@ th {
   font-size: 0.875rem;
   font-weight: 500;
 
-  .cart__image {
+  .cart__image,
+  .history__image {
     width: 4.5rem;
   }
 
@@ -37,13 +38,4 @@ th {
 
 tr:nth-child(even) {
   background-color: $light-color;
-}
-
-@include atTablets {
-  td,
-  th {
-    .cart__image {
-      width: 9rem;
-    }
-  }
 }

@@ -4,17 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 import axios from 'axios';
 import UserCardBlock from '@components/UserCardBlock';
-import { REMOVE_CART_ITEM } from '@_reducers/user';
+import { REMOVE_CART_ITEM, SUCCESS_BUY_REQUEST } from '@_reducers/user';
 import { PRODUCT_SERVER, USER_SERVER } from '@config/config';
 import Paypal from '@lib/Paypal';
 
 function CartPage() {
   const dispatch = useDispatch();
 
-  const { userData } = useSelector((state) => state.user);
-  const [cartDetail, setCartDetail] = useState([]);
+  const { userData, successBuyDone } = useSelector((state) => state.user);
+
+  const [CartDetail, setCartDetail] = useState([]);
   const [Total, setTotal] = useState(0);
-  const [showTotal, setShowTotal] = useState(false);
+  const [ShowTotal, setShowTotal] = useState(false);
+  const [ShowBuySuccess, setShowBuySucess] = useState(false);
 
   const calculateTotal = useCallback((totalPrice) => {
     let total = 0;
@@ -57,6 +59,14 @@ function CartPage() {
     }
   }, [userData]);
 
+  useEffect(() => {
+    if (successBuyDone) {
+      setCartDetail([]);
+      setShowTotal(false);
+      setShowBuySucess(true);
+    }
+  }, [successBuyDone]);
+
   const removeFromCart = useCallback(
     (productId) => {
       axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`).then((response) => {
@@ -86,21 +96,44 @@ function CartPage() {
     [userData],
   );
 
+  const onSuccess = useCallback(
+    (paymentData) => {
+      dispatch({
+        type: SUCCESS_BUY_REQUEST,
+        data: {
+          paymentData,
+          cartDetail: CartDetail,
+        },
+      });
+    },
+    [CartDetail],
+  );
+
   return (
     <div className="cart-container">
       <h1 className="cart__title">My Cart({userData?.cart ? userData?.cart.length : 0})</h1>
-      {!userData?.isAuth || !showTotal ? (
-        <p className="cart__empty">The shopping basket is empty.</p>
-      ) : (
+
+      {ShowTotal && userData?.isAuth ? (
         <>
           <div className="cart_card-block">
-            <UserCardBlock products={cartDetail} removeItem={removeFromCart} />
+            <UserCardBlock products={CartDetail} removeItem={removeFromCart} />
           </div>
           <div>
             <h2 className="cart__price-total">
               <span>Total Amount:</span> ${Total}
             </h2>
-            <Paypal total={Total} />
+            <Paypal total={Total} onSuccess={onSuccess} />
+          </div>
+        </>
+      ) : ShowBuySuccess ? (
+        <div className="cart__buy-success">
+          <i className="fas fa-check-circle" />
+          <p>Successfully Purchased Items!</p>
+        </div>
+      ) : (
+        <>
+          <div>
+            <p className="cart__empty">The shopping basket is empty.</p>
           </div>
         </>
       )}

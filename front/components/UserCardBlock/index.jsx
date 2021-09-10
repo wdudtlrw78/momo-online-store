@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import './styles.scss';
 import PropTyeps from 'prop-types';
-import { SERVER_URL } from '../../config/config';
+import { SERVER_URL } from '@config/config';
 
 function UserCardBlock({ products, removeItem }) {
   const renderCartImage = useCallback((images) => {

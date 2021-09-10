@@ -1,8 +1,10 @@
 const express = require('express');
 const { auth } = require('../middleware/auth');
+const { User } = require('../models/User');
+const { Payment } = require('../models/Payment');
 const { Product } = require('../models/Product');
 const router = express.Router();
-const { User } = require('../models/User');
+const async = require('async');
 
 router.get('/auth', auth, (req, res) => {
   res.status(200).json({
@@ -138,6 +140,84 @@ router.get('/removeFromCart', auth, (req, res) => {
             cart,
           });
         });
+    }
+  );
+});
+
+router.post('/successBuy', auth, (req, res) => {
+  // User Collection 안에 History 필드 안에 결제 정보 넣어주기
+  const history = [];
+  const transactionData = {};
+  const { cartDetail, paymentData } = req.body;
+
+  cartDetail.forEach((item) => {
+    history.push({
+      dateOfPurchase: Date.now(),
+      name: item.title,
+      id: item._id,
+      price: item.price,
+      quantity: item.quantity,
+      paymentId: paymentData.paymentID,
+      images: item.images,
+    });
+  });
+
+  // Payment Collection 안에 detail 결제 정보들 넣어주기
+
+  transactionData.user = {
+    id: req.user._id,
+    nickname: req.user.nickname,
+    email: req.user.email,
+  };
+  transactionData.data = paymentData;
+  transactionData.product = history;
+
+  // history 정보 저장
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $push: { history: history }, $set: { cart: [] } },
+    { new: true },
+    (err, user) => {
+      if (err) return res.status(400).json({ success: false, err });
+
+      // payment 안에 transactionData 정보 저장
+      const payment = new Payment(transactionData);
+      payment.save((err, doc) => {
+        if (err) return res.status(400).json({ success: false, err });
+
+        // Product model의 sold 필드 정보 update
+
+        // 상품 당 몇개의 quantity를 구매했는지
+        const products = [];
+        doc.product.forEach((item) => {
+          products.push({ id: item.id, quantity: item.quantity });
+        });
+
+        async.eachSeries(
+          products,
+          (item, callback) => {
+            Product.updateMany(
+              {
+                _id: item.id,
+              },
+              {
+                $inc: {
+                  sold: item.quantity,
+                },
+              },
+              { new: false },
+              callback
+            );
+          },
+          (err) => {
+            if (err) return res.status(400).json({ success: false, err });
+            res.status(200).json({
+              cart: user.cart,
+              history: history,
+            });
+          }
+        );
+      });
     }
   );
 });

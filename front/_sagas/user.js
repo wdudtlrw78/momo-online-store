@@ -15,7 +15,14 @@ import {
   REGISTER_SUCCESS,
 } from '@_reducers/user';
 import { USER_SERVER } from '@config/config';
-import { ADD_TO_CART_FAILURE, ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS } from '../_reducers/user';
+import {
+  ADD_TO_CART_FAILURE,
+  ADD_TO_CART_REQUEST,
+  ADD_TO_CART_SUCCESS,
+  SUCCESS_BUY_FAILURE,
+  SUCCESS_BUY_REQUEST,
+  SUCCESS_BUY_SUCCESS,
+} from '../_reducers/user';
 
 function authAPI() {
   return axios.get(`${USER_SERVER}/auth`);
@@ -120,6 +127,27 @@ function* addToCart(action) {
   }
 }
 
+function successBuyAPI(data) {
+  return axios.post(`${USER_SERVER}/successBuy`, data);
+}
+
+function* successBuy(action) {
+  try {
+    const result = yield call(successBuyAPI, action.data);
+
+    yield put({
+      type: SUCCESS_BUY_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: SUCCESS_BUY_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchAuth() {
   yield takeLatest(AUTH_REQUEST, auth);
 }
@@ -140,6 +168,17 @@ function* watchAddToCart() {
   yield takeLatest(ADD_TO_CART_REQUEST, addToCart);
 }
 
+function* watchSuccessBuy() {
+  yield takeLatest(SUCCESS_BUY_REQUEST, successBuy);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchAuth), fork(watchRegister), fork(watchLogin), fork(watchLogOut), fork(watchAddToCart)]);
+  yield all([
+    fork(watchAuth),
+    fork(watchRegister),
+    fork(watchLogin),
+    fork(watchLogOut),
+    fork(watchAddToCart),
+    fork(watchSuccessBuy),
+  ]);
 }

@@ -25,4 +25,22 @@
       font-weight: 400;
     }
   }
+
+  .cart__buy-success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .fa-check-circle {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: $large-size;
+      color: $primary-color;
+    }
+
+    p {
+      font-size: 0.875rem;
+    }
+  }
 }
