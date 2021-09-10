@@ -1,17 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 import axios from 'axios';
 import UserCardBlock from '@components/UserCardBlock';
-
-import { PRODUCT_SERVER } from '@config/config';
-import { USER_SERVER } from '../../config/config';
+import { REMOVE_CART_ITEM } from '@_reducers/user';
+import { PRODUCT_SERVER, USER_SERVER } from '@config/config';
+import Paypal from '@lib/Paypal';
 
 function CartPage() {
+  const dispatch = useDispatch();
+
   const { userData } = useSelector((state) => state.user);
   const [cartDetail, setCartDetail] = useState([]);
-  const [showTotal, setShowTotal] = useState(0);
+  const [Total, setTotal] = useState(0);
+  const [showTotal, setShowTotal] = useState(false);
 
   const calculateTotal = useCallback((totalPrice) => {
     let total = 0;
@@ -22,7 +25,8 @@ function CartPage() {
       return total;
     });
 
-    setShowTotal(total);
+    setTotal(total);
+    setShowTotal(true);
   }, []);
 
   useEffect(() => {
@@ -33,20 +37,22 @@ function CartPage() {
         userData.cart.forEach((item) => {
           cartItems.push(item.id);
         });
-        axios.get(`${PRODUCT_SERVER}/products_by_id?id=${cartItems}&type=array`).then((response) => {
-          userData.cart.forEach((cartItem) => {
-            response.data.product.forEach((productDetail, index) => {
-              if (cartItem.id === productDetail._id) {
-                response.data.product[index].quantity = cartItem.quantity;
-              }
+        axios
+          .get(`${PRODUCT_SERVER}/products_by_id?id=${cartItems}&type=array`)
+          .then((response) => {
+            userData.cart.forEach((cartItem) => {
+              response.data.product.forEach((productDetail, index) => {
+                if (cartItem.id === productDetail._id) {
+                  response.data.product[index].quantity = cartItem.quantity;
+                }
+              });
             });
-          });
-          if (response.data.success) {
-            setCartDetail(response.data.product);
-            calculateTotal(response.data.product);
-            console.log(response.data.product);
-          }
-        });
+            if (response.data.success) {
+              setCartDetail(response.data.product);
+              calculateTotal(response.data.product);
+            }
+          })
+          .catch((err) => alert(err));
       }
     }
   }, [userData]);
@@ -66,7 +72,10 @@ function CartPage() {
         if (response.data.success) {
           setCartDetail(response.data.productInfo);
           calculateTotal(response.data.productInfo);
-          userData.cart = response.data.cart;
+          dispatch({
+            type: REMOVE_CART_ITEM,
+            data: response.data.cart,
+          });
         }
 
         if (response.data.productInfo.length <= 0) {
@@ -80,8 +89,8 @@ function CartPage() {
   return (
     <div className="cart-container">
       <h1 className="cart__title">My Cart({userData?.cart ? userData?.cart.length : 0})</h1>
-      {!userData?.isAuth || userData.cart?.length === 0 ? (
-        <p className="cart__empty">장바구니가 비었습니다</p>
+      {!userData?.isAuth || !showTotal ? (
+        <p className="cart__empty">The shopping basket is empty.</p>
       ) : (
         <>
           <div className="cart_card-block">
@@ -89,8 +98,9 @@ function CartPage() {
           </div>
           <div>
             <h2 className="cart__price-total">
-              <span>Total Amount:</span> ${showTotal}
+              <span>Total Amount:</span> ${Total}
             </h2>
+            <Paypal total={Total} />
           </div>
         </>
       )}

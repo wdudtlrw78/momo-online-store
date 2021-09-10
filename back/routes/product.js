@@ -108,6 +108,9 @@ router.get('/products_by_id', (req, res) => {
       return item;
     });
   }
+
+  // product collection에서 현재 남아있는 상품들의 정보들 가져오기
+
   Product.find({ _id: { $in: productIds } })
     .populate('writer')
     .exec((err, product) => {

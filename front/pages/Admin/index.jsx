@@ -6,7 +6,7 @@ import useInput from '@hooks/useInput';
 
 import FileUpload from '@components/FileUpload';
 import axios from 'axios';
-import { PRODUCT_SERVER } from '../../config/config';
+import { PRODUCT_SERVER } from '@config/config';
 
 function Admin({ history }) {
   const [category, onChangeCategory] = useInput(1);

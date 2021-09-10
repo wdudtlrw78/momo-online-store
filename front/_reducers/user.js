@@ -42,6 +42,8 @@ export const ADD_TO_CART_REQUEST = 'ADD_TO_CART_REQUEST';
 export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
 export const ADD_TO_CART_FAILURE = 'ADD_TO_CART_FAILURE';
 
+export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+
 // action creator
 export const loginRequestAction = (data) => ({
   type: LOG_IN_REQUEST,
@@ -159,6 +161,14 @@ export default function user(state = initialState, action) {
         ...state,
         addToCartLoading: false,
         addToCartError: action.error,
+      };
+    case REMOVE_CART_ITEM:
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          cart: action.data,
+        },
       };
     default:
       return state;

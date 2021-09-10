@@ -131,6 +131,7 @@ router.get('/removeFromCart', auth, (req, res) => {
       Product.find({ _id: { $in: array } })
         .populate('writer')
         .exec((err, productInfo) => {
+          if (err) res.status(400).json({ success: false, err });
           return res.status(200).json({
             success: true,
             productInfo,
