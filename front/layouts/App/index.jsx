@@ -5,6 +5,7 @@ import BodyContainer from '@components/BodyContainer';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import Auth from '@hoc/auth';
+import NotFound from '@components/NotFound';
 
 const Home = loadable(() => import('@pages/Home'));
 const Login = loadable(() => import('@pages/Login'));
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/shop/product/:productId" component={Auth(DetailProduct, null)} />
         <Route exact path="/user/cart" component={Auth(Cart, null)} />
         <Route exact path="/history" component={Auth(History, true)} />
+        <Route path={"*"} component={Auth(NotFound, null)} />
       </Switch>
       <Footer />
     </BodyContainer>
