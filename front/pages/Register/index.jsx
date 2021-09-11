@@ -33,8 +33,6 @@ function Register({ history }) {
         setPasswordConfirm(true);
       }
 
-      console.log(nickname, email, password);
-
       dispatch({
         type: REGISTER_REQUEST,
         data: { nickname, email, password },

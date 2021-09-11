@@ -24,10 +24,8 @@ function ProductsLanding() {
     (body) => {
       axios.post(`${PRODUCT_SERVER}/shop`, body).then((response) => {
         if (response.data.success) {
-          console.log('success', response.data.productInfo);
           if (LoadMore) {
             setProducts([...Products, ...response.data.productInfo]);
-            console.log('ladmore', response.data.productInfo);
           } else {
             setProducts(response.data.productInfo);
           }
@@ -62,7 +60,7 @@ function ProductsLanding() {
     getProducts(body);
     setSkip(skip);
     setLoadMore(true);
-  }, [Skip, Limit]);
+  }, [Limit, Skip + Limit]);
 
   const showFilterResults = useCallback(
     (filters) => {
@@ -96,14 +94,12 @@ function ProductsLanding() {
       const newFilters = { ...Filters };
 
       newFilters[category] = filters;
-      console.log('filters', filters);
 
       if (category === 'price') {
         const priceValues = handlePrice(filters);
         newFilters[category] = priceValues;
       }
 
-      console.log('newFilters', newFilters);
       showFilterResults(newFilters);
       setFilters(newFilters);
     },

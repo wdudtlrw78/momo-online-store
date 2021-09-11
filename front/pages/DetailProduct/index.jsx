@@ -34,7 +34,6 @@ function DetailProductPage({ match }) {
   useEffect(() => {
     axios.get(`${PRODUCT_SERVER}/product/${productId}/reviews`).then((response) => {
       if (response.data.success) {
-        console.log(response.data);
         setReviews(...response.data.productReview);
       }
     });
