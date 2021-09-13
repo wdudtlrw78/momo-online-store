@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/shop/product/:productId" component={Auth(DetailProduct, null)} />
         <Route exact path="/user/cart" component={Auth(Cart, null)} />
         <Route exact path="/history" component={Auth(History, true)} />
-        <Route path={"*"} component={Auth(NotFound, null)} />
+        <Route path="*" component={Auth(NotFound, null)} />
       </Switch>
       <Footer />
     </BodyContainer>

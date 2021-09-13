@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 function NotFound() {
   return (
-<div
+    <div
       style={{
         display: 'flex',
         justifyContent: 'center',
@@ -21,7 +21,7 @@ function NotFound() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;
