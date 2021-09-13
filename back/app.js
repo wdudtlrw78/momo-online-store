@@ -44,7 +44,14 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-const port = process.env.PORT || 3410;
-app.listen(3410, () => {
-  console.log(`✅ Server Listening on ${port}`);
-});
+if (process.env.NODE.ENV === 'production') {
+  const port = process.env.PORT || 80;
+  app.listen(80, () => {
+    console.log(`✅ Server Listening on ${port}`);
+  });
+} else {
+  const port = process.env.PORT || 3410;
+  app.listen(3410, () => {
+    console.log(`✅ Server Listening on ${port}`);
+  });
+}
