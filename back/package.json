@@ -7,7 +7,7 @@
     "backend": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run backend\" \"cd ../front && npm run dev\"",
-    "start": "node app"
+    "start": "cross-env NODE_ENV=production pm2 start app.js"
   },
   "author": "momo",
   "license": "ISC",
@@ -17,6 +17,7 @@
     "concurrently": "^6.2.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
