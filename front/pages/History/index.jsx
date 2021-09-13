@@ -44,8 +44,8 @@ function History() {
                 </tr>
               </thead>
               <tbody>
-                {userData?.history.map((product) => (
-                  <tr key={product._id}>
+                {userData?.history.map((product, index) => (
+                  <tr key={index}>
                     <td width="25%">
                       <img className="history__image" alt="product" src={renderhistoryImage(product.images)} />
                     </td>

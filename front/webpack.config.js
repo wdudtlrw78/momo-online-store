@@ -110,7 +110,7 @@ const config = {
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: 'http://localhost:3410',
+        target: process.env.NODE_ENV === 'production' ? 'https://api.momostore.com' : 'http://localhost:3410',
         changeOrigin: true,
       },
     },
