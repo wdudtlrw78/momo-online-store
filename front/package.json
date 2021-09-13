@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --env development",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack build",
+    "start": "set PORT=80 cross-env NODE_ENV=production webpack start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "momo",
