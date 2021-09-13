@@ -106,11 +106,11 @@ const config = {
 
   devServer: {
     historyApiFallback: true,
-    port: process.env.NODE_ENV === 'production' ? 80 : 3400,
+    port: isDevelopment ? 3400 : 80,
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production' ? 'http://13.125.146.87' : 'http://localhost:3410',
+        target: isDevelopment ? 'http://localhost:3410' : 'http://13.125.146.87',
         changeOrigin: true,
       },
     },
