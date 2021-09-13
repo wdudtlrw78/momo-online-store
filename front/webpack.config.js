@@ -106,11 +106,11 @@ const config = {
 
   devServer: {
     historyApiFallback: true,
-    port: 3400,
+    port: process.env.NODE_ENV === 'production' ? 80 : 3400,
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production' ? 'https://api.momostore.com' : 'http://localhost:3410',
+        target: process.env.NODE_ENV === 'production' ? 'http://13.125.146.87' : 'http://localhost:3410',
         changeOrigin: true,
       },
     },
