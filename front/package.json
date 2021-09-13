@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "cross-env NODE_ENV=production webpack build",
+    "start": "cross-env NODE_ENV=production webpack serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "momo",
