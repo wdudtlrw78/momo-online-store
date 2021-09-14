@@ -27,8 +27,8 @@ const config = {
     },
   },
   entry: {
-    vendor: ['react', 'react-dom'],
-    app: ['./client'],
+    vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
+    app: ['@babel/polyfill', 'eventsource-polyfill', './client'],
   },
   module: {
     rules: [
@@ -110,7 +110,7 @@ const config = {
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: isDevelopment ? 'http://localhost:3410' : 'http://3.34.53.118',
+        target: isDevelopment ? 'http://localhost:3410' : 'http://api.nodemomobird.com',
         changeOrigin: true,
       },
     },
