@@ -26,24 +26,14 @@ mongoose
 
 const prod = process.env.NODE.ENV === 'production';
 
+app.use(cors());
+
 if (prod) {
   app.use(morgan('combined')); // 배포모드일 때는 좀더 log가 자세해져서 실제 접속자 ip도 알 수 있으며 디도스나 해킹시도 할 수 있으면 차단할 수 도있다.
   app.use(hpp());
   app.use(helmet());
-  app.use(
-    cors({
-      origin: 'http://52.78.196.179',
-      credentials: true,
-    })
-  );
 } else {
   app.use(morgan('dev')); // 프론트에서 백엔드 요청 보낼 때 어떤 요청들 보냈는지 기록 (백엔드에서 디버깅하기 편리)
-  app.use(
-    cors({
-      origin: true,
-      credentials: true,
-    })
-  );
 }
 
 app.use(cookieParser());

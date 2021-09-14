@@ -43,6 +43,8 @@ const config = {
                 targets: {
                   browsers: ['last 2 chrome versions'],
                 },
+                modules: false,
+                useBuiltIns: 'usage',
               },
             ],
             '@babel/preset-react',
