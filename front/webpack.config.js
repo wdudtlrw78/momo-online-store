@@ -106,11 +106,11 @@ const config = {
 
   devServer: {
     historyApiFallback: true,
-    port: isDevelopment ? 3400 : 80,
+    port: 3400,
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: isDevelopment ? 'http://localhost:3410' : 'http://api.nodemomobird.com',
+        target: 'http://localhost:3410',
         changeOrigin: true,
       },
     },

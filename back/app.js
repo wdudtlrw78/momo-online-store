@@ -24,9 +24,7 @@ mongoose
   .then(() => console.log('✅ MongoDB Connected..'))
   .catch((err) => console.log(err));
 
-const prod = process.env.NODE.ENV === 'production';
-
-if (prod) {
+if (process.env.NODE.ENV === 'production') {
   app.use(morgan('combined')); // 배포모드일 때는 좀더 log가 자세해져서 실제 접속자 ip도 알 수 있으며 디도스나 해킹시도 할 수 있으면 차단할 수 도있다.
   app.use(hpp());
   app.use(helmet());
@@ -46,15 +44,15 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-if (prod) {
-  app.use(express.static(path.join(__dirname, 'front/build')));
+if (process.env.NODE.ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'front/dist')));
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, '../front', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../front', 'dist', 'index.html'))
   );
 }
 
-const port = process.env.PORT || 3410;
-app.listen(3410, () => {
-  console.log(`✅ Server Listening on ${port}`);
+const PORT = 3410;
+app.listen(PORT, () => {
+  console.log(`✅ Server Listening on ${PORT}`);
 });
