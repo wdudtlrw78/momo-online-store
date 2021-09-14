@@ -1,7 +1,7 @@
 {
   "name": "momo-online-store",
   "version": "1.0.0",
-  "description": "",
+  "description": "momo",
   "main": "index.js",
   "scripts": {
     "dev": "webpack serve --env development",
