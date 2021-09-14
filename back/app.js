@@ -32,7 +32,7 @@ if (prod) {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'http://3.35.25.255',
+      origin: 'http://13.124.167.237',
       credentials: true,
     })
   );
