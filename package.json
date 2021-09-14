@@ -9,7 +9,7 @@
     "dev": "concurrently \"npm run backend\" \"cd ../front && npm run dev\"",
     "build": "cd front && npm run build",
     "install-front": "cd front && npm install",
-    "heroku-postbuild": "npm run install-front && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-front && npm run build"
   },
   "author": "momo",
   "license": "ISC",
