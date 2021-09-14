@@ -32,7 +32,7 @@ if (prod) {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'http://13.124.167.237',
+      origin: 'http://52.78.196.179',
       credentials: true,
     })
   );
@@ -63,14 +63,9 @@ if (prod) {
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(__dirname, '../front', 'build', 'index.html'))
   );
-
-  const port = process.env.PORT || 80;
-  app.listen(80, () => {
-    console.log(`✅ Server Listening on ${port}`);
-  });
-} else {
-  const port = process.env.PORT || 3410;
-  app.listen(3410, () => {
-    console.log(`✅ Server Listening on ${port}`);
-  });
 }
+
+const port = process.env.PORT || 3410;
+app.listen(3410, () => {
+  console.log(`✅ Server Listening on ${port}`);
+});
