@@ -24,13 +24,26 @@ mongoose
   .then(() => console.log('✅ MongoDB Connected..'))
   .catch((err) => console.log(err));
 
-app.use(cors());
-if (process.env.NODE.ENV === 'production') {
+const prod = process.env.NODE.ENV === 'production';
+
+if (prod) {
   app.use(morgan('combined')); // 배포모드일 때는 좀더 log가 자세해져서 실제 접속자 ip도 알 수 있으며 디도스나 해킹시도 할 수 있으면 차단할 수 도있다.
   app.use(hpp());
   app.use(helmet());
+  app.use(
+    cors({
+      origin: 'http://3.35.25.255',
+      credentials: true,
+    })
+  );
 } else {
   app.use(morgan('dev')); // 프론트에서 백엔드 요청 보낼 때 어떤 요청들 보냈는지 기록 (백엔드에서 디버깅하기 편리)
+  app.use(
+    cors({
+      origin: true,
+      credentials: true,
+    })
+  );
 }
 
 app.use(cookieParser());
@@ -44,15 +57,20 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-if (process.env.NODE.ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/front/build')));
+if (prod) {
+  app.use(express.static(path.join(__dirname, 'front/build')));
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'front', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../front', 'build', 'index.html'))
   );
-}
 
-const port = process.env.PORT || 3410;
-app.listen(3410, () => {
-  console.log(`✅ Server Listening on ${port}`);
-});
+  const port = process.env.PORT || 80;
+  app.listen(80, () => {
+    console.log(`✅ Server Listening on ${port}`);
+  });
+} else {
+  const port = process.env.PORT || 3410;
+  app.listen(3410, () => {
+    console.log(`✅ Server Listening on ${port}`);
+  });
+}

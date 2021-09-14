@@ -106,11 +106,11 @@ const config = {
 
   devServer: {
     historyApiFallback: true,
-    port: isDevelopment ? 3400 : 90,
+    port: isDevelopment ? 3400 : 80,
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: isDevelopment ? 'http://localhost:3410' : 'http://3.35.25.255',
+        target: isDevelopment ? 'http://localhost:3410' : 'http://3.34.53.118',
         changeOrigin: true,
       },
     },
