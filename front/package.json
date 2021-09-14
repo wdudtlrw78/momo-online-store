@@ -6,9 +6,6 @@
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "cross-env NODE_ENV=production webpack build",
-    "prod": "cd dist && npm run build",
-    "install-client": "cd dist && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "momo",
