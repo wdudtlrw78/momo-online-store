@@ -44,6 +44,14 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
+if (process.env.NODE.ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/front/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'front', 'build', 'index.html'))
+  );
+}
+
 const port = process.env.PORT || 3410;
 app.listen(3410, () => {
   console.log(`✅ Server Listening on ${port}`);
