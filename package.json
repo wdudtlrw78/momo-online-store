@@ -7,7 +7,9 @@
     "backend": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run backend\" \"cd ../front && npm run dev\"",
-    "heroku-postbuild": "npm install –prefix front && npm run build –prefix front"
+    "build": "cd front && npm run build",
+    "install-front": "cd front && npm install",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-front && npm run build"
   },
   "author": "momo",
   "license": "ISC",
