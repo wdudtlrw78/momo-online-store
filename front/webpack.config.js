@@ -95,7 +95,7 @@ const config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    publicPath: '/dist/',
+    publicPath: '/',
   },
 
   // webpack-dev-server@4 버전
