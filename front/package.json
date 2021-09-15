@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "momo",
   "main": "index.js",
+  "engines": {
+    "node": "12.18.4"
+  },
   "scripts": {
     "dev": "webpack serve --env development",
     "build": "cross-env NODE_ENV=production webpack build",

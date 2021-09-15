@@ -110,7 +110,7 @@ const config = {
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: 'http://localhost:3410',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },

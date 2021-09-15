@@ -32,18 +32,18 @@ app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('front/dist'));
-} else {
-  app.get('/', (req, res) => {
-    res.send('hello world!');
-  });
 }
+
+app.get('/', (req, res) => {
+  res.send('hello world!');
+});
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-const PORT = process.env.PORT || 3410;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server Listening on ${PORT}`);
 });
