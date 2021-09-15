@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
 mongoose
-  .connect(config.mongoURI, {
+  .connect(config.mongoURI || 'mongodb://localhost/momo-online-store', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
