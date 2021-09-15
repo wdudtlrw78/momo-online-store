@@ -14,8 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
+
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.MONGO_URL || 'mongodb://localhost/momo-online-store', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -30,11 +31,7 @@ app.use(cors());
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/front/dist')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'front', 'dist', 'index.html'))
-  );
+  app.use(express.static('front/dist'));
 } else {
   app.get('/', (req, res) => {
     res.send('hello world!');
@@ -46,7 +43,7 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-const PORT = 3410;
+const PORT = process.env.PORT || 3410;
 app.listen(PORT, () => {
   console.log(`✅ Server Listening on ${PORT}`);
 });
