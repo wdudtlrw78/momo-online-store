@@ -3,7 +3,9 @@ const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const config = require('./config/key');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
@@ -13,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
 mongoose
-  .connect(config.mongoURI || 'mongodb://localhost/momo-online-store', {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
