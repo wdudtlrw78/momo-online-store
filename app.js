@@ -31,12 +31,16 @@ app.use(cors());
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('front/dist'));
-}
+  app.use(express.static(path.join(__dirname, '/front/dist')));
 
-app.get('/', (req, res) => {
-  res.send('hello world!');
-});
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'front', 'dist', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('hello world!');
+  });
+}
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
