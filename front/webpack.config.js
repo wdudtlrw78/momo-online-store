@@ -27,8 +27,8 @@ const config = {
     },
   },
   entry: {
-    vendor: ['react', 'react-dom'],
-    app: ['./client'],
+    vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
+    app: ['@babel/polyfill', 'eventsource-polyfill', './client'],
   },
   module: {
     rules: [
@@ -44,6 +44,7 @@ const config = {
                   browsers: ['last 2 chrome versions'],
                 },
                 modules: false,
+                useBuiltIns: 'usage',
               },
             ],
             '@babel/preset-react',
