@@ -30,6 +30,8 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(cookieParser());
 
+const __dirname = path.resolve();
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '/front/dist')));
 
