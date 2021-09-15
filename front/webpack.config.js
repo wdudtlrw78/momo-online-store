@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+const PORT = process.env.PORT || 5000;
 
 const config = {
   name: 'momo-online-store',
@@ -105,7 +106,7 @@ const config = {
 
   devServer: {
     historyApiFallback: true,
-    port: 3400,
+    port: PORT,
     publicPath: '/dist/',
     proxy: {
       '/api': {
