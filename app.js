@@ -31,6 +31,11 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(cookieParser());
 
+app.use('/api/users', require('./routes/users'));
+app.use('/api/product', require('./routes/product'));
+
+app.use('/uploads', express.static('uploads'));
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'front/dist')));
 
@@ -42,11 +47,6 @@ if (process.env.NODE_ENV === 'production') {
     res.send('hello world!');
   });
 }
-
-app.use('/api/users', require('./routes/users'));
-app.use('/api/product', require('./routes/product'));
-
-app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
