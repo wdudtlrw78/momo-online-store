@@ -32,5 +32,5 @@ dev.js
 
 .vscode
 
-store-momo.pemnode_modules
+node_modules
 .env

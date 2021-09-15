@@ -31,7 +31,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'staging') {
   app.use(express.static(path.join(__dirname, 'front/dist')));
 
   app.get('*', (req, res) =>
