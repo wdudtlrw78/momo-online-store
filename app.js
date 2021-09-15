@@ -37,11 +37,7 @@ app.use('/api/product', require('./routes/product'));
 app.use('/uploads', express.static('uploads'));
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'front/dist')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(path.join(__dirname, 'front/dist', 'index.html'))
-  );
+  app.use(express.static('front/dist'));
 } else {
   app.get('/', (req, res) => {
     res.send('hello world!');
