@@ -128,7 +128,6 @@ if (!isDevelopment && config.plugins) {
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
   config.plugins.push(
     new HtmlWebpackPlugin({
-      title: 'MOMO',
       minify: { collapseWhitespace: true },
       hash: true,
       template: './index.html',
