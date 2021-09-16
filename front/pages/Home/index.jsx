@@ -15,12 +15,8 @@ function HomeScreen() {
     <>
       <section>
         <div className="visual__images-container">
-          <img
-            src="../../images/Home/17df248b5916571a727a9cae3d2150b1.jpg"
-            className="visual__images-left"
-            alt="visual"
-          />
-          <img src="../../images/Home/UDJA1C101G2_2.jpg" className="visual__images-right" alt="visual" />
+          <img src="../../images/17df248b5916571a727a9cae3d2150b1.jpg" className="visual__images-left" alt="visual" />
+          <img src="../../images/UDJA1C101G2_2.jpg" className="visual__images-right" alt="visual" />
         </div>
         <div className="inner">
           <div className="visual-container">

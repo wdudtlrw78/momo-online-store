@@ -61,6 +61,7 @@ const config = {
         test: /\.(png|jpe?g|gif)$/i,
         loader: 'file-loader',
         options: {
+          publicPath: '/dist',
           name: '[path][name].[ext]',
         },
       },
