@@ -1,6 +1,5 @@
 {
   "name": "back",
-  "homepage": "https://storemomo.herokuapp.com/",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",

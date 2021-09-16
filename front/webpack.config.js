@@ -7,7 +7,6 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
 
 const config = {
   name: 'momo-online-store',
@@ -28,8 +27,7 @@ const config = {
     },
   },
   entry: {
-    vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
-    app: ['@babel/polyfill', 'eventsource-polyfill', './client'],
+    app: './client',
   },
   module: {
     rules: [
@@ -44,8 +42,6 @@ const config = {
                 targets: {
                   browsers: ['last 2 chrome versions'],
                 },
-                modules: false,
-                useBuiltIns: 'usage',
               },
             ],
             '@babel/preset-react',
@@ -95,7 +91,7 @@ const config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    publicPath: '/',
+    publicPath: '/dist/',
   },
 
   // webpack-dev-server@4 버전
@@ -111,7 +107,7 @@ const config = {
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: `http://localhost:${PORT}`,
+        target: 'http://localhost:5000',
         changeOrigin: true,
       },
     },
