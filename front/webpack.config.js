@@ -85,7 +85,7 @@ const config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/dist/',
+    publicPath: '/',
   },
 
   // webpack-dev-server@4 버전
@@ -98,7 +98,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     port: 3400,
-    publicPath: '/dist/',
+    publicPath: '/',
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',
