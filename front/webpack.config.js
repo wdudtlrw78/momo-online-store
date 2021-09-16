@@ -61,12 +61,7 @@ const config = {
         test: /\.(png|jpe?g|gif)$/i,
         loader: 'file-loader',
         options: {
-          name() {
-            if (isDevelopment) {
-              return '[path][name].[ext]';
-            }
-            return '[contenthash].[ext]';
-          },
+          name: '[path][name].[ext]',
         },
       },
     ],
