@@ -1,7 +1,8 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "",
+  "description": "store momo",
+  "homepage": "https://storemomo.herokuapp.com/",
   "main": "app.js",
   "engines": {
     "node": "12.x",

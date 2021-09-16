@@ -1,6 +1,7 @@
 {
   "name": "momo-online-store",
   "version": "1.0.0",
+  "homepage": "https://storemomo.herokuapp.com/",
   "description": "momo",
   "main": "index.js",
   "engines": {
