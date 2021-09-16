@@ -61,12 +61,16 @@ const config = {
         test: /\.(png|jpe?g|gif)$/i,
         loader: 'file-loader',
         options: {
-          name() {
-            if (isDevelopment) {
-              return '[path][name].[ext]';
-            }
-            return '[contenthash].[ext]';
-          },
+          name: 'images/[name].[ext]',
+        },
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          fallback: 'file-loader',
+          name: 'images/[name].[ext]',
         },
       },
     ],
