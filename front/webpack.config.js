@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -56,7 +55,7 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -77,11 +76,6 @@ const config = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: isDevelopment ? 'development' : 'production',
     }),
-
-    new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[contenthash].css',
-    }),
   ],
 
   performance: {
@@ -90,7 +84,7 @@ const config = {
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     publicPath: '/dist/',
   },
 
@@ -123,7 +117,7 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-  config.plugins.push(new HtmlWebpackPlugin({ title: 'Momo Store', base: { href: '/' } }));
+  config.plugins.push(new HtmlWebpackPlugin({ template: './index.html' }));
   config.plugins.push(new CleanWebpackPlugin());
 }
 
