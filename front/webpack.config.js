@@ -107,7 +107,7 @@ const config = {
     publicPath: '/dist/',
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://127.0.0.1:5000',
         changeOrigin: true,
       },
     },
@@ -123,7 +123,7 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-  config.plugins.push(new HtmlWebpackPlugin({ title: 'Momo Store' }));
+  config.plugins.push(new HtmlWebpackPlugin({ title: 'Momo Store', base: { href: '/' } }));
   config.plugins.push(new CleanWebpackPlugin());
 }
 
