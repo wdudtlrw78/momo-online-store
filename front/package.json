@@ -1,6 +1,7 @@
 {
   "name": "momo-online-store",
   "version": "1.0.0",
+  "homepage": ".",
   "description": "momo",
   "main": "index.js",
   "engines": {
