@@ -3,7 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+<<<<<<< HEAD
 const { Product } = require('../../../models/Product');
+=======
+const { Product } = require('../models/Product');
+>>>>>>> 3d518474dbd31a45aa00488595ca77e03fdb0a22
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -1,10 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -27,8 +26,7 @@ const config = {
     },
   },
   entry: {
-    vendor: ['@babel/polyfill', 'eventsource-polyfill', 'react', 'react-dom'],
-    app: ['@babel/polyfill', 'eventsource-polyfill', './client'],
+    app: './client',
   },
   module: {
     rules: [
@@ -43,8 +41,6 @@ const config = {
                 targets: {
                   browsers: ['last 2 chrome versions'],
                 },
-                modules: false,
-                useBuiltIns: 'usage',
               },
             ],
             '@babel/preset-react',
@@ -59,18 +55,22 @@ const config = {
       },
       {
         test: /\.scss$/,
-        use: [isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         loader: 'file-loader',
         options: {
-          name() {
-            if (isDevelopment) {
-              return '[path][name].[ext]';
-            }
-            return '[contenthash].[ext]';
-          },
+          name: 'images/[name].[ext]',
+        },
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          fallback: 'file-loader',
+          name: 'images/[name].[ext]',
         },
       },
     ],
@@ -80,11 +80,6 @@ const config = {
     new webpack.EnvironmentPlugin({
       NODE_ENV: isDevelopment ? 'development' : 'production',
     }),
-
-    new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[contenthash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[contenthash].css',
-    }),
   ],
 
   performance: {
@@ -93,8 +88,8 @@ const config = {
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    publicPath: '/dist/',
+    filename: '[name].js',
+    publicPath: '/',
   },
 
   // webpack-dev-server@4 버전
@@ -107,10 +102,10 @@ const config = {
   devServer: {
     historyApiFallback: true,
     port: 3400,
-    publicPath: '/dist/',
+    publicPath: '/',
     proxy: {
       '/api': {
-        target: 'http://localhost:3410',
+        target: 'http://127.0.0.1:5000',
         changeOrigin: true,
       },
     },
@@ -126,6 +121,7 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+<<<<<<< HEAD
   config.plugins.push(
     new HtmlWebpackPlugin({
       minify: { collapseWhitespace: true },
@@ -133,6 +129,9 @@ if (!isDevelopment && config.plugins) {
       template: './index.html',
     }),
   );
+=======
+  config.plugins.push(new HtmlWebpackPlugin({ template: './index.html' }));
+>>>>>>> 3d518474dbd31a45aa00488595ca77e03fdb0a22
   config.plugins.push(new CleanWebpackPlugin());
 }
 

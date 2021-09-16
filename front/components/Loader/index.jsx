@@ -1,5 +1,5 @@
 import React from 'react';
-import loadingGif from '../../public/Loading.gif';
+import loadingGif from '../../images/Loading.gif';
 
 function Loader() {
   return (

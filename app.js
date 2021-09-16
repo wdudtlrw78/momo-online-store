@@ -1,11 +1,12 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const config = require('./config/key');
+const dotenv = require('dotenv');
 
-app.use(cors());
+dotenv.config();
 
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
@@ -14,8 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require('mongoose');
+
 mongoose
-  .connect(config.mongoURI, {
+  .connect(process.env.MONGO_URL || 'mongodb://localhost/momo-online-store', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -24,21 +26,28 @@ mongoose
   .then(() => console.log('✅ MongoDB Connected..'))
   .catch((err) => console.log(err));
 
-// 프론트에서 백엔드 요청 보낼 때 어떤 요청들 보냈는지 기록 (백엔드에서 디버깅)
 app.use(morgan('dev'));
 
+app.use(cors());
 app.use(cookieParser());
-
-app.get('/', function (req, res) {
-  res.send('hello world');
-});
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-const port = process.env.PORT || 3410;
-app.listen(3410, () => {
-  console.log(`✅ Server Listening on ${port}`);
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'front/dist')));
+
+  const root = path.join(__dirname, 'front', 'dist');
+  app.get('*', (req, res) => res.sendFile('index.html', { root }));
+} else {
+  app.get('/', (req, res) => {
+    res.send('hello world!');
+  });
+}
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Server Listening on ${PORT}`);
 });
