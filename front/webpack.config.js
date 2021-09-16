@@ -121,7 +121,7 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-<<<<<<< HEAD
+
   config.plugins.push(
     new HtmlWebpackPlugin({
       minify: { collapseWhitespace: true },
@@ -129,9 +129,7 @@ if (!isDevelopment && config.plugins) {
       template: './index.html',
     }),
   );
-=======
-  config.plugins.push(new HtmlWebpackPlugin({ template: './index.html' }));
->>>>>>> 3d518474dbd31a45aa00488595ca77e03fdb0a22
+
   config.plugins.push(new CleanWebpackPlugin());
 }
 

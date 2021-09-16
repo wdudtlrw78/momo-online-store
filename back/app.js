@@ -1,12 +1,9 @@
-const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const config = require('./config/key');
 
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
@@ -17,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const mongoose = require('mongoose');
 
 mongoose
-  .connect(process.env.MONGO_URL || 'mongodb://localhost/momo-online-store', {
+  .connect(config.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -34,18 +31,11 @@ app.use(cookieParser());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static('uploads'));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'front/dist')));
-
-  const root = path.join(__dirname, 'front', 'dist');
-  app.get('*', (req, res) => res.sendFile('index.html', { root }));
-} else {
-  app.get('/', (req, res) => {
-    res.send('hello world!');
-  });
-}
+app.get('/', (req, res) => {
+  res.send('hello world!');
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

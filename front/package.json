@@ -8,7 +8,7 @@
     "node": "12.18.4"
   },
   "scripts": {
-    "start": "webpack serve --env development",
+    "dev": "webpack serve --env development",
     "build": "cross-env NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

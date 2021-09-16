@@ -4,8 +4,6 @@ import Loader from '@components/Loader';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import leftImage from '../../images/17df248b5916571a727a9cae3d2150b1.jpg';
-import rightImage from '../../images/UDJA1C101G2_2.jpg';
 
 function HomeScreen() {
   const { authLoading } = useSelector((state) => state.user);
@@ -17,8 +15,12 @@ function HomeScreen() {
     <>
       <section>
         <div className="visual__images-container">
-          <img src={leftImage} className="visual__images-left" alt="visual" />
-          <img src={rightImage} className="visual__images-right" alt="visual" />
+          <img
+            src="../../public/Home/17df248b5916571a727a9cae3d2150b1.jpg"
+            className="visual__images-left"
+            alt="visual"
+          />
+          <img src="../../public/Home/UDJA1C101G2_2.jpg" className="visual__images-right" alt="visual" />
         </div>
         <div className="inner">
           <div className="visual-container">

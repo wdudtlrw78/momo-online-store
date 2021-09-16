@@ -1,15 +1,9 @@
 const express = require('express');
-<<<<<<< HEAD
-const { auth } = require('../../../middleware/auth');
-const { User } = require('../../../models/User');
-const { Payment } = require('../../../models/Payment');
-const { Product } = require('../../../models/Product');
-=======
 const { auth } = require('../middleware/auth');
 const { User } = require('../models/User');
 const { Payment } = require('../models/Payment');
 const { Product } = require('../models/Product');
->>>>>>> 3d518474dbd31a45aa00488595ca77e03fdb0a22
+
 const router = express.Router();
 const async = require('async');
 
