@@ -10,6 +10,8 @@ const helmet = require('helmet');
 
 dotenv.config();
 
+app.use(express.static(path.join(__dirname, 'front/dist')));
+
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
 
@@ -47,10 +49,8 @@ app.use('/api/product', require('./back/routes/product'));
 app.use('/uploads', express.static('uploads'));
 
 if (prod) {
-  app.use(express.static(path.join(__dirname, './front/dist')));
-
   app.get('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, './front', 'index.html'));
+    res.sendFile(path.join(__dirname, 'front', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
