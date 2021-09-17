@@ -47,10 +47,10 @@ app.use('/api/product', require('./back/routes/product'));
 app.use('/uploads', express.static('uploads'));
 
 if (prod) {
-  app.use(express.static(path.join(__dirname, 'back/public')));
+  app.use(express.static(path.join(__dirname, 'front/dist')));
 
   app.get('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, 'back/public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'front', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
