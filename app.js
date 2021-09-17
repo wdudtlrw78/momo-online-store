@@ -4,10 +4,9 @@ const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const dotenv = require('dotenv');
 const hpp = require('hpp');
 const helmet = require('helmet');
-
-const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -42,16 +41,16 @@ if (prod) {
 app.use(cors());
 app.use(cookieParser());
 
-app.use('/api/users', require('./routes/users'));
-app.use('/api/product', require('./routes/product'));
+app.use('/api/users', require('./back/routes/users'));
+app.use('/api/product', require('./back/routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
 if (prod) {
-  app.use(express.static(path.join(__dirname, '../front', 'dist')));
+  app.use(express.static(path.join(__dirname, 'front', 'dist')));
 
   app.get('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../front', 'index.html'));
+    res.sendFile(path.join(__dirname, 'front', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
