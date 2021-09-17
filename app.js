@@ -46,7 +46,7 @@ app.use(cookieParser());
 app.use('/api/users', require('./back/routes/users'));
 app.use('/api/product', require('./back/routes/product'));
 
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 if (prod) {
   app.get('*', (req, res, next) => {

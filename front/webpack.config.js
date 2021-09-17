@@ -5,14 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
 const config = {
   name: 'momo-online-store',
-  mode: isDevelopment ? 'development' : 'production',
-  devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'eval',
   resolve: {
-    extensions: ['.js', '.jsx', 'json'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       '@components': path.resolve(__dirname, 'components'),
       '@layouts': path.resolve(__dirname, 'layouts'),
@@ -67,11 +65,7 @@ const config = {
     ],
   },
 
-  plugins: [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: isDevelopment ? 'development' : 'production',
-    }),
-  ],
+  plugins: [new webpack.EnvironmentPlugin(['NODE_ENV'])],
 
   output: {
     path: path.join(__dirname, 'dist'),
@@ -99,13 +93,13 @@ const config = {
   },
 };
 
-if (isDevelopment && config.plugins) {
+if (process.env.NODE_ENV !== 'production' && config.plugins) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.plugins.push(new ReactRefreshWebpackPlugin());
   // config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
 }
 
-if (!isDevelopment && config.plugins) {
+if (process.env.NODE_ENV === 'production' && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
   config.plugins.push(new HtmlWebpackPlugin({ template: './index.html', hash: true, minify: true }));
