@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 const mongoose = require('mongoose');
 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
