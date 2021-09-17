@@ -34,7 +34,7 @@ const prod = process.env.NODE_ENV === 'production';
 
 if (prod) {
   app.use(morgan('combined'));
-  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(helmet());
   app.use(hpp());
 } else {
   app.use(morgan('dev'));
