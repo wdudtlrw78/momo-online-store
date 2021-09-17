@@ -3,16 +3,15 @@ const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config = {
   name: 'momo-online-store',
   mode: isDevelopment ? 'development' : 'production',
-  devtool: isDevelopment ? 'eval' : 'hidden-source-map',
+  devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', 'json'],
     alias: {
       '@components': path.resolve(__dirname, 'components'),
       '@layouts': path.resolve(__dirname, 'layouts'),
@@ -59,18 +58,9 @@ const config = {
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
-        loader: 'file-loader',
-        options: {
-          name: 'images/[name].[ext]',
-        },
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          fallback: 'file-loader',
-          name: 'images/[name].[ext]',
         },
       },
     ],
@@ -82,14 +72,10 @@ const config = {
     }),
   ],
 
-  performance: {
-    hints: false,
-  },
-
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/',
+    publicPath: '/dist/',
   },
 
   // webpack-dev-server@4 버전
@@ -102,7 +88,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     port: 3400,
-    publicPath: '/',
+    publicPath: '/dist/',
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',
@@ -121,14 +107,6 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-
-  config.plugins.push(
-    new HtmlWebpackPlugin({
-      minify: { collapseWhitespace: true },
-      hash: true,
-      template: './index.html',
-    }),
-  );
 
   config.plugins.push(new CleanWebpackPlugin());
 }

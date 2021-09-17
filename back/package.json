@@ -1,15 +1,14 @@
 {
   "name": "back",
   "version": "1.0.0",
-  "description": "store momo",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "backend": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run backend\" \"cd ../front && npm run dev\"",
-    "build": "cd front && npm run build",
-    "install-front": "cd front && npm install",
+    "build": "cd ../front && npm run build",
+    "install-front": "cd ../front && npm install",
     "heroku-postbuild": "npm run install-front && npm run build"
   },
   "author": "momo",
@@ -28,8 +27,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.13.7",
     "morgan": "^1.10.0",
-    "multer": "^1.4.3",
-    "pm2": "^5.1.1"
+    "multer": "^1.4.3"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",

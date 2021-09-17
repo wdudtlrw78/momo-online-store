@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-const config = require('./config/key');
+const hpp = require('hpp');
+const helmet = require('helmet');
+
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
 app.use(express.json());
@@ -14,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 const mongoose = require('mongoose');
 
 mongoose
-  .connect(config.mongoURI, {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -23,7 +29,15 @@ mongoose
   .then(() => console.log('✅ MongoDB Connected..'))
   .catch((err) => console.log(err));
 
-app.use(morgan('dev'));
+const prod = process.env.NODE_ENV === 'production';
+
+if (prod) {
+  app.use(morgan('combined'));
+  app.use(helmet({ contentSecurityPolicy: false }));
+  app.use(hpp());
+} else {
+  app.use(morgan('dev'));
+}
 
 app.use(cors());
 app.use(cookieParser());
@@ -33,9 +47,17 @@ app.use('/api/product', require('./routes/product'));
 
 app.use('/uploads', express.static('uploads'));
 
-app.get('/', (req, res) => {
-  res.send('hello world!');
-});
+if (prod) {
+  app.use(express.static(path.join(__dirname, '../front', 'dist')));
+
+  app.get('*', (req, res, next) => {
+    res.sendFile(path.join(__dirname, '../front', 'index.html'));
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.send('hello world!');
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
