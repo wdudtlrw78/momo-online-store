@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
@@ -75,7 +76,7 @@ const config = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/dist/',
+    publicPath: '/',
   },
 
   // webpack-dev-server@4 버전
@@ -88,7 +89,7 @@ const config = {
   devServer: {
     historyApiFallback: true,
     port: 3400,
-    publicPath: '/dist/',
+    publicPath: '/',
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:5000',
@@ -107,7 +108,7 @@ if (isDevelopment && config.plugins) {
 if (!isDevelopment && config.plugins) {
   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-
+  config.plugins.push(new HtmlWebpackPlugin({ template: './index.html', hash: true, minify: true }));
   config.plugins.push(new CleanWebpackPlugin());
 }
 

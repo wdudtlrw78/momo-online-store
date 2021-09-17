@@ -50,7 +50,7 @@ app.use('/uploads', express.static('uploads'));
 
 if (prod) {
   app.get('*', (req, res, next) => {
-    res.sendFile(path.join(__dirname, 'front', 'index.html'));
+    res.sendFile(path.join(__dirname, 'front/dist', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
