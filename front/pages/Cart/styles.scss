@@ -1,6 +1,7 @@
 @import 'scss/main';
 
 .cart-container {
+  height: 70vh;
   .cart__title {
     font-weight: 500;
     font-size: 1.5rem;
@@ -10,6 +11,7 @@
 
   .cart__empty {
     text-align: center;
+    margin-top: 5rem;
   }
 
   .cart_card-block {

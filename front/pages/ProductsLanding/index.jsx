@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './styles.scss';
-import ProductCard from '@components/ProductCard';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { PRODUCT_SERVER } from '@config/config';
 import { clothes, price } from '@lib/Datas';
+import axios from 'axios';
+import ProductCard from '@components/ProductCard';
 import CategoryBox from '@components/CategoryBox';
 import PriceBox from '@components/PriceBox';
 import SearchFeature from '@components/SearchFeature';
+import Loader from '@components/Loader';
 
 function ProductsLanding() {
   const [Products, setProducts] = useState([]);
@@ -19,6 +21,8 @@ function ProductsLanding() {
     category: [],
     price: [],
   });
+
+  const { authLoading } = useSelector((state) => state.user);
 
   const getProducts = useCallback(
     (body) => {
@@ -121,6 +125,10 @@ function ProductsLanding() {
     },
     [Limit, Filters],
   );
+
+  if (authLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

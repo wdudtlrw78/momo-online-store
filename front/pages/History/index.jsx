@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '@config/config';
 import '@components/UserCardBlock/styles.scss';
+import Loader from '@components/Loader';
 
 function History() {
-  const { userData } = useSelector((state) => state.user);
+  const { userData, authLoading } = useSelector((state) => state.user);
 
   const [showHistory, setShowHistory] = useState(false);
 
@@ -20,6 +21,10 @@ function History() {
       return `${SERVER_URL}/${image}`;
     }
   }, []);
+
+  if (authLoading) {
+    return <Loader />;
+  }
   return (
     <>
       <div

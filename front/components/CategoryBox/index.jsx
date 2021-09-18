@@ -19,7 +19,6 @@ function CategoryBox({ list, handleFilters }) {
 
       setChecked(newChecked);
       handleFilters(newChecked);
-      console.log('handleFiltersChecked', newChecked);
     },
     [Checked, handleFilters],
   );

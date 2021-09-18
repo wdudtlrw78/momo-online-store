@@ -9,13 +9,15 @@ import './styles.scss';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import useInput from '@hooks/useInput';
+import Loader from '@components/Loader';
 
 function DetailProductPage({ match }) {
   const productId = match.params.productId;
 
-  const { userData } = useSelector((state) => state.user);
+  const { userData, authLoading } = useSelector((state) => state.user);
 
   const [Product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [Rating, onChangeRating, setRating] = useInput('');
   const [Comment, onChangeComment, setComment] = useInput('');
   const [Reviews, setReviews] = useState([]);
@@ -71,6 +73,10 @@ function DetailProductPage({ match }) {
     },
     [Rating, Comment, userData],
   );
+
+  if (authLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

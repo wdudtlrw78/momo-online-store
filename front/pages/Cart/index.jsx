@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 import axios from 'axios';
 import UserCardBlock from '@components/UserCardBlock';
+import Loader from '@components/Loader';
 import { REMOVE_CART_ITEM, SUCCESS_BUY_REQUEST } from '@_reducers/user';
 import { PRODUCT_SERVER, USER_SERVER } from '@config/config';
 import Paypal from '@lib/Paypal';
@@ -11,7 +12,7 @@ import Paypal from '@lib/Paypal';
 function CartPage() {
   const dispatch = useDispatch();
 
-  const { userData, successBuyDone } = useSelector((state) => state.user);
+  const { userData, successBuyDone, authLoading } = useSelector((state) => state.user);
 
   const [CartDetail, setCartDetail] = useState([]);
   const [Total, setTotal] = useState(0);
@@ -67,34 +68,31 @@ function CartPage() {
     }
   }, [successBuyDone]);
 
-  const removeFromCart = useCallback(
-    (productId) => {
-      axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`).then((response) => {
-        // productInfo, cart 정보를 조합해서 CartDetail을 만든다.
-        response.data.cart.forEach((item) => {
-          response.data.productInfo.forEach((product, index) => {
-            if (item.id === product._id) {
-              response.data.productInfo[index].quantity = item.quantity;
-            }
-          });
+  const removeFromCart = useCallback((productId) => {
+    axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`).then((response) => {
+      // productInfo, cart 정보를 조합해서 CartDetail을 만든다.
+      response.data.cart.forEach((item) => {
+        response.data.productInfo.forEach((product, index) => {
+          if (item.id === product._id) {
+            response.data.productInfo[index].quantity = item.quantity;
+          }
         });
-
-        if (response.data.success) {
-          setCartDetail(response.data.productInfo);
-          calculateTotal(response.data.productInfo);
-          dispatch({
-            type: REMOVE_CART_ITEM,
-            data: response.data.cart,
-          });
-        }
-
-        if (response.data.productInfo.length <= 0) {
-          setShowTotal(false);
-        }
       });
-    },
-    [userData],
-  );
+
+      if (response.data.success) {
+        setCartDetail(response.data.productInfo);
+        calculateTotal(response.data.productInfo);
+        dispatch({
+          type: REMOVE_CART_ITEM,
+          data: response.data.cart,
+        });
+      }
+
+      if (response.data.productInfo.length <= 0) {
+        setShowTotal(false);
+      }
+    });
+  }, []);
 
   const onSuccess = useCallback(
     (paymentData) => {
@@ -108,6 +106,10 @@ function CartPage() {
     },
     [CartDetail],
   );
+
+  if (authLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="cart-container">

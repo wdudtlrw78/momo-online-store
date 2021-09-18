@@ -58,7 +58,7 @@ const config = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|ico)$/i,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -70,6 +70,7 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
+      favicon: './public/favicon.ico',
       hash: true,
       minify: true,
     }),
