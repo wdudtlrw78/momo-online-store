@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "pm2 start app.js",
+    "start": "node app.js",
     "backend": "nodemon app.js",
+    "pm2": "pm2 start app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run backend\" \"cd front && npm run dev\"",
     "build": "cd front && npm run build",
