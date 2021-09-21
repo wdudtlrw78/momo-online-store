@@ -30,15 +30,18 @@ function DetailProductPage({ match }) {
           setProduct(response.data.product[0]);
         }
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   }, [productId]);
 
   useEffect(() => {
-    axios.get(`${PRODUCT_SERVER}/product/${productId}/reviews`).then((response) => {
-      if (response.data.success) {
-        setReviews(...response.data.productReview);
-      }
-    });
+    axios
+      .get(`${PRODUCT_SERVER}/product/${productId}/reviews`)
+      .then((response) => {
+        if (response.data.success) {
+          setReviews(...response.data.productReview);
+        }
+      })
+      .catch((err) => console.log(err));
   }, [productId]);
 
   const commentRef = useRef(null);

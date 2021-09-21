@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import { PRODUCT_SERVER } from '@config/config';
@@ -14,7 +14,6 @@ function ProductsLanding() {
   const [Products, setProducts] = useState([]);
   const [Skip, setSkip] = useState(0);
   const [Limit, setLimit] = useState(12);
-  const [LoadMore, setLoadMore] = useState(false);
   const [SearchTerm, setSearchTerm] = useState('');
   const [PostSize, setPostSize] = useState(0);
   const [Filters, setFilters] = useState({
@@ -24,12 +23,14 @@ function ProductsLanding() {
 
   const { authLoading } = useSelector((state) => state.user);
 
-  const getProducts = useCallback(
-    (body) => {
-      axios.post(`${PRODUCT_SERVER}/shop`, body).then((response) => {
+  const getProducts = (body) => {
+    axios
+      .post(`${PRODUCT_SERVER}/shop`, body)
+      .then((response) => {
         if (response.data.success) {
-          if (LoadMore) {
+          if (body.loadMore) {
             setProducts([...Products, ...response.data.productInfo]);
+            setFilters();
           } else {
             setProducts(response.data.productInfo);
           }
@@ -37,50 +38,47 @@ function ProductsLanding() {
         } else {
           alert('Failed to bring the products.');
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    },
-    [LoadMore, Products],
-  );
+  };
 
   useEffect(() => {
-    setLoadMore(false);
-
     const body = {
       skip: Skip,
       limit: Limit,
     };
 
     getProducts(body);
-  }, [Skip, Limit]);
+  }, []);
 
-  const onClickLoadMore = useCallback(() => {
+  const onClickLoadMore = () => {
     const skip = Skip + Limit;
 
     const body = {
       skip,
       limit: Limit,
+      loadMore: true,
+      filters: Filters,
     };
 
     getProducts(body);
     setSkip(skip);
-    setLoadMore(true);
-  }, [Limit, Skip + Limit]);
+  };
 
-  const showFilterResults = useCallback(
-    (filters) => {
-      const body = {
-        skip: 0,
-        limit: Limit,
-        filters,
-      };
+  const showFilterResults = (filters) => {
+    const body = {
+      skip: 0,
+      limit: Limit,
+      filters,
+    };
 
-      getProducts(body);
-      setSkip(0);
-    },
-    [Limit],
-  );
+    getProducts(body);
+    setSkip(0);
+  };
 
-  const handlePrice = useCallback((value) => {
+  const handlePrice = (value) => {
     const data = price;
     let array = [];
 
@@ -91,40 +89,34 @@ function ProductsLanding() {
     }
 
     return array;
-  }, []);
+  };
 
-  const handleFilters = useCallback(
-    (filters, category) => {
-      const newFilters = { ...Filters };
+  const handleFilters = (filters, category) => {
+    const newFilters = { ...Filters };
 
-      newFilters[category] = filters;
+    newFilters[category] = filters;
 
-      if (category === 'price') {
-        const priceValues = handlePrice(filters);
-        newFilters[category] = priceValues;
-      }
+    if (category === 'price') {
+      const priceValues = handlePrice(filters);
+      newFilters[category] = priceValues;
+    }
 
-      showFilterResults(newFilters);
-      setFilters(newFilters);
-    },
-    [Filters],
-  );
+    showFilterResults(newFilters);
+    setFilters(newFilters);
+  };
 
-  const updateSearchTerm = useCallback(
-    (newSearchTerm) => {
-      const body = {
-        skip: 0,
-        limit: Limit,
-        filters: Filters,
-        searchTerm: newSearchTerm,
-      };
+  const updateSearchTerm = (newSearchTerm) => {
+    const body = {
+      skip: 0,
+      limit: Limit,
+      filters: Filters,
+      searchTerm: newSearchTerm,
+    };
 
-      setSkip(0);
-      setSearchTerm(newSearchTerm);
-      getProducts(body);
-    },
-    [Limit, Filters],
-  );
+    setSkip(0);
+    setSearchTerm(newSearchTerm);
+    getProducts(body);
+  };
 
   if (authLoading) {
     return <Loader />;

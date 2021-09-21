@@ -1,6 +1,5 @@
 import React from 'react';
 import Loader from '@components/Loader';
-
 import './styles.scss';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

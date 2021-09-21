@@ -1,9 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
-
 import './styles.scss';
-
 import { SERVER_URL } from '@config/config';
 import axios from 'axios';
 import { PRODUCT_SERVER } from '../../config/config';
@@ -34,7 +32,6 @@ function FileUpload({ updateImages }) {
 
   const onRemoveDrop = useCallback(
     (image) => {
-      console.log(image);
       const currentIndex = images.indexOf(image);
 
       const newImages = [...images];

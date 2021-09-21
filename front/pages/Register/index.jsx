@@ -117,7 +117,8 @@ function Register({ history }) {
         {passwordError && <p className="error-message">Passwords do not match</p>}
 
         <p className="link-container">
-          Have an Account? <Link to="/login">LOGIN</Link>
+          Have an Account?&nbsp;
+          <Link to="/login">LOGIN</Link>
         </p>
       </div>
     </div>

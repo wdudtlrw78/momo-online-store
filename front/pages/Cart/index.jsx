@@ -55,7 +55,7 @@ function CartPage() {
               calculateTotal(response.data.product);
             }
           })
-          .catch((err) => alert(err));
+          .catch((err) => console.log(err));
       }
     }
   }, [userData]);
@@ -142,9 +142,5 @@ function CartPage() {
     </div>
   );
 }
-
-CartPage.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};
 
 export default CartPage;

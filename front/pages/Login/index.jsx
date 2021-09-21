@@ -71,7 +71,8 @@ function Login({ history }) {
         </form>
 
         <p className="link-container">
-          New Customer? <Link to="/register">REGISTER</Link>
+          New Customer?&nbsp;
+          <Link to="/register">REGISTER</Link>
         </p>
       </div>
     </div>

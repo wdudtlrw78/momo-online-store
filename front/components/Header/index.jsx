@@ -33,13 +33,13 @@ function Header() {
         </Link>
 
         <div className="nav__right__group">
-          {userData && userData.isAuth && userData.isAdmin && (
+          {userData?.isAuth && userData.isAdmin && (
             <Link to="/admin" className="admin desktop">
               ADMIN
             </Link>
           )}
 
-          {userData && userData.isAuth ? (
+          {userData?.isAuth ? (
             <>
               <Link to="/shop" className="shop desktop">
                 SHOP
@@ -58,7 +58,7 @@ function Header() {
           )}
 
           <Link to="/user/cart" className="nav__cart-btn">
-            CART({userData && userData.cart ? userData && userData.cart.length : 0})
+            CART({userData?.cart ? userData?.cart.length : 0})
           </Link>
         </div>
       </nav>

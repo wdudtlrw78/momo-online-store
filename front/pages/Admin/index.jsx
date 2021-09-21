@@ -46,16 +46,19 @@ function Admin({ history }) {
         images,
       };
 
-      axios.post(`${PRODUCT_SERVER}`, body).then((response) => {
-        if (response.data.success) {
-          alert('The product upload was successful.');
-          history.push('/shop');
-        } else {
-          alert('Failed to upload product information');
-        }
-      });
+      axios
+        .post(`${PRODUCT_SERVER}`, body)
+        .then((response) => {
+          if (response.data.success) {
+            alert('The product upload was successful.');
+            history.push('/shop');
+          } else {
+            alert('Failed to upload product information');
+          }
+        })
+        .catch((err) => console.log(err));
     },
-    [userData?._id, category, title, description, price, images],
+    [userData, category, title, description, price, images],
   );
 
   const updateImages = useCallback((newImages) => {
