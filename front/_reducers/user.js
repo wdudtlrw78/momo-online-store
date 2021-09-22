@@ -77,6 +77,7 @@ export default function user(state = initialState, action) {
         authLoading: false,
         authDone: true,
         logOutDone: false,
+        registerDone: false,
         userData: action.data,
       };
     case AUTH_FAILURE:

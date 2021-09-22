@@ -75,7 +75,7 @@ function* login(action) {
       type: LOG_IN_SUCCESS,
       data: result.data,
     });
-    localStorage.setItem('CURRENT_USER', JSON.stringify(result.data));
+    // localStorage.setItem('CURRENT_USER', JSON.stringify(result.data));
   } catch (err) {
     console.error(err);
     yield put({
@@ -96,7 +96,7 @@ function* logout() {
       type: LOG_OUT_SUCCESS,
     });
 
-    localStorage.removeItem('CURRENT_USER');
+    // localStorage.removeItem('CURRENT_USER');
   } catch (err) {
     console.error(err);
     yield put({

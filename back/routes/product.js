@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }).single('file');
 
 try {
   fs.accessSync('uploads');
@@ -26,7 +26,7 @@ try {
   fs.mkdirSync('uploads');
 }
 
-router.post('/image', upload.single('file'), (req, res) => {
+router.post('/image', upload, (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       return res.status(400).json({ success: false, err });

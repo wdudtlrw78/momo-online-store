@@ -59,6 +59,7 @@ userSchema.methods.checkEmail = function (email, callback) {
     callback(err, user);
   });
 };
+
 userSchema.pre('save', function (next) {
   const user = this;
 

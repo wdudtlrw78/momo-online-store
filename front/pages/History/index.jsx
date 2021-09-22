@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '@config/config';
 import '@components/UserCardBlock/styles.scss';
 import Loader from '@components/Loader';
 
-function History() {
+function History({ history }) {
   const { userData, authLoading } = useSelector((state) => state.user);
 
   const [showHistory, setShowHistory] = useState(false);
@@ -15,16 +16,25 @@ function History() {
     }
   }, [userData]);
 
-  const renderhistoryImage = useCallback((images) => {
-    if (images?.length > 0) {
-      const image = images[0];
-      return `${SERVER_URL}/${image}`;
-    }
-  }, []);
+  const renderhistoryImage = useCallback(
+    (images) => {
+      if (userData?.isAuth && images?.length > 0) {
+        const image = images[0];
+        return `${SERVER_URL}/${image}`;
+      }
+    },
+    [userData],
+  );
 
   if (authLoading) {
     return <Loader />;
   }
+
+  if (!userData?.isAuth) {
+    alert('You need to log in.');
+    history.replace('/login');
+  }
+
   return (
     <>
       <div
@@ -71,5 +81,9 @@ function History() {
     </>
   );
 }
+
+History.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired,
+};
 
 export default History;

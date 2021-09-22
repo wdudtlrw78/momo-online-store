@@ -32,8 +32,9 @@ section {
       }
 
       .visual__description {
-        font-size: $primary-size;
+        font-size: $small-size;
         letter-spacing: 0.04em;
+        margin-top: -0.875rem;
       }
 
       .visual__admission {
@@ -108,6 +109,11 @@ section {
               font-weight: 500;
             }
           }
+        }
+
+        .visual__description {
+          font-size: $primary-size;
+          letter-spacing: 0.04em;
         }
       }
     }
