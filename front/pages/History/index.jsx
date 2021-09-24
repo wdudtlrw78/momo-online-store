@@ -73,7 +73,7 @@ function History({ history }) {
             </table>
           </div>
         ) : (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ height: '60vh', display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
             <p>There is no order details.</p>
           </div>
         )}

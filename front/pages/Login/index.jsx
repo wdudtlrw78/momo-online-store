@@ -10,7 +10,7 @@ import './styles.scss';
 function Login({ history }) {
   const dispatch = useDispatch();
 
-  const { logInLoading, logInError, logInDone, authLoading, userData } = useSelector((state) => state.user);
+  const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
 
