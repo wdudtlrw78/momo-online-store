@@ -21,15 +21,15 @@ function App() {
     <BodyContainer>
       <Header />
       <Switch>
-        <Route exact path="/" component={Auth(Home, null)} />
-        <Route exact path="/login" component={Auth(Login, false)} />
-        <Route exact path="/register" component={Auth(Register, false)} />
-        <Route exact path="/admin" component={Auth(Admin, true, true)} />
-        <Route exact path="/shop" component={Auth(ProductsLanding, null)} />
-        <Route exact path="/shop/product/:productId" component={Auth(DetailProduct, null)} />
-        <Route exact path="/user/cart" component={Auth(Cart, null)} />
-        <Route exact path="/history" component={Auth(History, true)} />
-        <Route path="*" component={Auth(NotFound, null)} />
+        <Route exact path="/" component={Auth(Home)} />
+        <Route exact path="/login" component={Auth(Login)} />
+        <Route exact path="/register" component={Auth(Register)} />
+        <Route exact path="/admin" component={Auth(Admin)} />
+        <Route exact path="/shop" component={Auth(ProductsLanding)} />
+        <Route exact path="/shop/product/:productId" component={Auth(DetailProduct)} />
+        <Route exact path="/user/cart" component={Auth(Cart)} />
+        <Route exact path="/history" component={Auth(History)} />
+        <Route path="*" component={Auth(NotFound)} />
       </Switch>
       <Footer />
     </BodyContainer>
