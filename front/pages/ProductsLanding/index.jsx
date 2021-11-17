@@ -32,6 +32,7 @@ function ProductsLanding() {
             setProducts([...Products, ...response.data.productInfo]);
             setFilters();
           } else {
+            console.log('productInfo', response.data.productInfo);
             setProducts(response.data.productInfo);
           }
           setPostSize(response.data.PostSize);

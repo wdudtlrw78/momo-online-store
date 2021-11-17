@@ -20,7 +20,7 @@ router.get('/auth', auth, (req, res) => {
   });
 });
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', (req, res, next) => {
   const user = new User(req.body);
 
   user.checkEmail(req.body.email, function (err, result) {

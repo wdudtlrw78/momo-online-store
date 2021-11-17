@@ -1,23 +1,20 @@
 import axios from 'axios';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import ProductImage from '@components/ProductImage';
 import ProductInfo from '@components/ProductInfo';
 import Ratings from '@components/Ratings';
 import { PRODUCT_SERVER } from '@config/config';
 import './styles.scss';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useInput from '@hooks/useInput';
 import Loader from '@components/Loader';
 
-function DetailProductPage({ match }) {
-  const productId = match.params.productId;
-
+function DetailProductPage() {
+  const { productId } = useParams();
   const { userData, authLoading } = useSelector((state) => state.user);
 
   const [Product, setProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [Rating, onChangeRating, setRating] = useInput('');
   const [Comment, onChangeComment, setComment] = useInput('');
   const [Reviews, setReviews] = useState([]);
@@ -31,7 +28,7 @@ function DetailProductPage({ match }) {
         }
       })
       .catch((err) => console.log(err));
-  }, [productId]);
+  }, []);
 
   useEffect(() => {
     axios
@@ -42,7 +39,7 @@ function DetailProductPage({ match }) {
         }
       })
       .catch((err) => console.log(err));
-  }, [productId]);
+  }, []);
 
   const commentRef = useRef(null);
   const onSubmit = useCallback(
@@ -68,7 +65,7 @@ function DetailProductPage({ match }) {
               setReviews(response.data.productReview);
             }
           })
-          .catch((err) => alert(err));
+          .catch((err) => console.error(err));
       }
 
       setRating(0);
@@ -77,9 +74,7 @@ function DetailProductPage({ match }) {
     [Rating, Comment, userData],
   );
 
-  if (authLoading) {
-    return <Loader />;
-  }
+  if (authLoading) return <Loader />;
 
   return (
     <>
@@ -151,9 +146,5 @@ function DetailProductPage({ match }) {
     </>
   );
 }
-
-DetailProductPage.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-};
 
 export default DetailProductPage;

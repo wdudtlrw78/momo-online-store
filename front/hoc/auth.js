@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { AUTH_REQUEST } from '@_reducers/user';
 
-export default (SpecialComponent) => {
-  const AuthenticateCheck = (props) => {
-    const dispatch = useDispatch();
+export default function Auth({ SpecialComponent }) {
+  const dispatch = useDispatch();
 
-    const { userData } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch({
+      type: AUTH_REQUEST,
+    });
+  }, []);
 
-    useEffect(() => {
-      dispatch({
-        type: AUTH_REQUEST,
-      });
-    }, []);
+  return <SpecialComponent />;
+}
 
-    return <SpecialComponent {...props} userData={userData} />;
-  };
-
-  return AuthenticateCheck;
+Auth.propTypes = {
+  SpecialComponent: PropTypes.elementType.isRequired,
 };

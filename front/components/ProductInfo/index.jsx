@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART_REQUEST } from '@_reducers/user';
 import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
-function ProductInfo({ detail, history }) {
+function ProductInfo({ detail }) {
   const dispatch = useDispatch();
   const { userData } = useSelector((state) => state.user);
+  const navigation = useNavigate();
 
   const onClickAddToCart = useCallback(() => {
     dispatch({
@@ -20,7 +21,7 @@ function ProductInfo({ detail, history }) {
 
     if (!userData?.isAuth) {
       alert('You need to log in.');
-      history.push('/login');
+      navigation('/login');
     }
   }, [detail, userData]);
 
@@ -48,8 +49,6 @@ ProductInfo.propTypes = {
     description: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
-
-  history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default withRouter(ProductInfo);
+export default ProductInfo;

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import './styles.scss';
 import axios from 'axios';
@@ -107,9 +106,7 @@ function CartPage() {
     [CartDetail],
   );
 
-  if (authLoading) {
-    return <Loader />;
-  }
+  if (authLoading) return <Loader />;
 
   return (
     <div className="cart-container">

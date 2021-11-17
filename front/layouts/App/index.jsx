@@ -1,6 +1,6 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import { Switch, Route } from 'react-router';
+import { Route, Routes } from 'react-router-dom';
 import BodyContainer from '@components/BodyContainer';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
@@ -20,17 +20,17 @@ function App() {
   return (
     <BodyContainer>
       <Header />
-      <Switch>
-        <Route exact path="/" component={Auth(Home)} />
-        <Route exact path="/login" component={Auth(Login)} />
-        <Route exact path="/register" component={Auth(Register)} />
-        <Route exact path="/admin" component={Auth(Admin)} />
-        <Route exact path="/shop" component={Auth(ProductsLanding)} />
-        <Route exact path="/shop/product/:productId" component={Auth(DetailProduct)} />
-        <Route exact path="/user/cart" component={Auth(Cart)} />
-        <Route exact path="/history" component={Auth(History)} />
-        <Route path="*" component={Auth(NotFound)} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Auth SpecialComponent={Home} />} />
+        <Route path="/login" element={<Auth SpecialComponent={Login} />} />
+        <Route path="/register" element={<Auth SpecialComponent={Register} />} />
+        <Route path="/admin" element={<Auth SpecialComponent={Admin} />} />
+        <Route path="/shop" element={<Auth SpecialComponent={ProductsLanding} />} />
+        <Route path="/shop/product/:productId" element={<Auth SpecialComponent={DetailProduct} />} />
+        <Route path="/user/cart" element={<Auth SpecialComponent={Cart} />} />
+        <Route path="/history" element={<Auth SpecialComponent={History} />} />
+        <Route path="*" element={<Auth SpecialComponent={NotFound} />} />
+      </Routes>
       <Footer />
     </BodyContainer>
   );

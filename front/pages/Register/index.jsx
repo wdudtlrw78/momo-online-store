@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '@hooks/useInput';
 import { REGISTER_REQUEST } from '@_reducers/user';
 import './styles.scss';
 import Loader from '@components/Loader';
 
-function Register({ history }) {
+function Register() {
   const dispatch = useDispatch();
   const { registerLoading, registerDone, registerError, userData } = useSelector((state) => state.user);
 
@@ -16,6 +15,8 @@ function Register({ history }) {
   const [password, onChangePassword, setPassword] = useInput('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangePasswordConfirm = useCallback(
     (e) => {
@@ -47,11 +48,11 @@ function Register({ history }) {
 
     if (registerDone) {
       alert('Membership registration completed');
-      history.replace('/login');
+      navigate('/login', { replace: true });
     }
 
     if (userData?.isAuth) {
-      history.replace('/');
+      navigate('/', { replace: true });
       alert('Only users who are not logged in can access it.');
     }
   }, [registerDone, userData?.isAuth]);
@@ -124,9 +125,5 @@ function Register({ history }) {
     </div>
   );
 }
-
-Register.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};
 
 export default Register;

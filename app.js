@@ -10,6 +10,7 @@ const helmet = require('helmet');
 
 dotenv.config();
 
+// static(middleware): css, js, 이미지등 정적 파일을 제공
 app.use(express.static(path.join(__dirname, 'front/dist')));
 
 // 프론트에서 json형식(axios)으로 데이터를 보냈을 때 그 json 형식의 데이터를 req.body로 넣어준다.
@@ -50,6 +51,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 if (prod) {
   app.get('*', (req, res, next) => {
+    // sendFile: path를 읽고 내용을 클라이언트로 전송
+    // path.join: 인자로 들어온 각각의 스트링을 하나의 경로로 결합
     res.sendFile(path.join(__dirname, 'front/dist', 'index.html'));
   });
 } else {

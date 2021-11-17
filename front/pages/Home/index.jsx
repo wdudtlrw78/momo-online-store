@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Loader from '@components/Loader';
 import './styles.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AUTH_REQUEST } from '@_reducers/user';
 import { Link } from 'react-router-dom';
 import leftImage from '../../public/images/leftImage.jpg';
 import rightImage from '../../public/images/rightImage.jpg';
 
 function HomeScreen() {
   const { authLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: AUTH_REQUEST,
+    });
+  }, []);
 
   if (authLoading) {
     return <Loader />;

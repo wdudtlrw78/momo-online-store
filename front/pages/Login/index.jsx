@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loader from '@components/Loader';
 import useInput from '@hooks/useInput';
 import { loginRequestAction } from '@_reducers/user';
 import './styles.scss';
 
-function Login({ history }) {
+function Login() {
   const dispatch = useDispatch();
 
   const { logInLoading, logInError, logInDone, userData } = useSelector((state) => state.user);
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword, setPassword] = useInput('');
+
+  const navigate = useNavigate();
 
   const onSubmit = useCallback(
     (e) => {
@@ -28,11 +29,11 @@ function Login({ history }) {
     onEmailFocus.current.focus();
 
     if (logInDone) {
-      history.replace('/');
+      navigate('/', { replace: true });
     }
 
     if (userData?.isAuth) {
-      history.replace('/');
+      navigate('/', { replace: true });
       alert('Only users who are not logged in can access it.');
     }
   }, [logInDone, userData?.isAuth]);
@@ -78,9 +79,5 @@ function Login({ history }) {
     </div>
   );
 }
-
-Login.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};
 
 export default Login;

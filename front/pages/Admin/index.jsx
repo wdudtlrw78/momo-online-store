@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { useSelector } from 'react-redux';
 import './styles.scss';
 import useInput from '@hooks/useInput';
@@ -7,8 +6,9 @@ import useInput from '@hooks/useInput';
 import FileUpload from '@components/FileUpload';
 import axios from 'axios';
 import { PRODUCT_SERVER } from '@config/config';
+import { useNavigate } from 'react-router-dom';
 
-function Admin({ history }) {
+function Admin() {
   const [category, onChangeCategory] = useInput(1);
   const [title, onChangeTitle] = useInput('');
   const [description, onChangeDescription] = useInput('');
@@ -23,9 +23,11 @@ function Admin({ history }) {
 
   const { userData, logOutDone } = useSelector((state) => state.user);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (logOutDone) {
-      history.push('/');
+      navigate('/');
     }
   }, [logOutDone]);
 
@@ -51,7 +53,7 @@ function Admin({ history }) {
         .then((response) => {
           if (response.data.success) {
             alert('The product upload was successful.');
-            history.push('/shop');
+            navigate('/shop');
           } else {
             alert('Failed to upload product information');
           }
@@ -67,7 +69,7 @@ function Admin({ history }) {
 
   if (!userData?.isAdmin) {
     alert('This page is accessible only to administrators.');
-    history.push('/');
+    navigate('/');
   }
 
   if (!userData) return null;
@@ -110,9 +112,5 @@ function Admin({ history }) {
     </div>
   );
 }
-
-Admin.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};
 
 export default Admin;

@@ -1,18 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { useSelector } from 'react-redux';
 import { SERVER_URL } from '@config/config';
 import '@components/UserCardBlock/styles.scss';
 import Loader from '@components/Loader';
+import { useNavigate } from 'react-router-dom';
 
-function History({ history }) {
+function History() {
   const { userData, authLoading } = useSelector((state) => state.user);
-
   const [showHistory, setShowHistory] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData?.history.length > 0) {
+    if (userData?.isAuth && userData?.history.length > 0) {
       setShowHistory(true);
+    } else if (userData?.history.length === 0) {
+      setShowHistory(false);
+    } else {
+      alert('You need to log in.');
+      navigate('/login', { replace: true });
     }
   }, [userData]);
 
@@ -26,14 +31,7 @@ function History({ history }) {
     [userData],
   );
 
-  if (authLoading) {
-    return <Loader />;
-  }
-
-  if (!userData?.isAuth) {
-    alert('You need to log in.');
-    history.replace('/login');
-  }
+  if (authLoading) return <Loader />;
 
   return (
     <>
@@ -81,9 +79,5 @@ function History({ history }) {
     </>
   );
 }
-
-History.propTypes = {
-  history: ReactRouterPropTypes.history.isRequired,
-};
 
 export default History;
