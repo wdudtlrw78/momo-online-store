@@ -12,12 +12,26 @@ function MobileNav() {
   const { userData } = useSelector((state) => state.user);
 
   const onToggleNav = useCallback(() => {
-    setShowNav((prev) => !prev);
+    setShowNav((status) => {
+      if (status) {
+        document.body.style.overflow = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+      return !status;
+    });
   }, []);
 
   const onClickLogOut = useCallback(() => {
     dispatch(logOutRequestAction());
-    setShowNav(false);
+    setShowNav((status) => {
+      if (status) {
+        document.body.style.overflow = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+      return !status;
+    });
   }, []);
 
   return (

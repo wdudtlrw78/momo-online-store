@@ -106,7 +106,9 @@ function CartPage() {
     [CartDetail],
   );
 
-  if (authLoading) return <Loader />;
+  if (authLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="cart-container">
