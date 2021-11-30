@@ -52,9 +52,14 @@ function Header() {
               </Link>
             </>
           ) : (
-            <Link to="/login" className="login desktop">
-              LOGIN
-            </Link>
+            <>
+              <Link to="/shop" className="shop desktop">
+                SHOP
+              </Link>
+              <Link to="/login" className="login desktop">
+                LOGIN
+              </Link>
+            </>
           )}
 
           <Link to="/user/cart" className="nav__cart-btn">
